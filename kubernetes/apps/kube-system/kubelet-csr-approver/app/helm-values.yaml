@@ -1,0 +1,3 @@
+---
+providerRegex: ^(kcp111gw|kcp112tj|kcp113ty|kawg121|kawg122|kawg123|kawg124)$
+bypassDnsResolution: true
