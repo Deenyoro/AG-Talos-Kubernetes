@@ -6,13 +6,13 @@ talosVersion: v1.7.5
 kubernetesVersion: v1.30.3
 
 clusterName: "arsenalgear"
-endpoint: https://10.10.12.111:6443
+endpoint: https://10.10.12.105:6443
 clusterPodNets:
   - "10.244.0.0/16"
 clusterSvcNets:
   - "10.96.0.0/16"
 additionalApiServerCertSans: &sans
-  - "10.10.12.111"
+  - "10.10.12.105"
   - 127.0.0.1 # KubePrism
   - "arsenalgear.local"
 additionalMachineCertSans: *sans
@@ -38,7 +38,7 @@ nodes:
             gateway: "10.10.10.1"
         mtu: 1500
         vip:
-          ip: "10.10.12.111"
+          ip: "10.10.12.105"
   - hostname: "kcp112tj"
     ipAddress: "10.10.12.112"
     installDisk: "/dev/sda"
@@ -55,7 +55,7 @@ nodes:
             gateway: "10.10.10.1"
         mtu: 1500
         vip:
-          ip: "10.10.12.111"
+          ip: "10.10.12.105"
   - hostname: "kcp113ty"
     ipAddress: "10.10.12.113"
     installDisk: "/dev/sda"
@@ -72,7 +72,7 @@ nodes:
             gateway: "10.10.10.1"
         mtu: 1500
         vip:
-          ip: "10.10.12.111"
+          ip: "10.10.12.105"
   - hostname: "kawg121"
     ipAddress: "10.10.12.121"
     installDisk: "/dev/sda"
@@ -142,7 +142,6 @@ patches:
       network:
         nameservers:
           - 10.10.10.1
-          - 192.168.90.1
   - # Configure NTP
     |-
     machine:
