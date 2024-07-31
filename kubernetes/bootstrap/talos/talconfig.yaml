@@ -1,0 +1,168 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.7.5
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.30.3
+
+clusterName: "arsenalgear"
+endpoint: https://10.10.12.111:6443
+clusterPodNets:
+  - "10.244.0.0/16"
+clusterSvcNets:
+  - "10.96.0.0/16"
+additionalApiServerCertSans: &sans
+  - "10.10.12.111"
+  - 127.0.0.1 # KubePrism
+  - "arsenalgear.local"
+additionalMachineCertSans: *sans
+
+# Disable built-in Flannel to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "kcp111gw"
+    ipAddress: "10.10.12.111"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "0232bf52553d"
+        dhcp: false
+        addresses:
+          - "10.10.12.111/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+        vip:
+          ip: "10.10.12.111"
+  - hostname: "kcp112tj"
+    ipAddress: "10.10.12.112"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "028307c9e3b7"
+        dhcp: false
+        addresses:
+          - "10.10.12.112/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+        vip:
+          ip: "10.10.12.111"
+  - hostname: "kcp113ty"
+    ipAddress: "10.10.12.113"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "029fdb15ab34"
+        dhcp: false
+        addresses:
+          - "10.10.12.113/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+        vip:
+          ip: "10.10.12.111"
+  - hostname: "kawg121"
+    ipAddress: "10.10.12.121"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "02b94a29365d"
+        dhcp: false
+        addresses:
+          - "10.10.12.121/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+  - hostname: "kawg122"
+    ipAddress: "10.10.12.122"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "02a4e8bd3405"
+        dhcp: false
+        addresses:
+          - "10.10.12.122/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+  - hostname: "kawg123"
+    ipAddress: "10.10.12.123"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "021f773b78a0"
+        dhcp: false
+        addresses:
+          - "10.10.12.123/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+  - hostname: "kawg124"
+    ipAddress: "10.10.12.124"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "02c09db99685"
+        dhcp: false
+        addresses:
+          - "10.10.12.124/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
+        mtu: 1500
+
+# Global patches
+patches:
+  - # Force nameserver
+    |-
+    machine:
+      network:
+        nameservers:
+          - 10.10.10.1
+          - 192.168.90.1
+  - # Configure NTP
+    |-
+    machine:
+      time:
+        disabled: false
+        servers:
+          - time.google.com
+  - "@./patches/global/cluster-discovery.yaml"
+  - "@./patches/global/containerd.yaml"
+  - "@./patches/global/disable-search-domain.yaml"
+  - "@./patches/global/hostdns.yaml"
+  - "@./patches/global/kubelet.yaml"
+  - "@./patches/global/openebs-local.yaml"
+  - "@./patches/global/sysctl.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/api-access.yaml"
+    - "@./patches/controller/cluster.yaml"
+    - "@./patches/controller/disable-admission-controller.yaml"
+    - "@./patches/controller/etcd.yaml"
+
