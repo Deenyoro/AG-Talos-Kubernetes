@@ -183,26 +183,3 @@ nodes:
             gateway: 192.168.90.1
     nameservers:
       - 10.10.10.1
-controlPlane:
-  patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
-    - op: add
-      path: /machine/kubeProxy
-      value:
-        enabled: false
-worker:
-  patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
-    - op: add
-      path: /machine/kubeProxy
-      value:
-        enabled: false
-

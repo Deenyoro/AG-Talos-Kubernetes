@@ -227,23 +227,7 @@ patches:
 # Controller patches
 controlPlane:
   patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
-    - op: add
-      path: /machine/kubeProxy
-      value:
-        enabled: false
-worker:
-  patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
-    - op: add
-      path: /machine/kubeProxy
-      value:
-        enabled: false
+    - "@./patches/controller/api-access.yaml"
+    - "@./patches/controller/cluster.yaml"
+    - "@./patches/controller/disable-admission-controller.yaml"
+    - "@./patches/controller/etcd.yaml"
