@@ -137,7 +137,7 @@ nodes:
       - interface: bond1
         bond:
           interfaces:
-            - enxbc2411B16bd5
+            - enxbc2411b16bd5
           mode: active-backup
         mtu: 9000
         addresses:
