@@ -4,6 +4,7 @@
 talosVersion: v1.7.5
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.30.3
+
 clusterName: "ThePatriots"
 endpoint: https://10.10.12.105:6443
 clusterPodNets:
@@ -15,203 +16,134 @@ additionalApiServerCertSans: &sans
   - 127.0.0.1 # KubePrism
   - "ThePatriots.local"
 additionalMachineCertSans: *sans
+
 # Disable built-in Flannel to use Cilium
 cniConfig:
   name: none
+
 nodes:
-  - hostname: "KCP111GW"
-    ipAddress: 10.10.12.111
+  - hostname: "kcp111gw"
+    ipAddress: "10.10.12.111"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx0269cb6f84a4
-          mode: active-backup
-        mtu: 1500
+      - deviceSelector:
+          hardwareAddr: "0269cb6f84a4"
+        dhcp: false
         addresses:
-          - 10.10.12.111/20
+          - "10.10.12.111/20"
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: "10.10.10.1"
+        mtu: 1500
         vip:
           ip: "10.10.12.105"
-    nameservers:
-      - 10.10.10.1
-  - hostname: "KCP112TJ"
-    ipAddress: 10.10.12.112
+  - hostname: "kcp112tj"
+    ipAddress: "10.10.12.112"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx0249f55f0575
-          mode: active-backup
-        mtu: 1500
+      - deviceSelector:
+          hardwareAddr: "0249f55f0575"
+        dhcp: false
         addresses:
-          - 10.10.12.112/20
+          - "10.10.12.112/20"
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: "10.10.10.1"
+        mtu: 1500
         vip:
           ip: "10.10.12.105"
-    nameservers:
-      - 10.10.10.1
-  - hostname: "KCP113TR"
-    ipAddress: 10.10.12.113
+  - hostname: "kcp113tr"
+    ipAddress: "10.10.12.113"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx027ce94bfbb6
-          mode: active-backup
-        mtu: 1500
+      - deviceSelector:
+          hardwareAddr: "027ce94bfbb6"
+        dhcp: false
         addresses:
-          - 10.10.12.113/20
+          - "10.10.12.113/20"
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: "10.10.10.1"
+        mtu: 1500
         vip:
           ip: "10.10.12.105"
-    nameservers:
-      - 10.10.10.1
-  - hostname: "KAWG121"
-    ipAddress: 10.10.12.121
+  - hostname: "kawg121"
+    ipAddress: "10.10.12.121"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: false
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx025ffcaf8d15
-          mode: active-backup
+      - deviceSelector:
+          hardwareAddr: "025ffcaf8d15"
+        dhcp: false
+        addresses:
+          - "10.10.12.121/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
         mtu: 1500
-        addresses:
-          - 10.10.12.121/20
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.10.10.1
-      - interface: bond1
-        bond:
-          interfaces:
-            - enxbc2411506ff7
-          mode: active-backup
-        mtu: 9000
-        addresses:
-          - 192.168.90.121/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
-    nameservers:
-      - 10.10.10.1
-  - hostname: "KAWG122"
-    ipAddress: 10.10.12.122
+  - hostname: "kawg122"
+    ipAddress: "10.10.12.122"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: false
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx02448ef5d041
-          mode: active-backup
+      - deviceSelector:
+          hardwareAddr: "02448ef5d041"
+        dhcp: false
+        addresses:
+          - "10.10.12.122/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
         mtu: 1500
-        addresses:
-          - 10.10.12.122/20
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.10.10.1
-      - interface: bond1
-        bond:
-          interfaces:
-            - enxbc241180885f
-          mode: active-backup
-        mtu: 9000
-        addresses:
-          - 192.168.90.122/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
-    nameservers:
-      - 10.10.10.1
-  - hostname: "KAWG123"
-    ipAddress: 10.10.12.123
+  - hostname: "kawg123"
+    ipAddress: "10.10.12.123"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: false
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx0263b2e00a63
-          mode: active-backup
+      - deviceSelector:
+          hardwareAddr: "0263b2e00a63"
+        dhcp: false
+        addresses:
+          - "10.10.12.123/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
         mtu: 1500
-        addresses:
-          - 10.10.12.123/20
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.10.10.1
-      - interface: bond1
-        bond:
-          interfaces:
-            - enxbc2411b16bd5
-          mode: active-backup
-        mtu: 9000
-        addresses:
-          - 192.168.90.123/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
-    nameservers:
-      - 10.10.10.1
-  - hostname: "KAWG124"
-    ipAddress: 10.10.12.124
+  - hostname: "kawg124"
+    ipAddress: "10.10.12.124"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: false
-    installDiskSelector:
-      size: "<=89GB"
     networkInterfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-            - enx021579a6b815
-          mode: active-backup
+      - deviceSelector:
+          hardwareAddr: "021579a6b815"
+        dhcp: false
+        addresses:
+          - "10.10.12.124/20"
+        routes:
+          - network: 0.0.0.0/0
+            gateway: "10.10.10.1"
         mtu: 1500
-        addresses:
-          - 10.10.12.124/20
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.10.10.1
-      - interface: bond1
-        bond:
-          interfaces:
-            - enxbc241128e2c4
-          mode: active-backup
-        mtu: 9000
-        addresses:
-          - 192.168.90.124/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
-    nameservers:
-      - 10.10.10.1
+
 # Global patches
 patches:
-  # Force nameserver
-  - |-
+  - # Force nameserver
+    |-
     machine:
       network:
         nameservers:
           - 10.10.10.1
-  # Configure NTP
-  - |-
+  - # Configure NTP
+    |-
     machine:
       time:
         disabled: false
@@ -224,18 +156,12 @@ patches:
   - "@./patches/global/kubelet.yaml"
   - "@./patches/global/openebs-local.yaml"
   - "@./patches/global/sysctl.yaml"
+
 # Controller patches
 controlPlane:
   patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
-worker:
-  patches:
-    - |-
-      - op: add
-        path: /machine/kubelet/extraArgs
-        value:
-          rotate-server-certificates: "true"
+    - "@./patches/controller/api-access.yaml"
+    - "@./patches/controller/cluster.yaml"
+    - "@./patches/controller/disable-admission-controller.yaml"
+    - "@./patches/controller/etcd.yaml"
+
