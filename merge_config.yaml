@@ -17,6 +17,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.10.1
+        vip:
+          ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
   - hostname: "KCP112TJ"
@@ -36,6 +38,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.10.1
+        vip:
+          ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
   - hostname: "KCP113TR"
@@ -55,6 +59,8 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.10.1
+        vip:
+          ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
   - hostname: "KAWG121"
