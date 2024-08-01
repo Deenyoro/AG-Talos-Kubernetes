@@ -1,6 +1,6 @@
 ---
 nodes:
-  - hostname: "KCP111GW"
+  - hostname: "kcp111gw"
     ipAddress: 10.10.12.111
     controlPlane: true
     installDiskSelector:
@@ -21,7 +21,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
-  - hostname: "KCP112TJ"
+  - hostname: "kcp112tj"
     ipAddress: 10.10.12.112
     controlPlane: true
     installDiskSelector:
@@ -42,7 +42,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
-  - hostname: "KCP113TR"
+  - hostname: "kcp113tr"
     ipAddress: 10.10.12.113
     controlPlane: true
     installDiskSelector:
@@ -63,7 +63,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
-  - hostname: "KAWG121"
+  - hostname: "kawg121"
     ipAddress: 10.10.12.121
     controlPlane: false
     installDiskSelector:
@@ -93,7 +93,7 @@ nodes:
             gateway: 192.168.90.1
     nameservers:
       - 10.10.10.1
-  - hostname: "KAWG122"
+  - hostname: "kawg122"
     ipAddress: 10.10.12.122
     controlPlane: false
     installDiskSelector:
@@ -123,7 +123,7 @@ nodes:
             gateway: 192.168.90.1
     nameservers:
       - 10.10.10.1
-  - hostname: "KAWG123"
+  - hostname: "kawg123"
     ipAddress: 10.10.12.123
     controlPlane: false
     installDiskSelector:
@@ -153,7 +153,7 @@ nodes:
             gateway: 192.168.90.1
     nameservers:
       - 10.10.10.1
-  - hostname: "KAWG124"
+  - hostname: "kawg124"
     ipAddress: 10.10.12.124
     controlPlane: false
     installDiskSelector:
