@@ -9,7 +9,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx0232bf52553d
+            - enx0269cb6f84a4
           mode: active-backup
         mtu: 1500
         addresses:
@@ -28,7 +28,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx028307c9e3b7
+            - enx0249f55f0575
           mode: active-backup
         mtu: 1500
         addresses:
@@ -47,7 +47,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx029fdb15ab34
+            - enx027ce94bfbb6
           mode: active-backup
         mtu: 1500
         addresses:
@@ -66,7 +66,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx02b94a29365d
+            - enx025ffcaf8d15
           mode: active-backup
         mtu: 1500
         addresses:
@@ -77,7 +77,7 @@ nodes:
       - interface: bond1
         bond:
           interfaces:
-            - enxbc2411d3db21
+            - enxbc2411506ff7
           mode: active-backup
         mtu: 9000
         addresses:
@@ -96,7 +96,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx02a4e8bd3405
+            - enx02448ef5d041
           mode: active-backup
         mtu: 1500
         addresses:
@@ -107,7 +107,7 @@ nodes:
       - interface: bond1
         bond:
           interfaces:
-            - enxbc241184c657
+            - enxbc241180885f
           mode: active-backup
         mtu: 9000
         addresses:
@@ -126,7 +126,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx021f773b78a0
+            - enx0263b2e00a63
           mode: active-backup
         mtu: 1500
         addresses:
@@ -137,7 +137,7 @@ nodes:
       - interface: bond1
         bond:
           interfaces:
-            - enxbc241117b24f
+            - enxbc2411B16bd5
           mode: active-backup
         mtu: 9000
         addresses:
@@ -156,7 +156,7 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx02c09db99685
+            - enx021579a6b815
           mode: active-backup
         mtu: 1500
         addresses:
@@ -167,7 +167,7 @@ nodes:
       - interface: bond1
         bond:
           interfaces:
-            - enxbc241140fb25
+            - enxbc241128e2c4
           mode: active-backup
         mtu: 9000
         addresses:

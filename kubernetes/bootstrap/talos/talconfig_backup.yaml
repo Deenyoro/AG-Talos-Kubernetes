@@ -29,7 +29,7 @@ nodes:
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "0232bf52553d"
+          hardwareAddr: "0269cb6f84a4"
         dhcp: false
         addresses:
           - "10.10.12.111/20"
@@ -46,7 +46,7 @@ nodes:
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "028307c9e3b7"
+          hardwareAddr: "0249f55f0575"
         dhcp: false
         addresses:
           - "10.10.12.112/20"
@@ -56,14 +56,14 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.10.12.105"
-  - hostname: "kcp113ty"
+  - hostname: "kcp113tr"
     ipAddress: "10.10.12.113"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "029fdb15ab34"
+          hardwareAddr: "027ce94bfbb6"
         dhcp: false
         addresses:
           - "10.10.12.113/20"
@@ -80,7 +80,7 @@ nodes:
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "02b94a29365d"
+          hardwareAddr: "025ffcaf8d15"
         dhcp: false
         addresses:
           - "10.10.12.121/20"
@@ -95,7 +95,7 @@ nodes:
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "02a4e8bd3405"
+          hardwareAddr: "02448ef5d041"
         dhcp: false
         addresses:
           - "10.10.12.122/20"
@@ -110,7 +110,7 @@ nodes:
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "021f773b78a0"
+          hardwareAddr: "0263b2e00a63"
         dhcp: false
         addresses:
           - "10.10.12.123/20"
@@ -125,7 +125,7 @@ nodes:
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "02c09db99685"
+          hardwareAddr: "021579a6b815"
         dhcp: false
         addresses:
           - "10.10.12.124/20"
