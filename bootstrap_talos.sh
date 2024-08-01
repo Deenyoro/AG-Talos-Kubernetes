@@ -1,10 +1,16 @@
 #!/bin/bash
 
 # Define variables
-ORIGINAL_CONFIG="./kubernetes/bootstrap/talos/talconfig.yaml"
-MERGE_CONFIG="./merge_config.yaml"
-BACKUP_CONFIG="./kubernetes/bootstrap/talos/talconfig_backup.yaml"
 SCREEN_SESSION="talos-bootstrap"
+
+# Function to check if expect is installed
+check_install_expect() {
+  if ! command -v expect &> /dev/null; then
+    echo "expect is not installed. Installing..."
+    sudo apt-get update
+    sudo apt-get install -y expect
+  fi
+}
 
 # Function to run task configure and respond to prompt
 run_task_configure() {
@@ -19,28 +25,29 @@ run_task_configure() {
 EOF
 }
 
-# Function to merge configurations
-merge_configs() {
-  # Backup the original config
-  cp "$ORIGINAL_CONFIG" "$BACKUP_CONFIG"
-  # Merge the additional config into the original
-  yq eval-all 'select(filename == "'"$ORIGINAL_CONFIG"'") * select(filename == "'"$MERGE_CONFIG"'")' "$ORIGINAL_CONFIG" "$MERGE_CONFIG" > merged_output.yaml
-  # Write the result back to the original config file
-  mv merged_output.yaml "$ORIGINAL_CONFIG"
-}
+# Check and install expect if needed
+check_install_expect
 
 # Run task configure
 run_task_configure
 
-# Merge configurations
-merge_configs
+# Wait for task configure to complete
+sleep 30
+
+# Check if task configure completed successfully
+if ! task configure; then
+  echo "task configure failed. Exiting."
+  exit 1
+fi
+
+# Run the merge_config.sh script
+bash merge_config.sh
 
 # Create and start a new screen session
 screen -S "$SCREEN_SESSION" -d -m
 
 # Start the task talos:bootstrap in the first window
-screen -S "$SCREEN_SESSION" -X screen -t bootstrap
-screen -S "$SCREEN_SESSION" -p bootstrap -X stuff "task talos:bootstrap\n"
+screen -S "$SCREEN_SESSION" -p 0 -X stuff "task talos:bootstrap\n"
 
 # Create a second window and run the CSR approval loop
 screen -S "$SCREEN_SESSION" -X screen -t csr-approve
