@@ -1,23 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
-# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.7.5
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.30.3
-clusterName: "ThePatriots"
-endpoint: https://10.10.12.105:6443
-clusterPodNets:
-  - "10.244.0.0/16"
-clusterSvcNets:
-  - "10.96.0.0/16"
-additionalApiServerCertSans: &sans
-  - "10.10.12.105"
-  - 127.0.0.1 # KubePrism
-  - "ThePatriots.local"
-additionalMachineCertSans: *sans
-# Disable built-in Flannel to use Cilium
-cniConfig:
-  name: none
 nodes:
   - hostname: "KCP111GW"
     ipAddress: 10.10.12.111
@@ -196,29 +177,6 @@ nodes:
             gateway: 192.168.90.1
     nameservers:
       - 10.10.10.1
-# Global patches
-patches:
-  # Force nameserver
-  - |-
-    machine:
-      network:
-        nameservers:
-          - 10.10.10.1
-  # Configure NTP
-  - |-
-    machine:
-      time:
-        disabled: false
-        servers:
-          - time.google.com
-  - "@./patches/global/cluster-discovery.yaml"
-  - "@./patches/global/containerd.yaml"
-  - "@./patches/global/disable-search-domain.yaml"
-  - "@./patches/global/hostdns.yaml"
-  - "@./patches/global/kubelet.yaml"
-  - "@./patches/global/openebs-local.yaml"
-  - "@./patches/global/sysctl.yaml"
-# Controller patches
 controlPlane:
   patches:
     - |-
