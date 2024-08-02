@@ -19,7 +19,7 @@ additionalMachineCertSans: *sans
 cniConfig:
   name: none
 nodes:
-  - hostname: "kcp111gw"
+  - hostname: "kjd111"
     ipAddress: 10.10.12.111
     controlPlane: true
     installDiskSelector:
@@ -40,7 +40,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
-  - hostname: "kcp112tj"
+  - hostname: "kjd112"
     ipAddress: 10.10.12.112
     controlPlane: true
     installDiskSelector:
@@ -61,7 +61,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.10.1
-  - hostname: "kcp113tr"
+  - hostname: "kjd113"
     ipAddress: 10.10.12.113
     controlPlane: true
     installDiskSelector:
