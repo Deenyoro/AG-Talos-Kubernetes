@@ -10,8 +10,14 @@ cp "$original_config" "$backup_config"
 
 # Merge function
 merge_configs() {
+  # Extract talosVersion from merge_config.yaml
+  talos_version=$(yq eval '.talosVersion' "$merge_config")
+
   # Merge the additional config into the original
   yq eval-all 'select(filename == "'"$original_config"'") * select(filename == "'"$merge_config"'")' "$original_config" "$merge_config" > merged_output.yaml
+
+  # Update talosVersion in the merged output
+  yq eval --inplace ".talosVersion = \"$talos_version\"" merged_output.yaml
 
   # Write the result back to the original config file
   mv merged_output.yaml "$original_config"
