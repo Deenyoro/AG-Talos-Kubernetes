@@ -1,0 +1,6 @@
+externalCluster:
+  enable: true
+cephClusterSpec:
+  external:
+    enable: true
+  dataDirHostPath: /var/lib/rook
