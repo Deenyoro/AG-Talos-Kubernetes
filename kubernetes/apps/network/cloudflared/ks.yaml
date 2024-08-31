@@ -15,7 +15,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: thepatriots
   wait: false
   interval: 30m
   retryInterval: 1m

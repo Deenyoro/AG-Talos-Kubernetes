@@ -28,7 +28,7 @@ talosVersion: {{ talosVersion }}
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: {{ kubernetesVersion }}
 
-clusterName: {{ bootstrap_cluster_name | default('home-kubernetes', true) }}
+clusterName: {{ bootstrap_cluster_name | default('thepatriots', true) }}
 endpoint: "https://{{ bootstrap_controller_vip }}:6443"
 domain: {{ bootstrap_cluster_domain | default('home.local', true) }}
 allowSchedulingOnMasters: true
