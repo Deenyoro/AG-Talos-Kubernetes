@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./cloudflare/cloudflare-secrets.sops.yaml
+  - ./cloudflare/volsync-externalsecret.yaml
+  - ./app/hr.yaml
+  - ./app/restic-config-volsync.yaml
+  - ./app/replicationsource-volsync.yaml
