@@ -17,3 +17,5 @@ resources:
   - ./k8s-gateway.yaml
   - ./rook-release.yaml
   - ./invoiceninja-release.yaml
+  - ./external-secrets.yaml
+  - ./external-secrets-release.yaml
