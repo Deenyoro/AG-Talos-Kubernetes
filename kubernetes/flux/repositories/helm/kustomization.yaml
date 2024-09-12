@@ -19,3 +19,4 @@ resources:
   - ./invoiceninja-release.yaml
   - ./external-secrets.yaml
   - ./external-secrets-release.yaml
+  - ./volsync-release.yaml
