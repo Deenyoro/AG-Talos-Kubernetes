@@ -30,6 +30,12 @@ spec:
           mon:
             disabled: false
             interval: 45s
+      mon:
+        endpoints:
+          - "192.168.90.12:6789"
+          - "192.168.90.13:6789"
+          - "192.168.90.11:6789"
+          - "192.168.90.14:6789"
       network:
         provider: host
         connections:
