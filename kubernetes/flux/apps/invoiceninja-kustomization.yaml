@@ -1,0 +1,15 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: invoiceninja
+  namespace: flux-system
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+    namespace: flux-system
+  path: "./kubernetes/apps/invoiceninja"
+  prune: true
+  targetNamespace: invoiceninja-system
+  validation: client
