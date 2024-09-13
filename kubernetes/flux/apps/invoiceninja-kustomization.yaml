@@ -12,4 +12,3 @@ spec:
   path: "./kubernetes/apps/invoiceninja"
   prune: true
   targetNamespace: invoiceninja-system
-  validation: client

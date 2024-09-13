@@ -4,5 +4,4 @@ resources:
   - ./config
   - ./repositories
   - ./vars
-  - ./apps/invoiceninja-kustomization.yaml
-  - ./apps/volsync-kustomization.yaml
+  - ./apps
