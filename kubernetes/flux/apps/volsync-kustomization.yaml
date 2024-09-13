@@ -18,3 +18,6 @@ spec:
       kind: Deployment
       name: volsync-controller
       namespace: volsync-system
+  dependsOn:
+    - name: volsync-release
+      namespace: flux-system
