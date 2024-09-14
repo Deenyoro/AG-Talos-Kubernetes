@@ -10,6 +10,7 @@ resources:
   - ./openebs.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
+  - ./piraeus-charts.yaml
   - ./spegel.yaml
   - ./stakater.yaml
   - ./external-dns.yaml
