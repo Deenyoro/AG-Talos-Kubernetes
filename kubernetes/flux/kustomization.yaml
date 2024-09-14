@@ -4,4 +4,3 @@ resources:
   - ./config
   - ./repositories
   - ./vars
-  - ./apps
