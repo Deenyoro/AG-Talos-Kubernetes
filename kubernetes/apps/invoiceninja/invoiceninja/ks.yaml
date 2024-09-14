@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app invoiceninja
+  namespace: flux-system
+spec:
+  targetNamespace: &ns invoiceninja
+  interval: 10m
+  path: "./kubernetes/apps/invoiceninja/invoiceninja/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  wait: true
+  dependsOn:
+    - name: volsync
+    - name: invoiceninja-storage-pvc
+    - name: invoiceninja-public-pvc
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  postBuild:
+    substitute:
+      APP_NS: *ns

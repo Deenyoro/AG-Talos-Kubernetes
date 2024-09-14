@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: invoiceninja
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: invoiceninja
+      version: 0.10.2
+      sourceRef:
+        kind: HelmRepository
+        name: invoiceninja-release
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 0
+  upgrade:
+    remediation:
+      retries: 0
+  values:
+    debug: false
+    image:
+      registry: docker.io
+      repository: invoiceninja/invoiceninja
+      tag: 5.8.37@sha256:a84921363bf59619b45c677f0a88bb400f9315bcda83967783696b14b2c04310
+    existingSecret: invoiceninja-secret
+    updateStrategy:
+      type: Recreate
+    appURL: "https://clients.${SECRET_DOMAIN}"
+    userEmail: "${SECRET_WORK_EMAIL}"
+    mariadb:
+      auth:
+        database: invoiceninja
+        username: invoiceninja
+        existingSecret: invoiceninja-secret
+    redis:
+      sentinel:
+        enabled: false
+      master:
+        count: 1
+        persistence:
+          enabled: false
+    persistence:
+      public:
+        existingClaim: invoiceninja-public
+      storage:
+        existingClaim: invoiceninja-storage
+    ingress:
+      hostname: &host "clients.${SECRET_DOMAIN}"
+      ingressClassName: external
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        nginx.ingress.kubernetes.io/proxy-body-size: 100M
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
+      hosts:
+        - host: *host
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+          secretName: "${SECRET_DOMAIN_CERT_SECRET}"
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - kind: Ingress
+            apiVersion: networking.k8s.io/v1
+            metadata:
+              name: invoiceninja
+              namespace: ${APP_NS}
+            spec:
+              tls:
+                - hosts:
+                    - *host
+                  secretName: "${SECRET_DOMAIN_CERT_SECRET}"
