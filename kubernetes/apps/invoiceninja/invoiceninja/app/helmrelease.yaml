@@ -30,8 +30,8 @@ spec:
     existingSecret: invoiceninja-secret
     updateStrategy:
       type: Recreate
-    appURL: "https://clients.${SECRET_DOMAIN}"
-    userEmail: "${SECRET_WORK_EMAIL}"
+    appURL: "https://invoice.${SECRET_DOMAIN}"
+    userEmail: "${SECRET_INVNINJA_EMAIL}"
     mariadb:
       auth:
         database: invoiceninja
@@ -65,7 +65,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: "${SECRET_DOMAIN_CERT_SECRET}"
     podAnnotations:
       reloader.stakater.com/auto: "true"
   postRenderers:
@@ -80,4 +79,3 @@ spec:
               tls:
                 - hosts:
                     - *host
-                  secretName: "${SECRET_DOMAIN_CERT_SECRET}"

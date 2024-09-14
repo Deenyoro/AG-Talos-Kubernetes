@@ -3,6 +3,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: invoiceninja-db-backup
+  namespace: ${APP_NS}
 spec:
   schedule: "0 4 * * *"
   concurrencyPolicy: Forbid
@@ -45,10 +46,10 @@ spec:
                 - name: DB_NAMES
                   value: "invoiceninja"
               volumeMounts:
-                - name: invoiceninja-db-backup-nfs
+                - name: invoiceninja-db-backup
                   mountPath: /backups
           restartPolicy: OnFailure
           volumes:
-            - name: invoiceninja-db-backup-nfs
+            - name: invoiceninja-db-backup
               persistentVolumeClaim:
-                claimName: invoiceninja-db-backup-nfs
+                claimName: invoiceninja-db-backup
