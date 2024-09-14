@@ -9,4 +9,4 @@ resources:
   - observability
   - openebs-system
   - rook-ceph
-  - volsync
+  - volsync/ks.yaml
