@@ -4,8 +4,8 @@ resources:
   - cert-manager
   - flux-system
   - kube-system
-#  - network
-#  - observability
-#  - openebs-system
-#  - rook-ceph
+  - network
+  - observability
+  - openebs-system
+  - rook-ceph
   - volsync/ks.yaml
