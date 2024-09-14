@@ -59,6 +59,7 @@ spec:
     secretRef:
       name: sops-age
   postBuild:
+    substitute: {}
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
@@ -66,3 +67,56 @@ spec:
       - kind: Secret
         name: cluster-secrets
         optional: false
+  patches:
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+          namespace: not-used
+        spec:
+          interval: 10m0s
+          retryInterval: 2m0s
+          timeout: 5m
+          wait: true
+          sourceRef:
+            kind: GitRepository
+            name: thepatriots
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-gpg
+          patches:
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: not-used
+                  namespace: not-used
+                spec:
+                  interval: 10m
+                  timeout: 5m
+                  install:
+                    createNamespace: true
+                    remediation:
+                      retries: 5
+                  upgrade:
+                    remediation:
+                      retries: 5
+              target:
+                kind: HelmRelease
+                group: helm.toolkit.fluxcd.io
+                version: v2
+          postBuild:
+            substitute: {}
+            substituteFrom:
+              - kind: ConfigMap
+                name: cluster-config
+                optional: false
+              - kind: Secret
+                name: cluster-secrets
+                optional: false
+      target:
+        kind: Kustomization
+        group: kustomize.toolkit.fluxcd.io
+        version: v1
