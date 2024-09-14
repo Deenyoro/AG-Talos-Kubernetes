@@ -1,4 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
+  - ./backtube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./coredns.yaml
@@ -14,4 +17,3 @@ resources:
   - ./k8s-gateway.yaml
   - ./rook-release.yaml
   - ./invoiceninja-release.yaml
-  - ./volsync-release.yaml
