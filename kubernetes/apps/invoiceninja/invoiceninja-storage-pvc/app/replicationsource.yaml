@@ -2,11 +2,11 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: ${APP}
-  namespace: ${APP_NS}
+#  namespace: ${APP_NS}
 spec:
   sourcePVC: ${VOLSYNC_CLAIM}
   restic:
-    repository: s3:s3.URL/${RESTIC_BUCKET}/${VOLSYNC_CLAIM}
+    repository: s3:https://11130f68de674f870b3391763d200b31.r2.cloudflarestorage.com/${RESTIC_BUCKET}/${VOLSYNC_CLAIM}
     secretName: restic-secret
   trigger:
     manual: true
