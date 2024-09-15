@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: restic-repository
+    namespace: invoiceninja
+type: Opaque
+stringData:
+    repository: ENC[AES256_GCM,data:Y5S7IrFj0QphqeZJ/JxIM9FscpAhNCIOXbNPSGuxkkomzDrE9Oh8CxixNug4TH/PqbRxscY1plDB9o/poEEX9AgzTCe3wZAamnjilKCuWdSe9EDmSY+90WQUoGI4wWVHoZE=,iv:QFikb4E/20oIKMjBNXWJ2xxMEfFgT4/EMoBc4Vpc/gs=,tag:94uDJ5OMhWcVYJPia+k2BA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1zddtwjmvl4ed3jm9e0jd0cnptmmla0z8fjvcccvu6c8jkdd2x9zq0dctqy
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3RjMvZmdnU3ZENHNnTUhB
+            VFI0SXdiZWUvZ01xZ0k0b1ZPUnc3RUNvcGxJCkJZdGsxSE4yVHkra2RwOWpjWmZv
+            dDYwaERsMWVWQWpWWXB2MGYrRkVYbTQKLS0tIHdPUFVXTG1BU2Y0QVZrNFZmc3hU
+            NWMwUjQyU3FYU3p1emppa09YK1RGczQKBEXPSrqqFcoAGKNmwsYV46lEaFuJ4mdx
+            aCKiS3UZheE6SLxoPY1nR+tAMmyqFxAjhd4VQiChj6bOYGnsQYh/Pw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-09-15T17:17:19Z"
+    mac: ENC[AES256_GCM,data:Z/HB8l4B/HJQY+LZUxH48cDiAVH3Cmd5ibQhZPs8UVFhjLOx9oSE1wduUgnLPi0uvbRldL59O1UMyeB10pQVeOGdO6A/VcNi1AReNai8KSvZb9ZSf8rnQvqzYPbc51X1JkIcNAqVMhjJNJZiUGDmqbGBQejfyINAVxrZKqmdCCQ=,iv:AeKrvTMcTBUQZCxlnk5P0M9+ZG7OG7e7TMOEMZdbh2w=,tag:lOfDgEC4XbFzK0BWhjkA7A==,type:str]
+    pgp: []
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.0
