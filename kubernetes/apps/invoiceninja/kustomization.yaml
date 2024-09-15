@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./notifications.yaml
   # Flux-Kustomizations
   - ./invoiceninja-storage-pvc/ks.yaml
   - ./invoiceninja-public-pvc/ks.yaml
