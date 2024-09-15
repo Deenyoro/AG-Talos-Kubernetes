@@ -9,4 +9,4 @@ resources:
   - openebs-system
   - rook-ceph
   - volsync/ks.yaml
-  - invoiceninja/kustomization.yaml
+  - invoiceninja
