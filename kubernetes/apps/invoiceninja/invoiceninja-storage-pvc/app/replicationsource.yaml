@@ -4,20 +4,21 @@ metadata:
   name: invoiceninja
   namespace: invoiceninja
 spec:
-  sourcePVC: invoiceninja-data
   restic:
-    repository: restic-repository
-    secretName: restic-secret
     cacheCapacity: 1Gi
     cacheStorageClassName: local-hostpath
     copyMethod: Snapshot
-    pruneIntervalDays: 7
-    retain:
-      daily: 7
-      weekly: 4
     moverSecurityContext:
       fsGroup: 1000
       runAsGroup: 1000
       runAsUser: 1000
+    pruneIntervalDays: 7
+    repository: restic-repository
+    retain:
+      daily: 7
+      weekly: 4
+    storageClassName: ceph-filesystem
+    volumeSnapshotClassName: csi-ceph-filesystem
+  sourcePVC: invoiceninja-data
   trigger:
     schedule: "0 4 * * *"
