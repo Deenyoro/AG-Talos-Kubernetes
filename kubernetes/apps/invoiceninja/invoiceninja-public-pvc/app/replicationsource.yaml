@@ -6,7 +6,7 @@ metadata:
 spec:
   restic:
     cacheCapacity: 1Gi
-    cacheStorageClassName: local-hostpath
+    cacheStorageClassName: openebs-hostpath
     copyMethod: Snapshot
     moverSecurityContext:
       fsGroup: 1000
@@ -17,7 +17,7 @@ spec:
     retain:
       daily: 7
       weekly: 4
-    storageClassName: ceph-filesystem
+    storageClassName: cephfs
     volumeSnapshotClassName: csi-ceph-filesystem
   sourcePVC: invoiceninja-public
   trigger:
