@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.7.6
+talosVersion: v1.8.0
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.30.3
 clusterName: "thepatriots"
@@ -28,18 +28,18 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx0269cb6f84a4
+            - eth0
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
-          - 10.10.12.111/20
+          - 10.10.12.111/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kjd112"
     ipAddress: 10.10.12.112
     controlPlane: true
@@ -49,18 +49,18 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx0249f55f0575
+            - eth0
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
-          - 10.10.12.112/20
+          - 10.10.12.112/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kjd113"
     ipAddress: 10.10.12.113
     controlPlane: true
@@ -70,18 +70,18 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx027ce94bfbb6
+            - eth0
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
-          - 10.10.12.113/20
+          - 10.10.12.113/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg121"
     ipAddress: 10.10.12.121
     controlPlane: false
@@ -91,27 +91,24 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx025ffcaf8d15
+            - eth0
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.121/20
+          - 10.10.12.121/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
-            - enxbc2411506ff7
+            - eth1
           mode: active-backup
         mtu: 9000
         addresses:
           - 192.168.90.121/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg122"
     ipAddress: 10.10.12.122
     controlPlane: false
@@ -121,27 +118,24 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx02448ef5d041
+            - eth0
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.122/20
+          - 10.10.12.122/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
-            - enxbc241180885f
+            - eth1
           mode: active-backup
         mtu: 9000
         addresses:
           - 192.168.90.122/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg123"
     ipAddress: 10.10.12.123
     controlPlane: false
@@ -151,27 +145,24 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx0263b2e00a63
+            - eth0
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.123/20
+          - 10.10.12.123/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
-            - enxbc2411b16bd5
+            - eth1
           mode: active-backup
         mtu: 9000
         addresses:
           - 192.168.90.123/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg124"
     ipAddress: 10.10.12.124
     controlPlane: false
@@ -181,27 +172,25 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx021579a6b815
+            - eth0
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.124/20
+          - 10.10.12.124/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
-            - enxbc241128e2c4
+            - eth1
           mode: active-backup
         mtu: 9000
         addresses:
           - 192.168.90.124/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
+
 # Global patches
 patches:
   # Force nameserver
@@ -209,7 +198,7 @@ patches:
     machine:
       network:
         nameservers:
-          - 10.10.10.1
+          - 10.10.12.1
   # Configure NTP
   - |-
     machine:
