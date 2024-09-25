@@ -1,4 +1,7 @@
 ---
+image:
+  repository: ghcr.io/jfroy/spegel
+  digest: "sha256:50f6e296cb4083033148e6e609f6fa97028b9c17eff6ca26584471b856aa0264"
 spegel:
   containerdSock: /run/containerd/containerd.sock
   containerdRegistryConfigPath: /etc/cri/conf.d/hosts
