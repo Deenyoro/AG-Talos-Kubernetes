@@ -37,6 +37,22 @@ spec:
         connections:
           encryption:
             enabled: true
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
+    ingress:
+      dashboard:
+        ingressClassName: "internal"
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+        host:
+          name: "rook.${SECRET_DOMAIN}"
+          path: "/"
+        tls:
+          - secretName: rook-tls
+            hosts:
+              - "rook.${SECRET_DOMAIN}"
 
     cephBlockPools: {}
     cephFileSystems: {}
