@@ -37,3 +37,7 @@ spec:
         connections:
           encryption:
             enabled: true
+
+    cephBlockPools: {}
+    cephFileSystems: {}
+    cephObjectStores: {}
