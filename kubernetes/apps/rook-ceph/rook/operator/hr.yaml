@@ -27,6 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    logLevel: DEBUG # INFO
     csi:
       cephFSKernelMountOptions: ms_mode=secure # Set when encryption/compression is enabled
     crds:
