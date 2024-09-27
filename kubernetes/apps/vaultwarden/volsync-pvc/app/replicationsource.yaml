@@ -1,0 +1,23 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: vaultwarden
+spec:
+  restic:
+    cacheCapacity: 2Gi
+    cacheStorageClassName: local-hostpath
+    copyMethod: Snapshot
+    moverSecurityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+    pruneIntervalDays: 7
+    repository: vaultwarden-volsync-r2-secret
+    retain:
+      daily: 7
+      weekly: 4
+    storageClassName: cephfs
+    volumeSnapshotClassName: csi-ceph-filesystem
+  sourcePVC: invoiceninja-public
+  trigger:
+    schedule: "0 4 * * *"

@@ -1,0 +1,21 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: vaultwarden
+spec:
+  restic:
+    accessModes:
+    - ReadWriteOnce
+    cacheCapacity: 2Gi
+    cacheStorageClassName: local-hostpath
+    capacity: 2Gi
+    copyMethod: Snapshot
+    moverSecurityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+    repository: vaultwarden-volsync-r2-secret
+    storageClassName: cephfs
+    volumeSnapshotClassName: csi-ceph-filesystem
+  trigger:
+    manual: restore-once

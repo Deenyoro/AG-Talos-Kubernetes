@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app vaultwarden-pvc
+  namespace: flux-system
+spec:
+  targetNamespace: &ns default
+  interval: 10m
+  path: "./kubernetes/apps/vaultwarden/volsync-pvc/app"
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  dependsOn:
+    - name: vaultwarden-secrets
+    - name: rook-ceph-cluster
+    - name: volsync
+  wait: true
+  postBuild:
+    substitute:
+      APP: *app
+      APP_NS: *ns
