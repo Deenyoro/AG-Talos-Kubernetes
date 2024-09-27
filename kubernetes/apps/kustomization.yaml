@@ -6,7 +6,7 @@ resources:
   - kube-system
   - network
   - observability
-  - openebs-system
+#  - openebs-system
   - rook-ceph
   - volsync/ks.yaml
-  - invoiceninja
+#  - invoiceninja
