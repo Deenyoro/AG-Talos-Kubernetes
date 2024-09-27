@@ -10,18 +10,18 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx0269cb6f84a4
+            - enxbc2411c2f84d
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.111/20
+          - 10.10.12.111/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kjd112"
     ipAddress: 10.10.12.112
     controlPlane: true
@@ -31,18 +31,18 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx0249f55f0575
+            - enxbc241184feb0
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.112/20
+          - 10.10.12.112/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kjd113"
     ipAddress: 10.10.12.113
     controlPlane: true
@@ -52,18 +52,18 @@ nodes:
       - interface: bond0
         bond:
           interfaces:
-            - enx027ce94bfbb6
+            - enxbc24112910fd
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.113/20
+          - 10.10.12.113/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg121"
     ipAddress: 10.10.12.121
     controlPlane: false
@@ -77,10 +77,10 @@ nodes:
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.121/20
+          - 10.10.12.121/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
@@ -93,7 +93,7 @@ nodes:
           - network: 0.0.0.0/0
             gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg122"
     ipAddress: 10.10.12.122
     controlPlane: false
@@ -107,10 +107,10 @@ nodes:
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.122/20
+          - 10.10.12.122/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
@@ -123,7 +123,7 @@ nodes:
           - network: 0.0.0.0/0
             gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg123"
     ipAddress: 10.10.12.123
     controlPlane: false
@@ -137,10 +137,10 @@ nodes:
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.123/20
+          - 10.10.12.123/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
@@ -153,7 +153,7 @@ nodes:
           - network: 0.0.0.0/0
             gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
   - hostname: "kawg124"
     ipAddress: 10.10.12.124
     controlPlane: false
@@ -167,10 +167,10 @@ nodes:
           mode: active-backup
         mtu: 1500
         addresses:
-          - 10.10.12.124/20
+          - 10.10.12.124/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.10.10.1
+            gateway: 10.10.12.1
       - interface: bond1
         bond:
           interfaces:
@@ -183,4 +183,4 @@ nodes:
           - network: 0.0.0.0/0
             gateway: 192.168.90.1
     nameservers:
-      - 10.10.10.1
+      - 10.10.12.1
