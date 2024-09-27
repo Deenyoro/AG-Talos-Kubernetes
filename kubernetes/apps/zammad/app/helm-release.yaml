@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app zammad
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: zammad
+      version: 12.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: zammad
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+     repository: ghcr.io/zammad/zammad
+     tag: "6.3@sha256:fa84e09ddcccbbe3792d39322f69b3464e0ef8556cad8fdcfaeae2ad9001c977"
+
+    service:
+      type: ClusterIP
+      port: 8080
+
+    ingress:
+      enabled: true
+      className: "internal"
+      annotations: {}
+      hosts:
+        - host: &host zammad.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+         - hosts:
+             - *host
+
+    # Please note that passwords for PostgreSQL, Redis and S3 may not
+    #   contain special characters which would require URL encoding.
+    # See also https://github.com/zammad/zammad-helm/issues/251
+    secrets:
+      autowizard:
+        useExisting: false
+        secretKey: autowizard
+        secretName: autowizard
+      elasticsearch:
+        useExisting: false
+        secretKey: password
+        secretName: elastic-credentials
+      postgresql:
+        useExisting: false
+        secretKey: postgresql-pass
+        secretName: postgresql-pass
+      redis:
+        useExisting: false
+        secretKey: redis-password
+        secretName: redis-pass
+
+    elasticsearch:
+      clusterName: zammad
+      coordinating:
+        replicaCount: 0
+      data:
+        replicaCount: 0
+      ingest:
+        replicaCount: 0
+      master:
+        heapSize: 512m
+        masterOnly: false
+        replicaCount: 1
+        resources:
+          requests:
+            cpu: 50m
+            memory: 512Mi
+          limits:
+            cpu: 100m
+            memory: 1024Mi
+
