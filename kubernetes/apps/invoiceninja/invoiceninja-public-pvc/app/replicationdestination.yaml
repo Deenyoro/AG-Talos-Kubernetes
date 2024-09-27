@@ -15,7 +15,7 @@ spec:
       fsGroup: 1000
       runAsGroup: 1000
       runAsUser: 1000
-    repository: restic-repository
+    repository: invoiceninja-volsync-r2-public-pvc-secret
     storageClassName: cephfs
     volumeSnapshotClassName: csi-ceph-filesystem
   trigger:

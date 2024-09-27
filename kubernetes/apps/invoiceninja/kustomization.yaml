@@ -6,6 +6,8 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./invoiceninja-secrets/ks-public-pvc.yaml
+  - ./invoiceninja-secrets/ks-storage-pvc.yaml
   - ./invoiceninja-storage-pvc/ks.yaml
   - ./invoiceninja-public-pvc/ks.yaml
   - ./invoiceninja/ks.yaml

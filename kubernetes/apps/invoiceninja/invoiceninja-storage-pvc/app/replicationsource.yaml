@@ -13,7 +13,7 @@ spec:
       runAsGroup: 1000
       runAsUser: 1000
     pruneIntervalDays: 7
-    repository: restic-repository
+    repository: invoiceninja-volsync-r2-storage-pvc-secret
     retain:
       daily: 7
       weekly: 4

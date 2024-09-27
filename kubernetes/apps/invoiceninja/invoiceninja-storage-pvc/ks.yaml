@@ -16,6 +16,7 @@ spec:
   wait: true
   dependsOn:
     - name: volsync
+    - name: invoiceninja-secrets-storage-pvc
   postBuild:
     substitute:
       APP: invoiceninja-storage

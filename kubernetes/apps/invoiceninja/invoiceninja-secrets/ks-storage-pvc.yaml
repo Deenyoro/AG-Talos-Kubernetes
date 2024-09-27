@@ -1,20 +1,19 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: invoiceninja-public-pvc
+  name: &app invoiceninja-secrets-storage-pvc
   namespace: flux-system
 spec:
-  targetNamespace: invoiceninja
+  targetNamespace: &ns invoiceninja
   interval: 10m
-  path: "./kubernetes/apps/invoiceninja/invoiceninja-public-pvc/app"
+  path: "./kubernetes/apps/invoiceninja/invoiceninja-secrets/storage-pvc"
   prune: true
   sourceRef:
     kind: GitRepository
     name: thepatriots
   wait: true
-  dependsOn:
-    - name: volsync
-    - name: invoiceninja-secrets-public-pvc
-  # Removed postBuild.substitute since placeholders are replaced not sure if they are neededx
+  postBuild:
+    substitute:
+      APP: *app
+      APP_NS: *ns

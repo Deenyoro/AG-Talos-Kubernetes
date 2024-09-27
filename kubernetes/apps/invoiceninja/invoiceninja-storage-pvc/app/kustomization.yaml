@@ -4,5 +4,3 @@ namespace: invoiceninja
 resources:
   - replicationdestination.yaml
   - replicationsource.yaml
-  - restic-secret.sops.yaml
-  - restic-repository.sops.yaml
