@@ -21,5 +21,4 @@ spec:
   postBuild:
     substitute:
       APP: vaultwarden
-      VOLSYNC_CLAIM: vaultwarden
 
