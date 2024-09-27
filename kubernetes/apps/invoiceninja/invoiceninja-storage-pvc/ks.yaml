@@ -19,6 +19,7 @@ spec:
     - name: invoiceninja-secrets-storage-pvc
   postBuild:
     substitute:
+      APP: invoiceninja-storage
       APP_NS: *ns
       VOLSYNC_CLAIM: invoiceninja-storage
       VOLSYNC_CAPACITY: 1Gi
