@@ -8,6 +8,7 @@ metadata:
 spec:
   targetNamespace: &ns default
   interval: 10m
+  timeout: 2m
   path: "./kubernetes/apps/vaultwarden/volsync-pvc/app"
   prune: false
   sourceRef:

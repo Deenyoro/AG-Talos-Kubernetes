@@ -16,8 +16,8 @@ spec:
     retain:
       daily: 7
       weekly: 4
-    storageClassName: cephfs
-    volumeSnapshotClassName: csi-ceph-filesystem
+    storageClassName: ceph-rbd
+    volumeSnapshotClassName: csi-ceph-blockpool
   sourcePVC: vaultwarden
   trigger:
     schedule: "0 4 * * *"

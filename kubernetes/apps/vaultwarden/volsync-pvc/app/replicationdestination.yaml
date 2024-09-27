@@ -15,7 +15,7 @@ spec:
       runAsGroup: 1000
       runAsUser: 1000
     repository: vaultwarden-volsync-r2-secret
-    storageClassName: cephfs
-    volumeSnapshotClassName: csi-ceph-filesystem
+    storageClassName: ceph-rbd
+    volumeSnapshotClassName: csi-ceph-blockpool
   trigger:
     manual: restore-once
