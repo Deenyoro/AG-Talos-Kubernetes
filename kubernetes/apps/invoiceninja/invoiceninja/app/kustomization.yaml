@@ -6,4 +6,5 @@ resources:
 #  - pvc.yaml
   - secrets.sops.yaml
   - helmrelease.yaml
+  - ingress-int.yaml
 #  - backup-cronjob.yaml
