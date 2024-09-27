@@ -20,5 +20,6 @@ spec:
   wait: true
   postBuild:
     substitute:
+      APP: vaultwarden
       VOLSYNC_CLAIM: vaultwarden
 
