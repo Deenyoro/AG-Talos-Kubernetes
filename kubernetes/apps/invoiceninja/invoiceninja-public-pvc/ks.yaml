@@ -21,3 +21,4 @@ spec:
     substitute:
       VOLSYNC_CLAIM: invoiceninja-public
       VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_REPOSITORY_SECRET: invoiceninja-volsync-r2-public-pvc-secret

@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: invoiceninja
 resources:
   - replicationdestination.yaml
-  - replicationsource.yaml
+#  - replicationsource.yaml

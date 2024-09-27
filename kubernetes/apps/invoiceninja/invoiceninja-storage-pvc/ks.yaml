@@ -23,5 +23,6 @@ spec:
       VOLSYNC_CLAIM: invoiceninja-storage
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_ACCESSMODES: ReadWriteMany
-      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_STORAGECLASS: ceph-rbd
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
+      VOLSYNC_REPOSITORY_SECRET: invoiceninja-volsync-r2-storage-pvc-secret
