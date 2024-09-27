@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: uptimekuma
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/louislam/uptime-kuma
+              tag: 1.23.13-alpine
+              pullPolicy: IfNotPresent
+            env:
+              TZ: ${TZ}
+              UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN: 0
+            resources:
+              requests:
+                cpu: 200m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            enabled: true
+            port: 3001
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+          nginx.ingress.kubernetes.io/server-snippets: |
+            location / {
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_http_version 1.1;
+              proxy_set_header X-Forwarded-Host $http_host;
+              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header X-Forwarded-For $remote_addr;
+              proxy_set_header Host $host;
+              proxy_set_header Connection "upgrade";
+              proxy_cache_bypass $http_upgrade;
+            }
+        hosts:
+          - host: &host uptime.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      data:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: ceph-fs
+        accessMode: ReadWriteMany
+        size: 3Gi
+        globalMounts:
+          - path: /app/data
