@@ -67,15 +67,3 @@ spec:
             - *host
     podAnnotations:
       reloader.stakater.com/auto: "true"
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - kind: Ingress
-            apiVersion: networking.k8s.io/v1
-            metadata:
-              name: invoiceninja
-              namespace: invoiceninja
-            spec:
-              tls:
-                - hosts:
-                    - *host
