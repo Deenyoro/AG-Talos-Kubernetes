@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   # Flux-Kustomizations
   - secrets/ks.yaml
-#  - volsync-pvc/ks.yaml
+  - volsync-pvc/ks.yaml
   - vaultwarden/ks.yaml
