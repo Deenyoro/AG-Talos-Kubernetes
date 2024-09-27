@@ -19,3 +19,4 @@ resources:
   - ./k8s-gateway.yaml
   - ./rook-release.yaml
   - ./invoiceninja-release.yaml
+  - ./zammad.yaml
