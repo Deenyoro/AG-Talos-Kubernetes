@@ -19,11 +19,9 @@ spec:
     - name: invoiceninja-secrets-storage-pvc
   postBuild:
     substitute:
-      APP: invoiceninja-storage
       APP_NS: *ns
       VOLSYNC_CLAIM: invoiceninja-storage
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_STORAGECLASS: ceph-filesystem
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
-      VOLSYNC_CACHE_SNAPSHOTCLASS: ceph-filesystem

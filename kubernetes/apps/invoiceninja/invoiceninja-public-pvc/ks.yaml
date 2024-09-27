@@ -17,4 +17,7 @@ spec:
   dependsOn:
     - name: volsync
     - name: invoiceninja-secrets-public-pvc
-  # Removed postBuild.substitute since placeholders are replaced not sure if they are neededx
+  postBuild:
+    substitute:
+      VOLSYNC_CLAIM: invoiceninja-public
+      VOLSYNC_CAPACITY: 1Gi
