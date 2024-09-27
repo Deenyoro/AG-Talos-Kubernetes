@@ -22,4 +22,4 @@ spec:
     substitute:
       APP: *app
       APP_NS: *ns
-      
+
