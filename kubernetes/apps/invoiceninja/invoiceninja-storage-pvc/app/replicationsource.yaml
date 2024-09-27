@@ -6,7 +6,7 @@ metadata:
 spec:
   restic:
     cacheCapacity: 1Gi
-    cacheStorageClassName: openebs-hostpath
+    cacheStorageClassName: local-hostpath
     copyMethod: Snapshot
     moverSecurityContext:
       fsGroup: 1000
