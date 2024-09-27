@@ -18,6 +18,6 @@ spec:
       weekly: 4
     storageClassName: cephfs
     volumeSnapshotClassName: csi-ceph-filesystem
-  sourcePVC: invoiceninja-public
+  sourcePVC: vaultwarden
   trigger:
     schedule: "0 4 * * *"
