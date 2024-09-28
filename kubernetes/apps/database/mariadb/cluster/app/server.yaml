@@ -8,33 +8,20 @@ spec:
     key: password
     generate: false
 
-  storage:
-    size: 5Gi
-    storageClassName: ceph-rbd
-
   replicas: 2
   image: "mariadb:11.5.2"
   imagePullPolicy: IfNotPresent
 
+  volumeClaimTemplate:
+    storageClassName: ceph-rbd
+    resources:
+      requests:
+        storage: 5Gi
+    accessModes:
+      - ReadWriteOnce
+
   maxScale:
-    enabled: true
-
-    auth:
-      adminUsername: root
-      adminPasswordSecretKeyRef:
-        name: mariadb-secret
-        key: maxscale_password
-      deleteDefaultAdmin: true
-
-    kubernetesService:
-      type: LoadBalancer
-
-    guiKubernetesService:
-      type: LoadBalancer
-
-    connection:
-      secretName: mxs-galera-conn
-      port: 3306
+    enabled: false
 
 
   galera:
