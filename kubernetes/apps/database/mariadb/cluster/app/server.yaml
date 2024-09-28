@@ -5,10 +5,10 @@ metadata:
 spec:
   maxScaleRef:
     name: maxscale-galera
-    namespace: maxscale
+    namespace: database
 
   rootPasswordSecretKeyRef:
-    name: mariadb
+    name: mariadb-secret
     key: password
     generate: false
 
