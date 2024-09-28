@@ -3,44 +3,85 @@ kind: MariaDB
 metadata:
   name: mariadb
 spec:
-  port: 3306
-
   rootPasswordSecretKeyRef:
     name: mariadb-secret
     key: password
+    generate: false
 
-  image: "mariadb:11.2.2"
+  storage:
+    size: 5Gi
+    storageClassName: ceph-rbd
+
+  replicas: 2
+  image: "mariadb:11.5.2"
   imagePullPolicy: IfNotPresent
 
-  env:
-    - name: TZ
-      value: ${TIMEZONE}
+  maxScale:
+    enabled: true
 
-  # bootstrapFrom:
-  #   backupRef:
-  #     name: mariabackup
+    auth:
+      adminUsername: root
+      adminPasswordSecretKeyRef:
+        name: mariadb-secret
+        key: maxscale_password
+      deleteDefaultAdmin: true
 
-  volumeClaimTemplate:
-    storageClassName: ceph-rbd
-    resources:
-      requests:
-        storage: 10Gi
-    accessModes:
-      - ReadWriteOnce
+    kubernetesService:
+      type: LoadBalancer
+
+    guiKubernetesService:
+      type: LoadBalancer
+
+    connection:
+      secretName: mxs-galera-conn
+      port: 3306
+
+
+  galera:
+    enabled: true
+
+    podRecoveryTimeout: 15m
+
+  service:
+    type: LoadBalancer
+
+  primaryService:
+    type: LoadBalancer
+
+  secondaryService:
+    type: LoadBalancer
+
+  myCnf: |
+    [mariadb]
+    bind-address=*
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    max_allowed_packet=256M
 
   resources:
     requests:
       cpu: 100m
-      memory: 128Mi
-    limits:
-      cpu: 300m
       memory: 512Mi
+    limits:
+      memory: 2Gi
 
   podSecurityContext:
-    runAsUser: 568
-    runAsGroup: 568
-    fsGroup: 568
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
     fsGroupChangePolicy: OnRootMismatch
 
-  service:
-    type: ClusterIP
+
+  #  livenessProbe:
+#    initialDelaySeconds: 20
+#    periodSeconds: 10
+#    timeoutSeconds: 10
+#
+#  readinessProbe:
+#    initialDelaySeconds: 20
+#    periodSeconds: 10
+#    timeoutSeconds: 10
+
+  metrics:
+    enabled: true
