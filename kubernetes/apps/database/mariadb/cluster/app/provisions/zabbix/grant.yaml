@@ -5,7 +5,7 @@ metadata:
   name: zabbix
 spec:
   mariaDbRef:
-    name: mariadb
+    name: mariadb-galera
   privileges:
     - 'ALL'
   database: 'zabbix'

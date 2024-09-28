@@ -1,36 +1,24 @@
-apiVersion: mariadb.mmontes.io/v1alpha1
+apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
-  name: mariadb
+  name: mariadb-galera
 spec:
+  maxScaleRef:
+    name: maxscale-galera
+    namespace: maxscale
+
   rootPasswordSecretKeyRef:
-    name: mariadb-secret
+    name: mariadb
     key: password
+    generate: false
 
-  replicas: 2
-  image: "mariadb:11.5.2"
-  imagePullPolicy: IfNotPresent
+  storage:
+    size: 1Gi
 
-  volumeClaimTemplate:
-    storageClassName: ceph-rbd
-    resources:
-      requests:
-        storage: 5Gi
-    accessModes:
-      - ReadWriteOnce
-
+  replicas: 3
 
   galera:
     enabled: true
-
-  service:
-    type: LoadBalancer
-
-  primaryService:
-    type: LoadBalancer
-
-  secondaryService:
-    type: LoadBalancer
 
   myCnf: |
     [mariadb]
@@ -38,31 +26,25 @@ spec:
     default_storage_engine=InnoDB
     binlog_format=row
     innodb_autoinc_lock_mode=2
+    innodb_buffer_pool_size=1024M
     max_allowed_packet=256M
 
   resources:
     requests:
       cpu: 100m
-      memory: 512Mi
+      memory: 128Mi
     limits:
-      memory: 2Gi
+      memory: 1Gi
 
-  podSecurityContext:
-    runAsUser: 999
-    runAsGroup: 999
-    fsGroup: 999
-    fsGroupChangePolicy: OnRootMismatch
+  livenessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 10
 
-
-  #  livenessProbe:
-#    initialDelaySeconds: 20
-#    periodSeconds: 10
-#    timeoutSeconds: 10
-#
-#  readinessProbe:
-#    initialDelaySeconds: 20
-#    periodSeconds: 10
-#    timeoutSeconds: 10
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    timeoutSeconds: 10
 
   metrics:
     enabled: true
