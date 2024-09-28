@@ -6,5 +6,5 @@ resources:
   # Pre Flux-Kustomizations
   - ./ns.yaml
   # Flux-Kustomizations
-  - cloudnative-pg/ks.yaml
+  - cloudnative-pg/ks-operator.yaml
   - cloudnative-pg/ks-cluster16.yaml
