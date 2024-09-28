@@ -3,8 +3,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  # Pre Flux-Kustomizations
-  - ./ns.yaml
-  # Flux-Kustomizations
-  - cloudnative-pg/ks.yaml
-  - cloudnative-pg/ks-cluster16.yaml
+  - ./cluster16.yaml

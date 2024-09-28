@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres16
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.1-18
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 15Gi
+    storageClass: ceph-rbd
+  superuserSecret:
+    name: cloudnative-pg-secret
+  enableSuperuserAccess: true
+  resources:
+    requests:
+      memory: 2Gi
+    limits:
+      memory: 4Gi
+#  bootstrap:
+#    recovery:
+#      source: &previousCluster postgres16-v1
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  postgresql:
+    parameters:
+      max_connections: "600"
+      shared_buffers: 512MB
+
+  monitoring:
+    enablePodMonitor: true
+    # https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
+    podMonitorMetricRelabelings:
+      - { sourceLabels: [ "cluster" ], targetLabel: cnpg_cluster, action: replace }
+      - { regex: cluster, action: labeldrop }
+  backup:
+    target: prefer-standby
+    retentionPolicy: 30d
