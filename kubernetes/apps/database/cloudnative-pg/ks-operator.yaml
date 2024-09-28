@@ -4,6 +4,7 @@ metadata:
   name: cnpg-operator
   namespace: flux-system
 spec:
+  targetNamespace: database
   path: ./kubernetes/apps/database/cloudnative-pg/operator
   prune: false
   sourceRef:

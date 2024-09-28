@@ -4,6 +4,7 @@ metadata:
   name: cnpg-cluster16
   namespace: flux-system
 spec:
+  targetNamespace: database
   dependsOn:
     - name: cnpg-operator
   path: ./kubernetes/apps/database/cloudnative-pg/cluster
