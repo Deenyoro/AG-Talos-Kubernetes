@@ -79,7 +79,7 @@ spec:
       data:
         enabled: true
         type: persistentVolumeClaim
-        storageClass: ceph-fs
+        storageClass: cephfs
         accessMode: ReadWriteMany
         size: 3Gi
         globalMounts:
