@@ -5,6 +5,7 @@ resources:
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./coredns.yaml
+  - ./cloudnative-pg.yaml
   - ./democratic-csi.yaml
   - ./jetstack.yaml
   - ./mariadb-operator.yaml
