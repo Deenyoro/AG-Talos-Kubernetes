@@ -6,7 +6,6 @@ spec:
   rootPasswordSecretKeyRef:
     name: mariadb-secret
     key: password
-    generate: false
 
   replicas: 2
   image: "mariadb:11.5.2"
@@ -20,14 +19,9 @@ spec:
     accessModes:
       - ReadWriteOnce
 
-  maxScale:
-    enabled: false
-
 
   galera:
     enabled: true
-
-    podRecoveryTimeout: 15m
 
   service:
     type: LoadBalancer
