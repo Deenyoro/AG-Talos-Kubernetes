@@ -12,6 +12,7 @@ spec:
     name: thepatriots
   dependsOn:
     - name: zabbix-secrets
+    - name: zabbix-server-pvc
     - name: rook-ceph-cluster
   wait: true
   prune: true

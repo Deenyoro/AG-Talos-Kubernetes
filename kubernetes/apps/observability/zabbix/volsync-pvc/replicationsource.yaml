@@ -1,0 +1,24 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: invoiceninja
+  namespace: invoiceninja
+spec:
+  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
+  restic:
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
+    copyMethod: Snapshot
+    moverSecurityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+    pruneIntervalDays: 7
+    repository: ${VOLSYNC_REPOSITORY_SECRET}
+    retain:
+      daily: 7
+      weekly: 4
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
+  trigger:
+    schedule: "0 4 * * *"

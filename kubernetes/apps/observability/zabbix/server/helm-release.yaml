@@ -64,7 +64,7 @@ spec:
       config:
         globalMounts:
           - path: /var/lib/zabbix
-        existingClaim: zabbix-server-pvc
+        existingClaim: zabbix-storage
 
 
 

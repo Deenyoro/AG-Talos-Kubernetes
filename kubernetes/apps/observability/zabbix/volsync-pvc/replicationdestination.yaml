@@ -1,0 +1,22 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: invoiceninja-storage-bootstrap
+  namespace: invoiceninja
+spec:
+  restic:
+    accessModes:
+    - ReadWriteOnce
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
+    capacity: "${VOLSYNC_CAPACITY:-1Gi}"
+    copyMethod: Snapshot
+    moverSecurityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsUser: 1000
+    repository: ${VOLSYNC_REPOSITORY_SECRET}
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
+  trigger:
+    manual: restore-once
