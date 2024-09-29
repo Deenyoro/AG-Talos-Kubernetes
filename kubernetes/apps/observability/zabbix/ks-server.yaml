@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: zabbix-server
+  namespace: flux-system
+spec:
+  targetNamespace: observability
+  path: ./kubernetes/apps/observability/zabbix/server
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  dependsOn:
+    - name: zabbix-secrets
+    - name: rook-ceph-cluster
+  wait: true
+  prune: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

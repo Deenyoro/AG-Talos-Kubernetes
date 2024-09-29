@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app zabbix-server
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      zabbix-server:
+        type: statefulset
+
+        initContainers:
+          01-init-db:
+            image:
+              repository:  ghcr.io/onedr0p/postgres-init
+              tag: 16.3
+            envFrom:
+              - secretRef:
+                  name: zabbix-init-secrets
+
+
+        containers:
+          server:
+            image:
+              repository: zabbix/zabbix-server-pgsql
+              tag: alpine-7.0.1
+            env:
+              ZBX_SERVER_NAME: "Zabbix on Kube"
+            envFrom:
+              - secretRef:
+                  name: zabbix-secrets
+    service:
+      zabbix:
+        controller: *app
+        type: LoadBalancer
+        ports:
+          http:
+            enabled: false
+            port: 80
+          agent-udp:
+            port: 10051
+            protocol: UDP
+          agent-tcp:
+            port: 10051
+            protocol: TCP
+
+    persistence:
+      config:
+        globalMounts:
+          - path: /var/lib/zabbix
+        existingClaim: zabbix-server-pvc
+
+
+
+
+
+
+
+
