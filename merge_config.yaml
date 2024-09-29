@@ -1,7 +1,7 @@
 ---
 talosVersion: v1.7.6
 nodes:
-  - hostname: "kjd111"
+  - hostname: "kcp111"
     ipAddress: 10.10.12.111
     controlPlane: true
     installDiskSelector:
@@ -12,7 +12,7 @@ nodes:
           interfaces:
             - enxbc2411c2f84d
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.111/24
         routes:
@@ -22,7 +22,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.12.1
-  - hostname: "kjd112"
+  - hostname: "kcp112"
     ipAddress: 10.10.12.112
     controlPlane: true
     installDiskSelector:
@@ -33,7 +33,7 @@ nodes:
           interfaces:
             - enxbc241184feb0
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.112/24
         routes:
@@ -43,7 +43,7 @@ nodes:
           ip: "10.10.12.105"
     nameservers:
       - 10.10.12.1
-  - hostname: "kjd113"
+  - hostname: "kcp113"
     ipAddress: 10.10.12.113
     controlPlane: true
     installDiskSelector:
@@ -54,7 +54,7 @@ nodes:
           interfaces:
             - enxbc24112910fd
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.113/24
         routes:
@@ -75,7 +75,7 @@ nodes:
           interfaces:
             - enx025ffcaf8d15
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.121/24
         routes:
@@ -105,7 +105,7 @@ nodes:
           interfaces:
             - enx02448ef5d041
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.122/24
         routes:
@@ -135,7 +135,7 @@ nodes:
           interfaces:
             - enx0263b2e00a63
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.123/24
         routes:
@@ -165,7 +165,7 @@ nodes:
           interfaces:
             - enx021579a6b815
           mode: active-backup
-        mtu: 1500
+        mtu: 9000
         addresses:
           - 10.10.12.124/24
         routes:
@@ -179,6 +179,36 @@ nodes:
         mtu: 9000
         addresses:
           - 192.168.90.124/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.90.1
+    nameservers:
+      - 10.10.12.1
+  - hostname: "kawg125"
+    ipAddress: 10.10.12.125
+    controlPlane: false
+    installDiskSelector:
+      size: "<=89GB"
+    networkInterfaces:
+      - interface: bond0
+        bond:
+          interfaces:
+            - enxbc24118c02c5
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 10.10.12.125/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 10.10.12.1
+      - interface: bond1
+        bond:
+          interfaces:
+            - enxbc241193b119
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.90.125/24
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.90.1
