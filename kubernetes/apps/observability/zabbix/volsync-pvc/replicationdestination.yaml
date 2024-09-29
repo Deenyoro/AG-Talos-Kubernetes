@@ -1,8 +1,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: invoiceninja-storage-bootstrap
-  namespace: invoiceninja
+  name: ${VOLSYNC_CLAIM}-bootstrap
 spec:
   restic:
     accessModes:

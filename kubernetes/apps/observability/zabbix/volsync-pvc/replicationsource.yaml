@@ -1,8 +1,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: invoiceninja
-  namespace: invoiceninja
+  name: ${VOLSYNC_CLAIM:-${APP}}
 spec:
   sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   restic:
