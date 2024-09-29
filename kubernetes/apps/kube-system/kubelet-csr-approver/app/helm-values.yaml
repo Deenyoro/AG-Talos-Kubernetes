@@ -1,3 +1,3 @@
 ---
-providerRegex: ^(kjd111|kjd112|kjd113|kawg121|kawg122|kawg123|kawg124)$
+providerRegex: ^(kcp111|kcp112|kcp113|kawg121|kawg122|kawg123|kawg124|kawg125)$
 bypassDnsResolution: true
