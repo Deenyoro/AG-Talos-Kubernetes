@@ -33,6 +33,25 @@ tasks:
       - msg: Missing Sops Age key file
         sh: test -f {{.AGE_FILE}}
 
+  generate:
+    desc: Generate Talhelper config
+    dir: "{{.KUBERNETES_DIR}}/bootstrap/talos"
+    cmds:
+      - |
+        if [ ! -f "{{.TALHELPER_SECRET_FILE}}" ]; then
+            talhelper gensecret > {{.TALHELPER_SECRET_FILE}}
+            sops --encrypt --in-place {{.TALHELPER_SECRET_FILE}}
+        fi
+      - talhelper genconfig --config-file {{.TALHELPER_CONFIG_FILE}} --out-dir {{.TALHELPER_CLUSTER_DIR}}
+    preconditions:
+      - msg: Missing talhelper config file
+        sh: test -f {{.TALHELPER_CONFIG_FILE}}
+      - msg: Missing Sops config file
+        sh: test -f {{.SOPS_CONFIG_FILE}}
+      - msg: Missing Sops Age key file
+        sh: test -f {{.AGE_FILE}}
+
+
   bootstrap:
     desc: Bootstrap the Talos cluster
     dir: "{{.KUBERNETES_DIR}}/bootstrap/talos"
