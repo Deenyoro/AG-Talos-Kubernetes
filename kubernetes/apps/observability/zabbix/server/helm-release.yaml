@@ -40,8 +40,6 @@ spec:
             image:
               repository: zabbix/zabbix-server-pgsql
               tag: alpine-7.0.1
-            env:
-              ZBX_SERVER_NAME: "Zabbix on Kube"
             envFrom:
               - secretRef:
                   name: zabbix-secrets

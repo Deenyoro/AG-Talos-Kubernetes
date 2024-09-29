@@ -31,6 +31,8 @@ spec:
            image:
             repository: zabbix/zabbix-web-nginx-pgsql
             tag: alpine-7.0.1
+           env:
+            ZBX_SERVER_HOST: zabbix-server.observability.svc.cluster.local
            envFrom:
             - secretRef:
                 name: zabbix-secrets
