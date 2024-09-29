@@ -22,7 +22,7 @@ cniConfig:
   name: none
 
 nodes:
-  - hostname: "kjd111"
+  - hostname: "kcp111"
     ipAddress: "10.10.12.111"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
@@ -39,7 +39,7 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.10.12.105"
-  - hostname: "kjd112"
+  - hostname: "kcp112"
     ipAddress: "10.10.12.112"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
@@ -56,7 +56,7 @@ nodes:
         mtu: 1500
         vip:
           ip: "10.10.12.105"
-  - hostname: "kjd113"
+  - hostname: "kcp113"
     ipAddress: "10.10.12.113"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515
