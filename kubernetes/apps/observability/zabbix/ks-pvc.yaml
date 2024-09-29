@@ -19,7 +19,6 @@ spec:
     - name: zabbix-secrets
   postBuild:
     substitute:
-      APP: zabbix
       APP_NS: *ns
       VOLSYNC_CLAIM: zabbix-storage
       VOLSYNC_CAPACITY: 1Gi
