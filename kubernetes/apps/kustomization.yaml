@@ -9,7 +9,7 @@ resources:
   - network
 #  - observability
 #  - openebs-system
-  - rook-ceph
+#  - rook-ceph
   - volsync/ks.yaml
 #  - vaultwarden
 #  - invoiceninja
