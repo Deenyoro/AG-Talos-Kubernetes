@@ -7,10 +7,10 @@ resources:
   - flux-system
   - kube-system
   - network
-  - observability
+#  - observability
 #  - openebs-system
   - rook-ceph
   - volsync/ks.yaml
-  - vaultwarden
-  - invoiceninja
-  - zammad/ks.yaml
+#  - vaultwarden
+#  - invoiceninja
+#  - zammad/ks.yaml
