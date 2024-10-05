@@ -76,6 +76,7 @@ spec:
       user: zammad
 
     elasticsearch:
+      enabled: false
       clusterName: zammad
       coordinating:
         replicaCount: 0
