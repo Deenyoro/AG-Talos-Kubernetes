@@ -22,3 +22,5 @@ resources:
   - ./rook-release.yaml
   - ./invoiceninja-release.yaml
   - ./zammad.yaml
+  - ./node-feature-discovery.yaml
+  - ./intel.yaml
