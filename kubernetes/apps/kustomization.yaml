@@ -5,6 +5,7 @@ resources:
   - database
   - democractic-system
   - flux-system
+  - gpu-system
   - kube-system
   - network
   - media
