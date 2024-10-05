@@ -8,10 +8,10 @@ resources:
   - kube-system
   - network
   - media
-#  - observability
+  - observability
 #  - openebs-system
   - rook-ceph
   - volsync/ks.yaml
-#  - vaultwarden
+  - vaultwarden
 #  - invoiceninja
-#  - zammad/ks.yaml
+  - zammad/ks.yaml
