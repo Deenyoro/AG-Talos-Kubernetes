@@ -1,0 +1,95 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pgadmin
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 5050
+        runAsGroup: 0
+        fsGroup: 0
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          main:
+            image:
+              repository: dpage/pgadmin4
+              tag: 8.12
+            env:
+              PGADMIN_DEFAULT_EMAIL: deen@${SECRET_DOMAIN}
+            envFrom:
+              - secretRef:
+                  name: pgadmin-secrets
+            resources:
+              requests:
+                memory: 300Mi
+              limits:
+                memory: 1Gi
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 80
+
+    persistence:
+      config:
+        enabled: true
+        storageClass: ceph-rbd
+        accessMode: "ReadWriteOnce"
+        size: 1Gi
+        globalMounts:
+          - path: /var/lib/pgadmin
+      oauthconfig:
+        enabled: true
+        type: configMap
+        name: pgadmin-local-config-configmap
+        globalMounts:
+          - path: /pgadmin4/config_local.py
+            subPath: config_local.py
+            readOnly: true
+
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        hosts:
+          - host: pgadmin.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        tls:
+          - hosts:
+              - pgadmin.${SECRET_DOMAIN}
