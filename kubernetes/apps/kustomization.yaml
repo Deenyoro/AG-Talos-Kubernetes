@@ -13,5 +13,5 @@ resources:
   - rook-ceph
   - volsync/ks.yaml
   - vaultwarden
-#  - invoiceninja
+  - invoiceninja
   - zammad/ks.yaml
