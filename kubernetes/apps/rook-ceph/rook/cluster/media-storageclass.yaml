@@ -14,7 +14,7 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
   csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
   csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-  fsName: QuadSquad_cephfs_EC
+  fsName: QuadSquad_cephfs
   pool: QuadSquad_cephfs_EC
 ---
 apiVersion: storage.k8s.io/v1
