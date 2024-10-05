@@ -15,4 +15,4 @@ resources:
   - volsync/ks.yaml
   - vaultwarden
   - invoiceninja
- # - zammad/ks.yaml
+  - zammad/ks.yaml
