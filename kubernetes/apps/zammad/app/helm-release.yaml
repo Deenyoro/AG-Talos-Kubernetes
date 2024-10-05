@@ -48,6 +48,34 @@ spec:
          - hosts:
              - *host
 
+    zammadConfig:
+      elasticsearch:
+        enabled: false
+        clusterName: zammad
+        coordinating:
+          replicaCount: 0
+        data:
+          replicaCount: 0
+        ingest:
+          replicaCount: 0
+        master:
+          heapSize: 512m
+          masterOnly: false
+          replicaCount: 1
+          resources:
+            requests:
+              #cpu: 50m
+              memory: 2Gi
+            limits:
+              #cpu: 100m
+              memory: 4Gi
+
+      postgresql:
+        enabled: false
+        db: zammad
+        host: postgres16-rw.database.svc.cluster.local
+        user: zammad
+
     # Please note that passwords for PostgreSQL, Redis and S3 may not
     #   contain special characters which would require URL encoding.
     # See also https://github.com/zammad/zammad-helm/issues/251
@@ -68,31 +96,4 @@ spec:
         useExisting: false
         secretKey: redis-password
         secretName: redis-pass
-
-    postgresql:
-      enabled: false
-      db: zammad
-      host: postgres16-rw.database.svc.cluster.local
-      user: zammad
-
-    elasticsearch:
-      enabled: false
-      clusterName: zammad
-      coordinating:
-        replicaCount: 0
-      data:
-        replicaCount: 0
-      ingest:
-        replicaCount: 0
-      master:
-        heapSize: 512m
-        masterOnly: false
-        replicaCount: 1
-        resources:
-          requests:
-            #cpu: 50m
-            memory: 2Gi
-          limits:
-            #cpu: 100m
-            memory: 4Gi
 
