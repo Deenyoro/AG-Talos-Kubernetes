@@ -6,7 +6,7 @@ metadata:
 spec:
   resources:
     requests:
-      storage: 1T
+      storage: 100Ti
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
