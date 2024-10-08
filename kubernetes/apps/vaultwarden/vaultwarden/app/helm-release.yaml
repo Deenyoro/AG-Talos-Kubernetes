@@ -52,6 +52,8 @@ spec:
               #SMTP_FROM_NAME: vaultwarden
               #SMTP_PORT: 2525
               #SMTP_SECURITY: "off"
+            envFrom:
+              - secret: vaultwarden-secrets
             resources:
               requests:
                 cpu: 100m
