@@ -46,8 +46,10 @@ spec:
           enabled: false
     persistence:
       public:
+        enabled: true
         existingClaim: invoiceninja-public
       storage:
+        enabled: true
         existingClaim: invoiceninja-storage
     ingress:
       hostname: &host "clients.${SECRET_DOMAIN}"
