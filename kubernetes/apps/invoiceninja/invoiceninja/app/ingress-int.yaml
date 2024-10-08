@@ -19,17 +19,17 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-  - host: clients.${SECRET_DOMAIN}
-    http:
-      paths:
-      - backend:
-          service:
-            name: invoiceninja-web
-            port:
-              name: http
-        path: /
-        pathType: ImplementationSpecific
+    - host: invoice.${SECRET_DOMAIN}
+      http:
+        paths:
+          - backend:
+              service:
+                name: invoiceninja-web
+                port:
+                  name: http
+            path: /
+            pathType: ImplementationSpecific
   tls:
-  - hosts:
-    - clients.${SECRET_DOMAIN}
-    secretName: clients.${SECRET_DOMAIN}-tls
+    - hosts:
+        - invoice.${SECRET_DOMAIN}
+      secretName: invoice.${SECRET_DOMAIN}-tls
