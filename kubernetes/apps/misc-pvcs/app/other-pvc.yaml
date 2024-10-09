@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: other-pvc-v1
+spec:
+  resources:
+    requests:
+      storage: 2Ti
+  accessModes:
+    - ReadWriteMany
+  retain: true
+  storageClassName: cephfs-media
