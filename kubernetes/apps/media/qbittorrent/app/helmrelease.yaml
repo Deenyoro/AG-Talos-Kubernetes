@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      version: 3.1.0
+      version: 3.5.1
   install:
     createNamespace: true
     remediation:
@@ -32,7 +32,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: 'true'
     controllers:
-      qbit:
+      qbittorrent:
         pod:
           securityContext:
             fsGroup: 568
@@ -41,11 +41,10 @@ spec:
               - 100
 
         containers:
-          app:
+          qbit:
             env:
-              QBITTORRENT__BT_PORT: 57427
-              QBITTORRENT__PORT: 80
-              TZ: Europe/Helsinki
+              QBITTORRENT__PORT: 8080
+              TZ: America/New_York
             image:
               repository: ghcr.io/onedr0p/qbittorrent
               tag: 4.6.4@sha256:53ead5ab43027d04efc5d52740aa02308a88d6b4a6eaa90cf6fd2e94fc11ba17
@@ -74,17 +73,18 @@ spec:
           gluetun:
             env:
               VPN_TYPE: openvpn
-              VPN_SERVICE_PROVIDER: "private internet access"
               VPN_INTERFACE: tun0
               FIREWALL: on
               DOT: off
               FIREWALL_VPN_INPUT_PORTS:
               FIREWALL_INPUT_PORTS: 80
               VPN_PORT_FORWARDING: on
-
+            resources:
+              limits:
+                kernel.org/tun: "1"
             envFrom:
               - secretRef:
-                  name: qbit-vpn-secret
+                  name: openvpn-secret
             image:
               repository: ghcr.io/qdm12/gluetun
               tag: latest@sha256:6b3a0ebcd6cae7f6f7780bf94ecf63823a98f8d16786cb4964544de514ee8f05
@@ -93,8 +93,31 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
+
+          port-forward:
+            image:
+              repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
+              tag: 0.0.2@sha256:ac6c0061fd61b85a588cfdd7742b2a757f9c2f3663ed354a4581f3e668b0ed81
+            env:
+              GLUETUN_CONTROL_SERVER_HOST: localhost
+              GLUETUN_CONTROL_SERVER_PORT: 8000
+              QBITTORRENT_HOST: localhost
+              QBITTORRENT_WEBUI_PORT: *port
+              CRON_ENABLED: true
+              CRON_SCHEDULE: "*/5 * * * *"
+              LOG_TIMESTAMP: false
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
     ingress:
-      app:
+      qbit:
         className: internal
         hosts:
           - host: &host "qb.${SECRET_DOMAIN}"
@@ -102,29 +125,25 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: qbit
+                  identifier: qbittorrent
                   port: http
         tls:
           - hosts:
               - *host
+  service:
+    qbittorrent:
+      controller: qbittorrent
+      ports:
+        http:
+          port: 8080
+
     persistence:
       config:
-        existingClaim: qbit-config
+        existingClaim: qbittorrent-config
         globalMounts:
           - path: /config
-      library:
+      media:
+        existingClaim: media-pvc-v1
         globalMounts:
-          - path: /var/mnt/merged/library
-        hostPath: /var/mnt/merged/library
-        type: hostPath
-      media-downloads:
-        globalMounts:
-          - path: /var/mnt/merged/Downloads
-        hostPath: /var/mnt/merged/Downloads
-        type: hostPath
-    service:
-      qbit:
-        controller: qbit
-        ports:
-          http:
-            port: 80
+          - path: /media
+            subPath: media

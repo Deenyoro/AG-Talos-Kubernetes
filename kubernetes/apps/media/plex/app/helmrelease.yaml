@@ -142,4 +142,3 @@ spec:
         globalMounts:
           - path: /media
             subPath: media
-            readOnly: true
