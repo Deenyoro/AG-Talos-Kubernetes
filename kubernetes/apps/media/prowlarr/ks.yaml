@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: media
-  path: ./kubernetes/apps/media/prowlarr/secrets/
+  path: ./kubernetes/apps/media/prowlarr/app/
   prune: true
   wait: false
   sourceRef:
