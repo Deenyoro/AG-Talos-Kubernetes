@@ -37,7 +37,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
                   name: prowlarr-init-secrets
         containers:
@@ -55,7 +55,9 @@ spec:
               PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
               PROWLARR__SERVER__PORT: &port 8080
               PROWLARR__UPDATE__BRANCH: develop
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: prowlarr-secret
             resources:
               requests:
                 cpu: 100m
