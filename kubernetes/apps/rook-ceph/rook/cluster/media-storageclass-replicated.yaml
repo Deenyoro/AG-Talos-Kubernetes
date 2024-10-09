@@ -1,3 +1,4 @@
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 provisioner: rook-ceph.cephfs.csi.ceph.com
@@ -5,7 +6,7 @@ reclaimPolicy: Retain
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
 metadata:
-  name: cephfs-media-ec
+  name: cephfs-media
 parameters:
   clusterID: rook-ceph
   csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
@@ -15,6 +16,4 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
   csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
   fsName: QuadSquad_cephfs
-  pool: QuadSquad_cephfs_EC
-
-
+  pool: QuadSquad_cephfs_Replicated
