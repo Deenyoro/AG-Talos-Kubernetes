@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: qbit
@@ -130,12 +130,12 @@ spec:
         tls:
           - hosts:
               - *host
-  service:
-    qbittorrent:
-      controller: qbittorrent
-      ports:
-        http:
-          port: 8080
+    service:
+      qbittorrent:
+        controller: qbittorrent
+        ports:
+          http:
+            port: 8080
 
     persistence:
       config:
