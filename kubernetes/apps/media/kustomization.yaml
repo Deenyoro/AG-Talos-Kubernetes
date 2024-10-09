@@ -11,3 +11,4 @@ resources:
   - ./radarr/ks.yaml
   - ./sonarr/ks-secrets.yaml
   - ./sonarr/ks.yaml
+  - ./flaresolverr/ks.yaml
