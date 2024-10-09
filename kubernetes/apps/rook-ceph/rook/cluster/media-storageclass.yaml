@@ -20,7 +20,7 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 provisioner: rook-ceph.cephfs.csi.ceph.com
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
 metadata:
