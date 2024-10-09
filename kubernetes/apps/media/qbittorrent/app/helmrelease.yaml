@@ -76,8 +76,8 @@ spec:
               VPN_INTERFACE: tun0
               FIREWALL: on
               DOT: off
-              FIREWALL_VPN_INPUT_PORTS:
-              FIREWALL_INPUT_PORTS: 80
+              # FIREWALL_VPN_INPUT_PORTS:
+              FIREWALL_INPUT_PORTS: 8080
               VPN_PORT_FORWARDING: on
             resources:
               limits:
