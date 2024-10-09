@@ -102,6 +102,17 @@ spec:
                 service:
                   identifier: app
                   port: http
+      internal:
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: plex
