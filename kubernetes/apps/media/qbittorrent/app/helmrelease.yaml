@@ -125,7 +125,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: qbit
+                  identifier: qbittorrent
                   port: http
         tls:
           - hosts:
