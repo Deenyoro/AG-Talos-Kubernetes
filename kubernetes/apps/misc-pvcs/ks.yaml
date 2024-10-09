@@ -9,7 +9,7 @@ spec:
   targetNamespace: &ns default
   interval: 10m
   timeout: 2m
-  path: "./kubernetes/apps/misc-pvcs/apps"
+  path: "./kubernetes/apps/misc-pvcs/app"
   prune: true
   sourceRef:
     kind: GitRepository
