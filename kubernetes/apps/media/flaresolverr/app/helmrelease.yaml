@@ -27,13 +27,13 @@ spec:
   values:
 
     controllers:
-      main:
+      flaresolverr:
         type: deployment
         annotations:
           reloader.stakater.com/auto: "true"
 
         containers:
-          main:
+          flaresolverr:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
               tag: v3.3.21
@@ -46,7 +46,8 @@ spec:
               limits:
                 memory: 800M
     service:
-      main:
+      flaresolverr:
+        controller: flaresolverr
         ports:
           http:
             port: 8191
