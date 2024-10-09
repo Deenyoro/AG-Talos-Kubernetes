@@ -1,0 +1,130 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: qbit
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.1.0
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  interval: 30m
+  maxHistory: 2
+  uninstall:
+    keepHistory: false
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: uninstall
+      retries: 3
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: 'true'
+    controllers:
+      qbit:
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 100
+
+        containers:
+          app:
+            env:
+              QBITTORRENT__BT_PORT: 57427
+              QBITTORRENT__PORT: 80
+              TZ: Europe/Helsinki
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 4.6.4@sha256:53ead5ab43027d04efc5d52740aa02308a88d6b4a6eaa90cf6fd2e94fc11ba17
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              limits:
+                memory: 3Gi
+              requests:
+                cpu: 49m
+                memory: 2Gi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+          gluetun:
+            env:
+              VPN_TYPE: openvpn
+              VPN_SERVICE_PROVIDER: "private internet access"
+              VPN_INTERFACE: tun0
+              FIREWALL: on
+              DOT: off
+              FIREWALL_VPN_INPUT_PORTS:
+              FIREWALL_INPUT_PORTS: 80
+              VPN_PORT_FORWARDING: on
+
+            envFrom:
+              - secretRef:
+                  name: qbit-vpn-secret
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: latest@sha256:6b3a0ebcd6cae7f6f7780bf94ecf63823a98f8d16786cb4964544de514ee8f05
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: &host "qb.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: qbit
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        existingClaim: qbit-config
+        globalMounts:
+          - path: /config
+      library:
+        globalMounts:
+          - path: /var/mnt/merged/library
+        hostPath: /var/mnt/merged/library
+        type: hostPath
+      media-downloads:
+        globalMounts:
+          - path: /var/mnt/merged/Downloads
+        hostPath: /var/mnt/merged/Downloads
+        type: hostPath
+    service:
+      qbit:
+        controller: qbit
+        ports:
+          http:
+            port: 80
