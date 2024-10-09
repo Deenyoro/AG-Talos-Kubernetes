@@ -102,6 +102,9 @@ spec:
                 service:
                   identifier: app
                   port: http
+        tls:
+          - hosts:
+              - *host
       internal:
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
