@@ -5,3 +5,5 @@ resources:
   - ./pvc.yaml
   - ./plex/ks.yaml
   - ./qbittorrent/ks.yaml
+  - ./prowlarr/ks-secrets.yaml
+  - ./prowlarr/ks.yaml
