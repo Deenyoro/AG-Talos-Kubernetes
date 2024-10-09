@@ -16,3 +16,4 @@ resources:
   - vaultwarden
   - invoiceninja
   - zammad/ks.yaml
+  - rustdesk/ks.yaml
