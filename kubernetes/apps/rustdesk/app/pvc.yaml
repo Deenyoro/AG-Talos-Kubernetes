@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: rustdesk
 spec:
-  retain: true
   resources:
     requests:
       storage: 20Gi
