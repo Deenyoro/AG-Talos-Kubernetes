@@ -30,7 +30,7 @@ spec:
   values:
     controller:
       annotations:
-        reloader.stakater.com/auto: 'true'
+        reloader.stakater.com/auto: "true"
     controllers:
       qbittorrent:
         pod:
@@ -57,10 +57,10 @@ spec:
                 enabled: false
             resources:
               limits:
-                memory: 3Gi
+                memory: 10Gi
               requests:
                 cpu: 49m
-                memory: 2Gi
+                memory: 5Gi
             securityContext:
               runAsUser: 568
               runAsGroup: 568
