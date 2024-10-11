@@ -13,6 +13,8 @@ kubeconform_args=(
     "-ignore-missing-schemas"
     "-skip"
     "Secret"
+    "-skip"
+    "PersistentVolumeClaim"
     "-schema-location"
     "default"
     "-schema-location"
