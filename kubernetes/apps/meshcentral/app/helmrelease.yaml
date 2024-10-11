@@ -37,8 +37,20 @@ spec:
           http:
             port: ${PORT}
     ingress:
-      app:
-        className: nginx-external
+      external:
+        className: external
+        hosts:
+          - host: ${HOSTNAME}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - ${HOSTNAME}
+      internal:
+        className: internal
         hosts:
           - host: ${HOSTNAME}
             paths:
@@ -51,7 +63,7 @@ spec:
               - ${HOSTNAME}
     persistence:
       config:
-        type: configMap # Changed from 'secret' to 'configMap'
+        type: configMap
         name: meshcentral-config
         advancedMounts:
           meshcentral:
