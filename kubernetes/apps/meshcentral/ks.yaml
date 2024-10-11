@@ -1,9 +1,8 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app meshcentral
+  name: meshcentral
   namespace: flux-system
 spec:
   targetNamespace: default
@@ -15,3 +14,11 @@ spec:
   sourceRef:
     kind: GitRepository
     name: thepatriots
+  postBuild:
+    substitute:
+      TIMEZONE: "America/New_York"
+      HOSTNAME: "meshcentral.${SECRET_DOMAIN}"
+      PORT: "443"
+      TLS_OFFLOAD: "true"
+      NEW_ACCOUNTS: "false"
+      WEBRTC: "true"
