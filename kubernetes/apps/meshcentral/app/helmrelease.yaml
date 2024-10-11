@@ -35,8 +35,8 @@ spec:
         controller: meshcentral
         ports:
           http:
-            port: ${PORT}
-            targetPort: 8080 # Added this line
+            port: 443
+            targetPort: 443
     ingress:
       external:
         className: external

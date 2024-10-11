@@ -6,13 +6,25 @@ data:
   config.json: |
     {
       "settings": {
-        "port": 8080
+        "Cert": "${HOSTNAME}",
+        "WANonly": true,
+        "Minify": 1,
+        "Port": 443,
+        "RedirPort": 80,
+        "TLSOffload": "127.0.0.1",
+        "AgentPort": 443,
+        "AgentAliasPort": 443,
+        "AgentPong": true,
+        "MpsPort": 443,
+        "MpsAliasPort": 443
       },
       "domains": {
         "": {
+          "Title": "MeshCentral",
+          "newAccounts": false,
+          "certUrl": "https://${HOSTNAME}:443/",
           "userQuota": 1048576,
-          "meshQuota": 248576,
-          "newAccounts": 0
+          "meshQuota": 248576
         }
       }
     }
