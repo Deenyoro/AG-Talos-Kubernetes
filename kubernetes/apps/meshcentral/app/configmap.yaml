@@ -9,20 +9,20 @@ data:
         "Cert": "${HOSTNAME}",
         "WANonly": true,
         "Minify": 1,
-        "Port": 443,
+        "Port": ${PORT},
         "RedirPort": 80,
         "TLSOffload": "127.0.0.1",
-        "AgentPort": 443,
-        "AgentAliasPort": 443,
+        "AgentPort": ${PORT},
+        "AgentAliasPort": ${PORT},
         "AgentPong": true,
-        "MpsPort": 443,
-        "MpsAliasPort": 443
+        "MpsPort": ${PORT},
+        "MpsAliasPort": ${PORT}
       },
       "domains": {
         "": {
           "Title": "MeshCentral",
           "newAccounts": false,
-          "certUrl": "https://${HOSTNAME}:443/",
+          "certUrl": "https://${HOSTNAME}/",
           "userQuota": 1048576,
           "meshQuota": 248576
         }
