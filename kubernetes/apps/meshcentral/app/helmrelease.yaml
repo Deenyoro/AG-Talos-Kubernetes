@@ -36,6 +36,7 @@ spec:
         ports:
           http:
             port: ${PORT}
+            targetPort: 8080 # Added this line
     ingress:
       external:
         className: external
