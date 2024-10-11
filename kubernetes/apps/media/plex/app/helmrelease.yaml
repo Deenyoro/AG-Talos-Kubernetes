@@ -39,12 +39,12 @@ spec:
               tag: 1.41.0.8994-f2c27da23@sha256:fe9ed1189617cd98106635c63ed39d40e4ec82535514e4a51a7c72e56b65c4dd
             env:
               TZ: America/New_York
-              PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443
+              PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,http://10.10.12.241:32400
             envFrom:
               - secret: plex-secret
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
@@ -86,6 +86,8 @@ spec:
       app:
         controller: plex
         type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.12.241
         ports:
           http:
             port: 32400
