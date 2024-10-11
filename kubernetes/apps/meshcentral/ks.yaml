@@ -15,11 +15,3 @@ spec:
   sourceRef:
     kind: GitRepository
     name: thepatriots
-  postBuild:
-    substitute:
-      TIMEZONE: "America/New_York"
-      HOSTNAME: "meshcentral.${SECRET_DOMAIN}"
-      PORT: "443"
-      TLS_OFFLOAD: "true"
-      NEW_ACCOUNTS: "false"
-      WEBRTC: "true"
