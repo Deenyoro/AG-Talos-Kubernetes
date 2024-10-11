@@ -25,6 +25,8 @@ spec:
   values:
     controllers:
       rustdesk:
+        defaultPodOptions:
+          hostNetwork: "true"
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -58,7 +60,7 @@ spec:
               TZ: ${TIMEZONE}
               DB_URL: /db/db_v2.sqlite3
               RELAY: "10.10.12.245:21117"
-            command: [ "hbbs", "-r rustdesk:21117" ]
+            command: ["hbbs", "-r rustdesk:21117"]
             probes: *probes
             securityContext: *securityContext
             resources: *resources
