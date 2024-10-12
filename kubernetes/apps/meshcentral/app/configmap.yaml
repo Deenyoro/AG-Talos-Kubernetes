@@ -7,11 +7,11 @@ data:
     {
       "settings": {
         "Cert": "${HOSTNAME}",
-        "WANonly": true,
+        "_WANonly": true,
+        "_LANonly": true,
         "Minify": 1,
         "Port": ${PORT},
-        "RedirPort": 80,
-        "TLSOffload": "127.0.0.1",
+        "TLSOffload": true,
         "AgentPort": ${PORT},
         "AgentAliasPort": ${PORT},
         "AgentPong": true,
