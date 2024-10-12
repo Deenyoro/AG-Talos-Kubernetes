@@ -11,7 +11,7 @@ data:
         "_LANonly": true,
         "Minify": 1,
         "Port": ${PORT},
-        "AliasPort":${ALIAS_PORT},
+        "AliasPort": ${ALIAS_PORT},
         "RedirPort": ${RedirPORT},
         "TLSOffload": true,
         "AgentPort": ${PORT},
