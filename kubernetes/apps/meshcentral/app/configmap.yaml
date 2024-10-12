@@ -19,7 +19,7 @@ data:
         "AgentPong": true,
         "MpsPort": ${MpsPORT},
         "MpsAliasPort": ${MpsALIAS_PORT},
-        "MpsTlsOffload": true,
+        "MpsTlsOffload": true
       },
       "domains": {
         "": {
