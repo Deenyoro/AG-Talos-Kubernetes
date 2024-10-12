@@ -11,12 +11,15 @@ data:
         "_LANonly": true,
         "Minify": 1,
         "Port": ${PORT},
+        "AliasPort":${ALIAS_PORT},
+        "RedirPort": ${RedirPORT},
         "TLSOffload": true,
         "AgentPort": ${PORT},
-        "AgentAliasPort": ${PORT},
+        "AgentAliasPort": ${ALIAS_PORT},
         "AgentPong": true,
-        "MpsPort": ${PORT},
-        "MpsAliasPort": ${PORT}
+        "MpsPort": ${MpsPORT},
+        "MpsAliasPort": ${MpsALIAS_PORT},
+        "MpsTlsOffload": true
       },
       "domains": {
         "": {

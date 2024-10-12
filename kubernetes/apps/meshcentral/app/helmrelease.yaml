@@ -36,7 +36,6 @@ spec:
         ports:
           http:
             port: ${PORT}
-            targetPort: ${TARGET_PORT}
     ingress:
       external:
         className: external

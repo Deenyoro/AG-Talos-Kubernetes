@@ -18,5 +18,7 @@ spec:
     substitute:
       TIMEZONE: "America/New_York"
       HOSTNAME: "meshcentral.${SECRET_DOMAIN}"
-      PORT: "443"
-      TARGET_PORT: "8080"
+      PORT: "4430"
+      ALIAS_PORT: "443"
+      MpsPORT: "44330"
+      MpsALIAS_PORT: "4433"
