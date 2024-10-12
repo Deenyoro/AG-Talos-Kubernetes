@@ -16,6 +16,8 @@ spec:
   values:
     controllers:
       meshcentral:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
