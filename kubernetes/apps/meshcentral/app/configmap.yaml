@@ -25,7 +25,7 @@ data:
         "": {
           "Title": "MeshCentral",
           "newAccounts": false,
-          "certUrl": "https://ingress-nginx-internal-controller.network.svc.cluster.local",
+          "certUrl": "https://${HOSTNAME}",
           "userQuota": 1048576,
           "meshQuota": 248576
         }

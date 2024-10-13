@@ -92,7 +92,7 @@ spec:
                 subPath: config.json
 #      cert:
 #        type: secret
-#        name: ${SECRET_DOMAIN/./-}-production-tls
+#        name: ${HOSTNAME/./-}-tls
 #        advancedMounts:
 #          meshcentral:
 #            app:
