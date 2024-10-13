@@ -18,10 +18,15 @@ spec:
       meshcentral:
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
           annotations:
-            k8s.v1.cni.cncf.io/networks: kube-system/macvlan-lan
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name":"multus-iot",
+                "interface": "eth1",
+                "namespace": "kube-system",
+                "ips": ["10.0.50.36/24"]
+              }]
         containers:
           app:
             image:
