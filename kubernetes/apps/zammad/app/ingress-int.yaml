@@ -24,7 +24,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: zammad
+                name: zammad-nginx
                 port:
                   number: 8080
   tls:
