@@ -28,8 +28,8 @@ spec:
     keepHistory: false
   values:
     image:
-     repository: ghcr.io/zammad/zammad
-     tag: "6.3@sha256:aa3863d70c56242f914ac12f1e99b664c41dfd1a1cc44757df8619783d2a601b"
+      repository: ghcr.io/zammad/zammad
+      tag: "6.3@sha256:aa3863d70c56242f914ac12f1e99b664c41dfd1a1cc44757df8619783d2a601b"
 
     service:
       type: ClusterIP
@@ -37,16 +37,20 @@ spec:
 
     ingress:
       enabled: true
-      className: "internal"
-      annotations: {}
+      className: "external"
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        nginx.ingress.kubernetes.io/proxy-body-size: 100M
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
       hosts:
         - host: &host zammad.${SECRET_DOMAIN}
           paths:
             - path: /
               pathType: ImplementationSpecific
       tls:
-         - hosts:
-             - *host
+        - hosts:
+            - *host
 
     zammadConfig:
       elasticsearch:
@@ -65,10 +69,10 @@ spec:
           resources:
             requests:
               #cpu: 50m
-              memory: 2Gi
+              memory: 3Gi
             limits:
               #cpu: 100m
-              memory: 4Gi
+              memory: 6Gi
 
       postgresql:
         enabled: false
@@ -76,9 +80,7 @@ spec:
         host: postgres16-rw.database.svc.cluster.local
         user: zammad
 
-    # Please note that passwords for PostgreSQL, Redis and S3 may not
-    #   contain special characters which would require URL encoding.
-    # See also https://github.com/zammad/zammad-helm/issues/251
+    # Note: Passwords should not contain special characters requiring URL encoding
     secrets:
       autowizard:
         useExisting: false
@@ -96,4 +98,3 @@ spec:
         useExisting: false
         secretKey: redis-password
         secretName: redis-pass
-
