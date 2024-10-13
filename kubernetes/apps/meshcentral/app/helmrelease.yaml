@@ -63,6 +63,8 @@ spec:
         tls:
           - hosts:
               - ${HOSTNAME}
+            secretName: "${HOSTNAME/./-}-tls"
+
       internal:
         className: internal
         hosts:
@@ -75,6 +77,7 @@ spec:
         tls:
           - hosts:
               - ${HOSTNAME}
+            secretName: "${HOSTNAME/./-}-tls"
     persistence:
       config:
         type: configMap
