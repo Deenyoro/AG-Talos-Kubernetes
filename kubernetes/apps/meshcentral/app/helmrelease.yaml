@@ -18,7 +18,10 @@ spec:
       meshcentral:
         annotations:
           reloader.stakater.com/auto: "true"
-          k8s.v1.cni.cncf.io/networks: macvlan-lan
+
+        pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: macvlan-lan
         containers:
           app:
             image:
