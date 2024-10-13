@@ -24,3 +24,4 @@ resources:
   - ./zammad.yaml
   - ./node-feature-discovery.yaml
   - ./intel.yaml
+  - ./angelnu-charts.yaml
