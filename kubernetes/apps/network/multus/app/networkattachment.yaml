@@ -10,7 +10,7 @@ spec:
       "cniVersion": "0.3.1",
       "type": "macvlan",
       "mode": "bridge",
-      "master": "eth0",
+      "master": "bond0",
       "ipam": {
         "type": "dhcp"
       }
