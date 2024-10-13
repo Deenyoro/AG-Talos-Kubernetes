@@ -5,7 +5,7 @@ metadata:
   name: meshcentral
   namespace: flux-system
 spec:
-  targetNamespace: default
+  targetNamespace: network
   interval: 10m
   timeout: 2m
   path: "./kubernetes/apps/meshcentral/app"
