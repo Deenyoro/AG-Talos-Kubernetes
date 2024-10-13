@@ -84,14 +84,14 @@ spec:
             app:
               - path: /opt/meshcentral/meshcentral-data/config.json
                 subPath: config.json
-      cert:
-        type: secret
-        name: ${SECRET_DOMAIN/./-}-production-tls
-        advancedMounts:
-          meshcentral:
-            app:
-              - path: /opt/meshcentral/meshcentral-data/webserver-cert-public.crt
-                subPath: webserver-cert-public.crt
+#      cert:
+#        type: secret
+#        name: ${SECRET_DOMAIN/./-}-production-tls
+#        advancedMounts:
+#          meshcentral:
+#            app:
+#              - path: /opt/meshcentral/meshcentral-data/webserver-cert-public.crt
+#                subPath: webserver-cert-public.crt
       data:
         existingClaim: meshcentral
         globalMounts:
