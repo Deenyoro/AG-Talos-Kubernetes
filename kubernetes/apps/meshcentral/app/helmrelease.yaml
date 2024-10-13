@@ -22,10 +22,10 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"multus-iot",
+                "name":"macvlan-lan",
                 "interface": "eth1",
                 "namespace": "kube-system",
-                "ips": ["10.0.50.36/24"]
+                "ips": ["10.10.12.224/24"]
               }]
         containers:
           app:
