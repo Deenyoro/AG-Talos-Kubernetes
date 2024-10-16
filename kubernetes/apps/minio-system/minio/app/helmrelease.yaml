@@ -106,6 +106,9 @@ spec:
                 service:
                   identifier: app
                   port: *port-console
+        tls:
+          - hosts:
+              - *host-console
 
       s3:
         className: internal
@@ -120,10 +123,12 @@ spec:
           - host: &host-api "s3.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: app
-                  port: *port-api
+                  port: http
+        tls:
+          - hosts:
+              - *host-api
     persistence:
       data:
         existingClaim: minio-pvc-v1
