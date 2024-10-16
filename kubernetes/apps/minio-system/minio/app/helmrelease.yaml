@@ -104,7 +104,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: minio
                   port: *port-console
 
       s3:
@@ -122,7 +122,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: minio
                   port: *port-api
     persistence:
       data:
