@@ -78,9 +78,9 @@ spec:
         controller: minio
         ports:
           http:
-            port: 9001
+            port: &port-console 9001
           s3:
-            port: 9000
+            port: &port-api 9000
     serviceMonitor:
       app:
         serviceName: minio
