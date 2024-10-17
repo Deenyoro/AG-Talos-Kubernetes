@@ -33,13 +33,19 @@ spec:
     appURL: "https://invoice.${SECRET_DOMAIN}"
     userEmail: "${SECRET_INVNINJA_EMAIL}"
     mariadb:
-      auth:
-        database: invoiceninja
-        username: invoiceninja
-        existingSecret: invoiceninja-secret
+      enabled: false
+      # auth:
+      #   database: invoiceninja
+      #   username: invoiceninja
+      #   existingSecret: invoiceninja-secret
+    externalDatabase:
+      host: "mariadb-galera-primary.database.svc.cluster.local"
+      user: invoiceninja
+      existingSecret: invoiceninja-secret
     redis:
       sentinel:
-        enabled: false
+        enabled: true
+        quorum: 1
       master:
         count: 1
         persistence:
