@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -21,6 +22,11 @@ spec:
   upgrade:
     remediation:
       retries: 0
+  valuesFrom:
+    - kind: Secret
+      targetPath:  externalDatabase.password
+      name: invoiceninja-secret
+      valuesKey: mariadb-password
   values:
     debug: false
     image:
@@ -41,7 +47,6 @@ spec:
     externalDatabase:
       host: "mariadb-galera-maxscale.database.svc.cluster.local"
       user: invoiceninja
-      existingSecret: invoiceninja-secret
     redis:
       sentinel:
         enabled: true

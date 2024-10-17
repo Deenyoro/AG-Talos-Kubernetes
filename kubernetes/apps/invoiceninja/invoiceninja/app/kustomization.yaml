@@ -8,3 +8,5 @@ resources:
   - helmrelease.yaml
   - ingress-int.yaml
 #  - backup-cronjob.yaml
+configurations:
+  - kustomizeconfig.yaml
