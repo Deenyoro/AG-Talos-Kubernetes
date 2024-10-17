@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app unimus
+  namespace: flux-system
+spec:
+  targetNamespace: &ns network
+  interval: 10m
+  timeout: 2m
+  path: "./kubernetes/apps/unimus/unimus/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  dependsOn:
+    - name: unimus-pvc
+    - name: rook-ceph-cluster
+    - name: volsync
+  wait: false
+  postBuild:
+    substitute:
+      APP: vaultwarden
+      VOLSYNC_CAPACITY: 2Gi
+

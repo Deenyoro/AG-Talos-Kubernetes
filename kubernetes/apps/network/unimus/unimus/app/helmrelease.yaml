@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: unimus
-  namespace: networking
 spec:
   interval: 15m
   chart:
@@ -44,6 +43,7 @@ spec:
                 memory: 1Gi
     service:
       main:
+        controller: unimus
         ports:
           http:
             port: 8085
@@ -57,7 +57,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: 8085
         tls:
           - hosts:
