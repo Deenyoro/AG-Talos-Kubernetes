@@ -39,7 +39,7 @@ spec:
       #   username: invoiceninja
       #   existingSecret: invoiceninja-secret
     externalDatabase:
-      host: "mariadb-galera-primary.database.svc.cluster.local"
+      host: "mariadb-galera-maxscale.database.svc.cluster.local"
       user: invoiceninja
       existingSecret: invoiceninja-secret
     redis:
