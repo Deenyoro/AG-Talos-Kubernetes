@@ -19,15 +19,15 @@ spec:
       meshcentral:
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          annotations:
-            k8s.v1.cni.cncf.io/networks: |
-              [{
-                "name":"macvlan-lan",
-                "interface": "eth1",
-                "namespace": "kube-system",
-                "ips": ["10.10.12.224/24"]
-              }]
+        # pod:
+        #   annotations:
+        #     k8s.v1.cni.cncf.io/networks: |
+        #       [{
+        #         "name":"macvlan-lan",
+        #         "interface": "eth1",
+        #         "namespace": "kube-system",
+        #         "ips": ["10.10.12.224/24"]
+        #       }]
         containers:
           app:
             image:
@@ -99,7 +99,7 @@ spec:
 #              - path: /opt/meshcentral/meshcentral-data/webserver-cert-public.crt
 #                subPath: webserver-cert-public.crt
       data:
-        existingClaim: meshcentral
+        existingClaim: meshcentral-v2
         globalMounts:
           - path: /root
             subPath: rootdir
