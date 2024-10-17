@@ -21,6 +21,7 @@ spec:
   wait: false
   postBuild:
     substitute:
+      HOSTNAME: "unimus.${SECRET_DOMAIN}"
       APP: vaultwarden
-      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_CLAIM: vaultwarden-storage
 

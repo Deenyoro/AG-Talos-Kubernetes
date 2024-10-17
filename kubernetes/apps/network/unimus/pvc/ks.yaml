@@ -21,7 +21,7 @@ spec:
       APP: unimus-storage
       APP_NS: *ns
       VOLSYNC_CLAIM: unimus-storage
-      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_ACCESSMODES: ReadWriteOnce
       VOLSYNC_STORAGECLASS: cephfs
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
