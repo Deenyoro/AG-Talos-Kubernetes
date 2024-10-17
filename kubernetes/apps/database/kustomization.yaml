@@ -9,3 +9,6 @@ resources:
   - cloudnative-pg/ks-operator.yaml
   - cloudnative-pg/ks-cluster16.yaml
   - pgadmin/ks.yaml
+  - mariadb/ks.yaml
+  - mariadb/ks-resources.yaml
+  - mariadb/ks-phpmyadmin.yaml
