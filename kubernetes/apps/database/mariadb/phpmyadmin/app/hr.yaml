@@ -53,9 +53,9 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal-nginx"
+        className: "internal"
         hosts:
-          - host: "phpmyadmin.skylab.fi"
+          - host: &host "phpmyadmin.${SECRET_DOMAIN}"
             paths:
               - path: "/"
                 pathType: Prefix
@@ -64,4 +64,4 @@ spec:
                   port: 80
         tls:
           - hosts:
-              - "phpmyadmin.skylab.fi"
+              - "phpmyadmin.${SECRET_DOMAIN}"
