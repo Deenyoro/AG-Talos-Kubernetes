@@ -4,7 +4,7 @@ metadata:
   name: mariadb-phpmyadmin
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/databases/mariadb/phpmyadmin/app
+  path: ./kubernetes/apps/database/mariadb/phpmyadmin/app
   prune: true
   sourceRef:
     kind: GitRepository
