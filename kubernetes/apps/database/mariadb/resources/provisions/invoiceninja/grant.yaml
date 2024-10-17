@@ -1,7 +1,7 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: Grant
 metadata:
-  name: inoivceninja
+  name: invoiceninja
 spec:
   mariaDbRef:
     name: mariadb-galera
@@ -9,4 +9,4 @@ spec:
     - "ALL PRIVILEGES"
   database: "*"
   table: "*"
-  username: inoivceninja
+  username: invoiceninja
