@@ -9,7 +9,7 @@ spec:
   targetNamespace: &ns network
   interval: 10m
   timeout: 2m
-  path: "./kubernetes/apps/unimus/unimus/app"
+  path: "./kubernetes/apps/network/unimus/unimus/app"
   prune: true
   sourceRef:
     kind: GitRepository
