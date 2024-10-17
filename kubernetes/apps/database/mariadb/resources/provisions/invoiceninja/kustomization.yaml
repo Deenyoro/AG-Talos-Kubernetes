@@ -5,3 +5,4 @@ resources:
   - ./user.yaml
   - ./db.yaml
   - ./grant.yaml
+  - ./secret.sops.yaml
