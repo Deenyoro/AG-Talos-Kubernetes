@@ -16,7 +16,7 @@ spec:
     retain:
       daily: 7
       weekly: 4
-    storageClassName: ceph-rbd
+    storageClassName: cephfs
     volumeSnapshotClassName: csi-ceph-filesystem
   sourcePVC: meshcentral
   trigger:
