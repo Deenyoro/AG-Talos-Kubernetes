@@ -4,6 +4,7 @@ metadata:
   name: mariadb-phpmyadmin
   namespace: flux-system
 spec:
+  targetNamespace: database
   path: ./kubernetes/apps/database/mariadb/phpmyadmin/app
   prune: true
   sourceRef:
