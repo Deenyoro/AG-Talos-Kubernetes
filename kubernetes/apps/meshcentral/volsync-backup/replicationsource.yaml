@@ -1,0 +1,23 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: meshcentral
+spec:
+  restic:
+    cacheCapacity: 2Gi
+    cacheStorageClassName: local-hostpath
+    copyMethod: Snapshot
+    moverSecurityContext:
+      fsGroup: 0
+      runAsGroup: 0
+      runAsUser: 0
+    pruneIntervalDays: 7
+    repository: meshcentral-volsync-r2-secret
+    retain:
+      daily: 7
+      weekly: 4
+    storageClassName: ceph-rbd
+    volumeSnapshotClassName: csi-ceph-filesystem
+  sourcePVC: meshcentral
+  trigger:
+    schedule: "0 4 * * *"
