@@ -6,7 +6,7 @@ metadata:
   name: &app unimus-pvc
   namespace: flux-system
 spec:
-  targetNamespace: &ns invoiceninja
+  targetNamespace: &ns network
   interval: 10m
   path: "./kubernetes/apps/network/unimus/pvc/app"
   prune: true
