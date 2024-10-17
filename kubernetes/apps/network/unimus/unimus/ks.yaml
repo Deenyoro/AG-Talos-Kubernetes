@@ -22,6 +22,6 @@ spec:
   postBuild:
     substitute:
       HOSTNAME: "unimus.${SECRET_DOMAIN}"
-      APP: vaultwarden
-      VOLSYNC_CLAIM: vaultwarden-storage
+      APP: unimus
+      VOLSYNC_CLAIM: unimus-storage
 
