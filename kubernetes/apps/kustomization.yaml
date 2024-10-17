@@ -9,7 +9,6 @@ resources:
   - kube-system
   - network
   - media
-  - minio-system
   - observability
   #  - openebs-system
   - rook-ceph
