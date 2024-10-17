@@ -4,7 +4,7 @@ metadata:
   name: mariadb-operator-crds
   namespace: flux-system
 spec:
-  path: ./k8s/nebula/apps/databases/mariadb/crds
+  path: ./kubernetes/apps/database/mariadb/crds
   prune: true
   wait: true
   sourceRef:
