@@ -10,7 +10,7 @@ spec:
 
   storage:
     size: 5Gi
-    storageClassName: ceph-block
+    storageClassName: ceph-rbd
 
   replicas: 3
   image: "mariadb:11.5.2"
