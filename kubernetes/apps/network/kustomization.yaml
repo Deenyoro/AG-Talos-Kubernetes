@@ -9,5 +9,5 @@ resources:
   - ./external-dns/ks-internal.yaml
   - ./ingress-nginx/ks.yaml
   - ./k8s-gateway/ks.yaml
-  - ./multus/ks.yaml
+  #  - ./multus/ks.yaml
   - ./unimus
