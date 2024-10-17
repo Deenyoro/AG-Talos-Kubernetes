@@ -4,6 +4,7 @@ metadata:
   name: mariadb-operator-crds
   namespace: flux-system
 spec:
+  targetNamespace: database
   path: ./kubernetes/apps/database/mariadb/crds
   prune: true
   wait: true
