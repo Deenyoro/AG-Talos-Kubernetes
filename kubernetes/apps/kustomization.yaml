@@ -19,4 +19,4 @@ resources:
   #  - rustdesk/ks.yaml
   - misc-pvcs/ks.yaml
   - meshcentral/ks.yaml
-  - meshcentral/ks-backup.yaml
+#  - meshcentral/ks-backup.yaml
