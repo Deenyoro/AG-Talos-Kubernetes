@@ -18,6 +18,6 @@ spec:
     repository: ${VOLSYNC_REPOSITORY_SECRET}
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
-    volumeMode: "${VOLSYNC_VOLUMEMODE:-Filesystem}"
+    #volumeMode: "${VOLSYNC_VOLUMEMODE:-Filesystem}"
   trigger:
     manual: restore-once
