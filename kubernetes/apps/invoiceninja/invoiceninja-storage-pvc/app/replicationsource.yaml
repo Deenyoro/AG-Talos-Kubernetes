@@ -21,4 +21,4 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
   trigger:
-    schedule: "0 4 * * *"
+    schedule: "0 2 * * *"
