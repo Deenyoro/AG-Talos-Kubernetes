@@ -22,5 +22,6 @@ spec:
       APP: invoiceninja-public
       VOLSYNC_CLAIM: invoiceninja-public
       VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_VOLUMEMODE: Block
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_REPOSITORY_SECRET: invoiceninja-volsync-r2-public-pvc-secret
