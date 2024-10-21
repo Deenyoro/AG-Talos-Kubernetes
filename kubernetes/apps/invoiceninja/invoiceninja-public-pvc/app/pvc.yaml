@@ -10,6 +10,7 @@ spec:
     kind: ReplicationDestination
     apiGroup: volsync.backube
     name: "${APP}-bootstrap"
+  volumeMode: Block
   resources:
     requests:
       storage: "${VOLSYNC_CAPACITY:-1Gi}"
