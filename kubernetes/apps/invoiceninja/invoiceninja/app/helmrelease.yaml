@@ -54,11 +54,12 @@ spec:
     redis:
       sentinel:
         enabled: true
-        quorum: 1
       master:
         count: 1
         persistence:
           enabled: false
+      replica:
+        replicaCount: 3
     persistence:
       public:
         enabled: true
