@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./pvc.yaml
   - ./replicationdestination.yaml # to pvc
-#  - ./replicationsource.yaml # from pvc
+  - ./replicationsource.yaml # from pvc

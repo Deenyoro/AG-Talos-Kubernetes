@@ -20,4 +20,4 @@ spec:
     volumeSnapshotClassName: csi-ceph-blockpool
   sourcePVC: vaultwarden
   trigger:
-    schedule: "0 4 * * *"
+    schedule: "30 4 * * *"
