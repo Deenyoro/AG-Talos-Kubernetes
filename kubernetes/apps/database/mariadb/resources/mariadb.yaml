@@ -16,25 +16,25 @@ spec:
   image: "mariadb:11.5.2"
   imagePullPolicy: IfNotPresent
 
-  maxScale:
-    enabled: false
-
-    auth:
-      adminUsername: root
-      adminPasswordSecretKeyRef:
-        name: mariadb-secret
-        key: maxscale_password
-      deleteDefaultAdmin: true
-
-    kubernetesService:
-      type: LoadBalancer
-
-    guiKubernetesService:
-      type: LoadBalancer
-
-    connection:
-      secretName: mxs-galera-conn
-      port: 3306
+#  maxScale:
+#    enabled: false
+#
+#    auth:
+#      adminUsername: root
+#      adminPasswordSecretKeyRef:
+#        name: mariadb-secret
+#        key: maxscale_password
+#      deleteDefaultAdmin: true
+#
+#    kubernetesService:
+#      type: LoadBalancer
+#
+#    guiKubernetesService:
+#      type: LoadBalancer
+#
+#    connection:
+#      secretName: mxs-galera-conn
+#      port: 3306
 
 
   galera:
