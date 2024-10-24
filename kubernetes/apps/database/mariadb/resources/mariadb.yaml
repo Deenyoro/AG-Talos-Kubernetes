@@ -17,7 +17,7 @@ spec:
   imagePullPolicy: IfNotPresent
 
   maxScale:
-    enabled: true
+    enabled: false
 
     auth:
       adminUsername: root
