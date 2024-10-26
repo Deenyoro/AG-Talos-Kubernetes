@@ -42,6 +42,8 @@ spec:
     updateStrategy:
       autoUpdateDataPlane: true
     recovery:
+      enabled: true
+      # forceClusterBootstrapInPod: "mariadb-galera-1"
       podRecoveryTimeout: 15m
 
   service:
