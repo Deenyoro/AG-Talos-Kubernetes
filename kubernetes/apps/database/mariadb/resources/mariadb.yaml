@@ -39,6 +39,8 @@ spec:
 
   galera:
     enabled: true
+    updateStrategy:
+      autoUpdateDataPlane: true
     recovery:
       podRecoveryTimeout: 15m
 
