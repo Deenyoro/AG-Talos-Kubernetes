@@ -16,6 +16,9 @@ spec:
   image: "mariadb:11.5.2"
   imagePullPolicy: IfNotPresent
 
+  updateStrategy:
+    autoUpdateDataPlane: true
+
 #  maxScale:
 #    enabled: false
 #
@@ -39,8 +42,6 @@ spec:
 
   galera:
     enabled: true
-    updateStrategy:
-      autoUpdateDataPlane: true
     recovery:
       enabled: true
       # forceClusterBootstrapInPod: "mariadb-galera-1"
