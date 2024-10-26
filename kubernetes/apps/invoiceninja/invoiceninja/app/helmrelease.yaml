@@ -49,8 +49,7 @@ spec:
       #   username: invoiceninja
       #   existingSecret: invoiceninja-secret
     externalDatabase:
-      #host: "mariadb-galera-maxscale.database.svc.cluster.local"
-      host: "10.244.2.240"
+      host: "mariadb-galera-maxscale.database.svc.cluster.local"
       user: invoiceninja
     redis:
       sentinel:
