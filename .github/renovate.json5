@@ -25,6 +25,9 @@
   "helmfile": {
     "fileMatch": ["(^|/)helmfile\\.ya?ml(?:\\.j2)?$"]
   },
+  "kubernetes": {
+    "fileMatch": ["k8s/.+\\.ya?ml$"]
+  },
   "kustomize": {
     "fileMatch": ["(^|/)kustomization\\.ya?ml(?:\\.j2)?$"]
   },
