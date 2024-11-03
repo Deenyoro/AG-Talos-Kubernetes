@@ -23,7 +23,7 @@ data:
       },
       "domains": {
         "": {
-          "Title": "MeshCentral",
+          "Title": "${COMPANY_NAME}",
           "newAccounts": false,
           "certUrl": "https://${HOSTNAME}",
           "userQuota": 1048576,
