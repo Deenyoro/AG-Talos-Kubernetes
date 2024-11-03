@@ -17,7 +17,7 @@ spec:
   postBuild:
     substitute:
       TIMEZONE: "America/New_York"
-      HOSTNAME: "meshcentral.${SECRET_DOMAIN}"
+      HOSTNAME: "remotedesktop.${SECRET_DOMAIN}"
       PORT: "4430"
       ALIAS_PORT: "443"
       RedirPORT: "800"
