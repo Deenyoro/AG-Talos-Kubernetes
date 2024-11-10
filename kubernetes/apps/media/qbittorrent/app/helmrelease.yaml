@@ -87,7 +87,7 @@ spec:
                   name: openvpn-secret
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: latest@sha256:1c8201b92414b513ce43432a4da40dcefa58a0d9d1c4599e77b293cbe608f915
+              tag: latest@sha256:cdecaa125ff7c10a78b3491353f5a8d6d3dea03dfa328b6332197724b400af9a
             securityContext:
               capabilities:
                 add:
