@@ -54,7 +54,7 @@ spec:
 
     zammadConfig:
       elasticsearch:
-        enabled: false
+        enabled: true
         clusterName: zammad
         coordinating:
           replicaCount: 1
