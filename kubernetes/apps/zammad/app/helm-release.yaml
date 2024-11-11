@@ -57,14 +57,14 @@ spec:
         enabled: true
         clusterName: zammad
         coordinating:
-          replicaCount: 1
+          replicaCount: 0
         data:
-          replicaCount: 2
+          replicaCount: 0
         ingest:
-          replicaCount: 1
+          replicaCount: 0
         master:
           heapSize: 512m
-          masterOnly: true
+          masterOnly: false
           replicaCount: 2
           resources:
             requests:
