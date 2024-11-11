@@ -1,0 +1,117 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: matrix-synapse
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: matrix-synapse
+      version: 3.10.0
+      sourceRef:
+        kind: HelmRepository
+        name: ananace-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/element-hq/synapse
+      tag: v1.118.0
+    serverName: ${SECRET_DOMAIN_CHAT}
+    publicServerName: matrix.${SECRET_DOMAIN_CHAT}
+    wellknown:
+      enabled: true
+      image:
+        repository: ghcr.io/rtsp/docker-lighttpd
+        tag: 1.4.76
+
+    workers:
+      default:
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            memory: 512Mi
+      media_repository:
+        enabled: true
+        strategy:
+          type: Recreate
+      federation_sender:
+        enabled: true
+        replicaCount: 2
+      synchrotron:
+        enabled: true
+        generic: true
+        listeners: [client]
+        csPaths:
+          - "/_matrix/client/(v2_alpha|r0|v3)/sync$"
+          - "/_matrix/client/(api/v1|v2_alpha|r0|v3)/events$"
+          - "/_matrix/client/(api/v1|r0|v3)/initialSync$"
+          - "/_matrix/client/(api/v1|r0|v3)/rooms/[^/]+/initialSync$"
+
+    extraConfig:
+      email:
+        smtp_host: smtp-relay.default.svc.cluster.local
+        smtp_port: 587
+        notif_from: "Your Friendly %(app)s homeserver <noreply@${SECRET_DOMAIN_CHAT}>"
+
+      trusted_key_servers:
+        - server_name: "kapsi.fi"
+        - server_name: "pikaviestin.fi"
+      presence:
+        enabled: true
+      enable_3pid_lookup: false
+
+    ingress:
+      enabled: true
+      className: "external"
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN_CHAT}"
+        nginx.ingress.kubernetes.io/use-regex: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: 100M
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
+      tls:
+        - secretName: matrix.${SECRET_DOMAIN_CHAT}-tls
+          hosts:
+            - ${SECRET_DOMAIN_CHAT}
+            - matrix.${SECRET_DOMAIN_CHAT}
+
+    postgresql:
+      enabled: false
+
+    externalPostgresql:
+      host: postgres16-rw.database.svc.cluster.local
+      port: 5432
+      username: synapse
+      existingSecret: synapse-postgres-secrets
+      existingSecretPasswordKey: postgresql-pass
+      database: "synapse"
+
+    redis:
+      enabled: true
+      auth:
+        enabled: true
+        password: ${SECRET_MATRIX_REDIS_PASSWORD}
+
+    synapse:
+      strategy:
+        type: Recreate
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2500Mi
+        limits:
+          cpu: 1000m
+          memory: 2500Mi
+
+    signingkey:
+      job:
+        enabled: false
+      existingSecret: matrix-synapse-signingkey
+
+    persistence:
+      enabled: true
+      existingClaim: synapse-data

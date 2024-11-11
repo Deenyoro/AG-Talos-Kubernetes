@@ -1,0 +1,59 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matrix-synapse-int
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100M
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
+spec:
+  ingressClassName: internal
+  rules:
+    - host: ${SECRET_DOMAIN_CHAT}
+      http:
+        paths:
+          - path: /_matrix/media/.*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: matrix-synapse-media-repository
+                port:
+                  number: 8083
+          - path: /_matrix
+            pathType: Prefix
+            backend:
+              service:
+                name: matrix-synapse
+                port:
+                  number: 8008
+          - path: /.well-known/matrix
+            pathType: Prefix
+            backend:
+              service:
+                name: matrix-synapse-wellknown-lighttpd
+                port:
+                  number: 80
+    - host: matrix.${SECRET_DOMAIN_CHAT}
+      http:
+        paths:
+          - path: /_matrix/media/.*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: matrix-synapse-media-repository
+                port:
+                  number: 8083
+          - path: /_matrix
+            pathType: Prefix
+            backend:
+              service:
+                name: matrix-synapse
+                port:
+                  number: 8008
+  tls:
+    - secretName: matrix.${SECRET_DOMAIN_CHAT}-tls
+      hosts:
+        - ${SECRET_DOMAIN_CHAT}
+        - matrix.${SECRET_DOMAIN_CHAT}
