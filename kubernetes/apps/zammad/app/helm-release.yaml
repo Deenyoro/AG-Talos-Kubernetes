@@ -64,8 +64,8 @@ spec:
           replicaCount: 1
         master:
           heapSize: 512m
-          masterOnly: false
-          replicaCount: 1
+          masterOnly: true
+          replicaCount: 2
           resources:
             requests:
               #cpu: 50m
