@@ -51,19 +51,6 @@ spec:
           - "/_matrix/client/(api/v1|r0|v3)/initialSync$"
           - "/_matrix/client/(api/v1|r0|v3)/rooms/[^/]+/initialSync$"
 
-    extraConfig:
-      email:
-        smtp_host: smtp-relay.default.svc.cluster.local
-        smtp_port: 587
-        notif_from: "Your Friendly %(app)s homeserver <noreply@${SECRET_DOMAIN_CHAT}>"
-
-      trusted_key_servers:
-        - server_name: "kapsi.fi"
-        - server_name: "pikaviestin.fi"
-      presence:
-        enabled: true
-      enable_3pid_lookup: false
-
     ingress:
       enabled: true
       className: "external"
