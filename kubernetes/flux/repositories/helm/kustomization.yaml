@@ -25,4 +25,4 @@ resources:
   - ./node-feature-discovery.yaml
   - ./intel.yaml
   - ./angelnu-charts.yaml
-  - ./ananace-charts
+  - ./ananace-charts.yaml
