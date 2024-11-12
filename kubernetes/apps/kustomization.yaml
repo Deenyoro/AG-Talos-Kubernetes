@@ -21,3 +21,4 @@ resources:
   - meshcentral/ks.yaml
   - meshcentral/ks-backup.yaml
   - openproject/ks.yaml
+  - matrix-synapse/ks.yaml
