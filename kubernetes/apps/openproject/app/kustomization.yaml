@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - openproject-secret.sops.yaml
+  - pvc.yaml
 generatorOptions:
   disableNameSuffixHash: true
