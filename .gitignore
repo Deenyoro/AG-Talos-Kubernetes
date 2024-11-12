@@ -25,3 +25,4 @@ wiki
 # Bootstrap
 /config.yaml
 .sopsrc
+keys.txt

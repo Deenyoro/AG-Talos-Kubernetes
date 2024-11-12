@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - openproject-secret.sops.yaml
+  - openproject-postgres-init-secret.sops.yaml
   - pvc.yaml
 generatorOptions:
   disableNameSuffixHash: true
