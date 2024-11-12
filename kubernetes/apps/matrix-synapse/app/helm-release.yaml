@@ -72,7 +72,7 @@ spec:
     externalPostgresql:
       host: postgres16-rw.database.svc.cluster.local
       port: 5432
-      username: synapse
+      username: matrix_synapse
       existingSecret: synapse-postgres-secrets
       existingSecretPasswordKey: postgresql-pass
       database: "synapse"
