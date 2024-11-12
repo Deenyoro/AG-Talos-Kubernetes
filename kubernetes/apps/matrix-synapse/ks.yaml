@@ -7,7 +7,7 @@ spec:
   targetNamespace: default
   interval: 30m
   timeout: 5m
-  path: "./apps/comms/matrix-synapse/app"
+  path: "./kubernetes/apps/matrix-synapse/app"
   prune: true
   sourceRef:
     kind: GitRepository
