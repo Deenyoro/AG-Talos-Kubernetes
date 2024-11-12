@@ -23,5 +23,3 @@ spec:
       RedirPORT: "800"
       MpsPORT: "44330"
       MpsALIAS_PORT: "4433"
-    secretRef:
-      name: cluster-secrets
