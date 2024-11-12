@@ -126,8 +126,8 @@ spec:
         existingClaim: openproject
         globalMounts:
           - path: /var/openproject
-      config:
-        type: configMap
-        name: openproject-configmap
-        globalMounts:
-          readOnly: true
+#      config:
+#        type: configMap
+#        name: openproject-configmap
+#        globalMounts:
+#          readOnly: true
