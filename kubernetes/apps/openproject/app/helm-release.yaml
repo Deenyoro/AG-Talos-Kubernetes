@@ -67,7 +67,7 @@ spec:
               OPENPROJECT_HTTPS: "true"
               OPENPROJECT_HSTS: "true"
               OPENPROJECT_HOST__NAME: project.${SECRET_DOMAIN}
-              OPENPROJECT_SOFTWARE__NAME: "Your Project Name"
+              OPENPROJECT_SOFTWARE__NAME: "Projects"
               OPENPROJECT_SOFTWARE__URL: https://project.${SECRET_DOMAIN}
               OPENPROJECT_CACHE__MEMCACHE__SERVER: openproject-memcached.default.svc.cluster.local:11211
               OPENPROJECT_DEFAULT__LANGUAGE: en

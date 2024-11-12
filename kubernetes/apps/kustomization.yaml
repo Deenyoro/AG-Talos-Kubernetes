@@ -20,3 +20,4 @@ resources:
   - misc-pvcs/ks.yaml
   - meshcentral/ks.yaml
   - meshcentral/ks-backup.yaml
+  - openproject/ks.yaml
