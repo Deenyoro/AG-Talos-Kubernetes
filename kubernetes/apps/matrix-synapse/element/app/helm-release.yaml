@@ -58,6 +58,10 @@ spec:
                 service:
                   identifier: app
                   port: http
+        tls:
+        - secretName: "{{ .Release.Name }}.${SECRET_DOMAIN_CHAT}-tls"
+          hosts:
+            - "{{ .Release.Name }}.${SECRET_DOMAIN_CHAT}"
       internal:
         className: internal
         annotations:
@@ -73,6 +77,10 @@ spec:
                 service:
                   identifier: app
                   port: http
+        tls:
+        - secretName: "{{ .Release.Name }}.${SECRET_DOMAIN_CHAT}-tls"
+          hosts:
+            - "{{ .Release.Name }}.${SECRET_DOMAIN_CHAT}"
 
     persistence:
       config:
