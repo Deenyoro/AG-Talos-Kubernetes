@@ -24,7 +24,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: openproject-app
+                name: openproject # **Corrected Service Name**
                 port:
                   number: 8080
   tls:
