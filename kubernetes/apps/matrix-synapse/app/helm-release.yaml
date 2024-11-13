@@ -94,7 +94,9 @@ spec:
         limits:
           cpu: 1000m
           memory: 2500Mi
-      registration_shared_secret: registration_pass
+        registration_shared_secret:
+          existingSecret: matrix-synapse-shared-secret
+           existingSecretKey: registration_pass
 
     signingkey:
       job:
