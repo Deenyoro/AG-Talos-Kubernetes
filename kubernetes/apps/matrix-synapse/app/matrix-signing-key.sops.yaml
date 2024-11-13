@@ -4,7 +4,7 @@ metadata:
     name: matrix-synapse-signingkey
     namespace: default
 data:
-    signing.key: ENC[AES256_GCM,data:EMbEIVERP1VbR6hyU3vyrXpaH9X41QMwx706mViEYk4FCFedGzIkRDnGM2h9k0e3VUirynBHiM6IMtVzKft0jQagReIHwolgsb6Y7HvkdNrY1/OEML93tO6S5xL3OrgeUJjNhdIwGxtOP4rBwqeXg76Oz2Q9Ic+fzyYVSDks8zYZ8MWT3rThFHR5ODPb70plauosQUGSGWET785/,iv:Zp3TM40engTWb5p43rT2QEhxvfECB3jQWAEwlvifrfg=,tag:SbmWc17+iz311tDK5FuK4w==,type:str]
+    signing.key: ENC[AES256_GCM,data:gZEJauFwbpFnq1kCv0O4eD8jOSnTLAXlyzF+Q+XL43D31po6W8JVoZLiVW9hjgLaXDkWIze8FZYtnRCLKRd7/Mj3K8AVVzxaP+r5vA+eZ9o=,iv:1LdzwRM5cKxOB6fAucojsZkIrSwvPEym4DwZBqIgxJA=,tag:5E3TOGdJKY62vzKThnUlRA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -29,8 +29,8 @@ sops:
             S1pWME0yWlVjMjdrTHBVaFdCZDhSOGMK0CNxU/ZFSY3mnFVgJK7xSSRI0Ap0HArf
             F+BVf8dwkYV0br/M3twWcoE04yWC/PmQ95x6FZUQ/R8SZG3up/r6kw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-11-13T01:11:37Z"
-    mac: ENC[AES256_GCM,data:nL2EXFOryJs/9AXco8tRellNnukp2emenjQ+MZ6X95/ZJH5VDD6B4cvfgAvUX2YttcsfPgl2Bvog6ClCGyKyZB+fwCtdWrg9wi+sd3MNHBLe/3xXhuDmjtRSpNbHR4IQRnv4ZnyMs8um0Hh8tOZI6/gRcNaZSJy2HjtacSRPlaE=,iv:XWPaKYDm1AGsV20KF4bB0oqhE8Nf2K2GJe3E56aoZRI=,tag:IiHcqLNT81U5wjUoxdQYWg==,type:str]
+    lastmodified: "2024-11-13T01:15:16Z"
+    mac: ENC[AES256_GCM,data:CIQ2PHDyWNPnN57lPyV0fg/LcSzajvPrnUFhkP9v2g8eDi+qn4W8nfTlZ/xRdsschVp/ll6nUEkj5WL6op6MiGPhxGaEwGzK23hXPnGshMCsLEcrXYU8NfXkIkR/Pe4JDGmcY/6gYcdc545CKtTVBSU4LXzc6voS6gAL/a9twUI=,iv:kPuErqsrwHlWHxNLGmevZumROuBudn/m81/ksq70oQI=,tag:U/LxQGSJgIV0AOQ283yVGQ==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.9.0
