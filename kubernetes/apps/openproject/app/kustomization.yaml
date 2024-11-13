@@ -6,6 +6,6 @@ resources:
   - openproject-secret.sops.yaml
   - openproject-postgres-init-secret.sops.yaml
   - pvc.yaml
-  - internal-ingress.yaml
+#  - internal-ingress.yaml
 generatorOptions:
   disableNameSuffixHash: true

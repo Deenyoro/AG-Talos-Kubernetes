@@ -119,6 +119,23 @@ spec:
           - hosts:
               - openproject.${SECRET_DOMAIN}
             secretName: openproject.${SECRET_DOMAIN}-tls
+      internal:
+        enabled: true
+        className: internal
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: 4G
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        hosts:
+          - host: openproject.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - openproject.${SECRET_DOMAIN}
+            secretName: openproject.${SECRET_DOMAIN}-tls
     persistence:
       data:
         enabled: true
