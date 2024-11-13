@@ -6,5 +6,6 @@ resources:
   - openproject-secret.sops.yaml
   - openproject-postgres-init-secret.sops.yaml
   - pvc.yaml
+  - openproject-smtp-secret.sops.yaml
 generatorOptions:
   disableNameSuffixHash: true
