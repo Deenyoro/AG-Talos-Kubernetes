@@ -15,6 +15,10 @@ spec:
         name: ananace-charts
         namespace: flux-system
       interval: 5m
+  valuesFrom:
+    - kind: Secret
+      name: matrix-synapse-shared-secret
+      valuesKey: config.registrationSharedSecret
   values:
     image:
       repository: ghcr.io/element-hq/synapse
@@ -26,6 +30,10 @@ spec:
       image:
         repository: ghcr.io/rtsp/docker-lighttpd
         tag: 1.4.76
+
+    config:
+       enableRegistration: true
+#      registrationSharedSecret: # Value is passed via Flux's valuesFrom secret feature.
 
     workers:
       default:
@@ -94,13 +102,12 @@ spec:
         limits:
           cpu: 1000m
           memory: 2500Mi
-        registration_shared_secret:
-          existingSecret: matrix-synapse-shared-secret
-           existingSecretKey: registration_pass
 
     signingkey:
       job:
         enabled: true
+      # existingSecret: matrix-synapse-signingkey # DO NOT REMOVE, job and existingSecret cannot be enabled at the same
+      #  time
 
     persistence:
       enabled: true
