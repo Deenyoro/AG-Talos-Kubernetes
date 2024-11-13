@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - pvc.yaml
   - synapse-postgres-secrets.sops.yaml
-  - matrix-signing-key.sops.yaml
+#  - matrix-signing-key.sops.yaml
   - helm-release.yaml
   - internal-ingress.yaml
