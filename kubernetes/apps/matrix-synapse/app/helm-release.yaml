@@ -33,8 +33,10 @@ spec:
         tag: 1.4.76
 
     config:
-       enableRegistration: false # This enables open registration, which is not wanted.
+       enableRegistration: true
 #      registrationSharedSecret: # Value is passed via Flux's valuesFrom secret feature.
+    extraConfig:
+      registration_requires_token: true
 
     workers:
       default:
