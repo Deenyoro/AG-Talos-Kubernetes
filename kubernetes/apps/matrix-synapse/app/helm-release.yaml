@@ -18,7 +18,8 @@ spec:
   valuesFrom:
     - kind: Secret
       name: matrix-synapse-shared-secret
-      valuesKey: config.registrationSharedSecret
+      valuesKey: registration_pass
+      targetPath: config.registrationSharedSecret
   values:
     image:
       repository: ghcr.io/element-hq/synapse
@@ -106,8 +107,7 @@ spec:
     signingkey:
       job:
         enabled: true
-      # existingSecret: matrix-synapse-signingkey # DO NOT REMOVE, job and existingSecret cannot be enabled at the same
-      #  time
+      # existingSecret: matrix-synapse-signingkey # DO NOT REMOVE, job and existingSecret cannot be enabled at the same time
 
     persistence:
       enabled: true
