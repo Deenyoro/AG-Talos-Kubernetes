@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: openproject-int
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 4G
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
+  labels:
+    app.kubernetes.io/instance: openproject
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: openproject
+    helm.sh/chart: app-template-3.5.0
+    helm.toolkit.fluxcd.io/name: openproject
+    helm.toolkit.fluxcd.io/namespace: default
+spec:
+  ingressClassName: internal
+  rules:
+    - host: openproject.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: openproject-app
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - openproject.${SECRET_DOMAIN}
+      secretName: openproject.${SECRET_DOMAIN}-tls

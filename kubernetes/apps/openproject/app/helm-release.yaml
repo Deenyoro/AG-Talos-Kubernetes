@@ -66,9 +66,9 @@ spec:
               OPENPROJECT_MAIL__FROM: project@mail.${SECRET_DOMAIN}
               OPENPROJECT_HTTPS: "true"
               OPENPROJECT_HSTS: "true"
-              OPENPROJECT_HOST__NAME: project.${SECRET_DOMAIN}
+              OPENPROJECT_HOST__NAME: openproject.${SECRET_DOMAIN}
               OPENPROJECT_SOFTWARE__NAME: "Projects"
-              OPENPROJECT_SOFTWARE__URL: https://project.${SECRET_DOMAIN}
+              OPENPROJECT_SOFTWARE__URL: https://openproject.${SECRET_DOMAIN}
               OPENPROJECT_CACHE__MEMCACHE__SERVER: openproject-memcached.default.svc.cluster.local:11211
               OPENPROJECT_DEFAULT__LANGUAGE: en
               OPENPROJECT_RAILS__CACHE__STORE: memcache
@@ -110,7 +110,7 @@ spec:
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         hosts:
-          - host: project.${SECRET_DOMAIN}
+          - host: openproject.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
@@ -118,8 +118,8 @@ spec:
                   port: http
         tls:
           - hosts:
-              - project.${SECRET_DOMAIN}
-            secretName: project.${SECRET_DOMAIN}-tls
+              - openproject.${SECRET_DOMAIN}
+            secretName: openproject.${SECRET_DOMAIN}-tls
     persistence:
       data:
         enabled: true
