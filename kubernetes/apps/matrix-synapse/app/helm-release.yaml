@@ -39,10 +39,10 @@ spec:
         strategy:
           type: Recreate
       federation_sender:
-        enabled: true
+        enabled: false
         replicaCount: 2
       synchrotron:
-        enabled: true
+        enabled: false
         generic: true
         listeners: [client]
         csPaths:
