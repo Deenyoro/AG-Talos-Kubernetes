@@ -96,8 +96,8 @@ spec:
 
     signingkey:
       job:
-        enabled: false
-      existingSecret: matrix-synapse-signingkey
+        enabled: true
+      # existingSecret: matrix-synapse-signingkey
 
     persistence:
       enabled: true
