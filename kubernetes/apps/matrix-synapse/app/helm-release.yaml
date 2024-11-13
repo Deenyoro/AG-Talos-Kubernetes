@@ -94,7 +94,7 @@ spec:
         limits:
           cpu: 1000m
           memory: 2500Mi
-      registration_shared_secret: registration_shared_secret
+      registration_shared_secret: registration_pass
 
     signingkey:
       job:
