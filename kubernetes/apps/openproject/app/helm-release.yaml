@@ -55,27 +55,6 @@ spec:
             image:
               repository: docker.io/openproject/community
               tag: 13.4.1-slim@sha256:9545a03c90454a481d1330bcd1133dd3688a7c6d08ca43ea7fe068b51897f280
-            env:
-              #              OPENPROJECT_EMAIL__DELIVERY__METHOD: smtp
-              #              OPENPROJECT_SMTP__ADDRESS: smtp-relay.default.svc.cluster.local
-              #              OPENPROJECT_SMTP__PORT: 25
-              #              OPENPROJECT_SMTP__DOMAIN: mail.${SECRET_DOMAIN}
-              #              OPENPROJECT_SMTP__AUTHENTICATION: none
-              #              OPENPROJECT_SMTP__SSL: "false"
-              #              OPENPROJECT_MAIL__FROM: project@mail.${SECRET_DOMAIN}
-              # this all needs changed
-              OPENPROJECT_HTTPS: "true"
-              OPENPROJECT_HSTS: "true"
-              OPENPROJECT_HOST__NAME: openproject.${SECRET_DOMAIN}
-              OPENPROJECT_SOFTWARE__NAME: "Projects"
-              OPENPROJECT_SOFTWARE__URL: https://openproject.${SECRET_DOMAIN}
-              OPENPROJECT_CACHE__MEMCACHE__SERVER: openproject-memcached.default.svc.cluster.local:11211
-              OPENPROJECT_DEFAULT__LANGUAGE: en
-              OPENPROJECT_RAILS__CACHE__STORE: memcache
-              OPENPROJECT_SEED__ADMIN__USER__MAIL: "admin@${SECRET_DOMAIN_COMP}"
-              OPENPROJECT_SEED__ADMIN__USER__PASSWORD__RESET: "false"
-              POSTGRES_STATEMENT_TIMEOUT: 120
-              OPENPROJECT_BOARDS__DEMO__DATA__AVAILABLE: "false"
             envFrom:
               - secretRef:
                   name: openproject-secret
