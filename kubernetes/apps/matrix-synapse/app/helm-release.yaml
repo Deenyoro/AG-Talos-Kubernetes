@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: ghcr.io/element-hq/synapse
-      tag: v1.118.0
+      tag: v1.119.0
     serverName: ${SECRET_DOMAIN_CHAT}
     publicServerName: matrix.${SECRET_DOMAIN_CHAT}
     wellknown:
