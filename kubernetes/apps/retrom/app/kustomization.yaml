@@ -9,6 +9,6 @@ resources:
 configMapGenerator:
   - name: retrom-configmap
     files:
-      - maddy.conf=./resources/config.json
+      - maddy.conf=./resources/config.sops.json
 generatorOptions:
   disableNameSuffixHash: true
