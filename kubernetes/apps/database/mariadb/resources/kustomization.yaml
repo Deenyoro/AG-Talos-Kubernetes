@@ -6,6 +6,7 @@ resources:
 #  - ./backup.yaml
   - ./mariadb.yaml
   - ./provisions
+  - ingress-maxscale.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: mariadb

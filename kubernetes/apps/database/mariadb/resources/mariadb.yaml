@@ -30,10 +30,10 @@ spec:
       deleteDefaultAdmin: true
 
     kubernetesService:
-      type: LoadBalancer
+      type: ClusterIP
 
     guiKubernetesService:
-      type: LoadBalancer
+      type: ClusterIP
 
     connection:
       secretName: mxs-galera-conn

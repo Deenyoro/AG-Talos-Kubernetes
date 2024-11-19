@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: maxscale-galera-http
+spec:
+  rules:
+    - host: mariadb-maxscale.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: maxscale-galera-gui
+                port:
+                  number: 8989
