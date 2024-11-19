@@ -11,6 +11,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: maxscale-galera-gui
+                name: mariadb-galera-maxscale-gui
                 port:
                   number: 8989
