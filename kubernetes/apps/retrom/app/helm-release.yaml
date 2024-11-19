@@ -72,8 +72,8 @@ spec:
               - retrom.${SECRET_DOMAIN}
     persistence:
       config:
-        type: configMap
-        name: retrom-configmap
+        type: secret
+        name: retrom-config
         globalMounts:
           - path: /config/config.json
             subPath: config.json

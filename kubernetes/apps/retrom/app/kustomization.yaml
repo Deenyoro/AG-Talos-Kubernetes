@@ -6,9 +6,9 @@ resources:
   - ./secret-db-init.sops.yaml
   - ./helm-release.yaml
   - ./pvc.yaml
-configMapGenerator:
-  - name: retrom-configmap
+secretGenerator:
+  - name: retrom-config
     files:
-      - maddy.conf=./resources/config.sops.json
+      - config.json=./resources/config.sops.json
 generatorOptions:
   disableNameSuffixHash: true
