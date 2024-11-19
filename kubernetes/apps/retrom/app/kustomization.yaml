@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./secret-db-init.sops.yaml
+  - ./helm-release.yaml
+  - ./pvc.yaml
+configMapGenerator:
+  - name: retrom-configmap
+    files:
+      - maddy.conf=./resources/config.json
+generatorOptions:
+  disableNameSuffixHash: true

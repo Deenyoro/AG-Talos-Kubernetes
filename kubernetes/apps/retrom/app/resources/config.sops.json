@@ -1,0 +1,33 @@
+{
+	"connection": {
+		"port": 5101,
+		"db_url": "ENC[AES256_GCM,data:W+5f8y74RI8wZxxzx8nzfUYPgQcpB+yN3dCs6GMdtgDwZWAxFOnfLG41TceIwRMhqfbnjmTxodJkXU1XU4NrZA9TuF9t/qVPaocqhg5JwY6iQ+h12MtxX+5Cqkx5u1PJ,iv:IRkBDOMgTBw/EnnZo96DPiGqAJCyS8KPs5XsfI+jY3E=,tag:icKE8ozFiOJi6ALjbEDJ1g==,type:str]"
+	},
+	"content_directories": [
+		{
+			"path": "/library",
+			"storage_type": "MultiFileGame"
+		}
+	],
+	"sops": {
+		"kms": null,
+		"gcp_kms": null,
+		"azure_kv": null,
+		"hc_vault": null,
+		"age": [
+			{
+				"recipient": "age1zddtwjmvl4ed3jm9e0jd0cnptmmla0z8fjvcccvu6c8jkdd2x9zq0dctqy",
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnRTZsMUsvWFIwQjNWMU1r\nbWswRXkxMnZwUm1HRWpFaG9yOHZDVlJXelFjCmFNZmVEN3ZvQnljWmdicW9hUUZN\nYzFmbWMxRCtDbEN6RjVpdUJYcVVqMEkKLS0tIFJoYldaOWp0OEY5eEJiWG1jZ05N\nd2ZUNkpSb0FseGZMRzVRbFpNTGFqL2cKjWFoJDqnLyfPP5j8peaI7UZvy5un0096\nFePrh4jou8wmb5An3fSG2djMZicQiL76fyuz/CpAX06ZxdBdiQHt6w==\n-----END AGE ENCRYPTED FILE-----\n"
+			},
+			{
+				"recipient": "age17u92e7hgqxt8eftks9knn5w54nh7hqpsssqt62duf7wa8q0ve52smm9erh",
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA0Y3hRMU9pQkFsaGU5NzIw\nNS85R1pWdnppT3pqUXZSMllWbS9IZzViSTBRClpPYXRTcExOQ2lwV1prMFBwVUg0\nTFF3cTVhNklhbE41bjcrU3FQYTVFdUUKLS0tIHJiZGtLY2ZPRUROUzhHS1lyTDhZ\nUks5T0dlSXNwdk4yNHlGa3c1NWpRUmcKEvPIXdXCpPalZSpRN5OCDwwmx+Qe2tk1\nzrvhdV1exg989wPr/j5r/TNlwv32Kq1yIg91lld7JDAyqkzcltHerg==\n-----END AGE ENCRYPTED FILE-----\n"
+			}
+		],
+		"lastmodified": "2024-11-19T07:28:11Z",
+		"mac": "ENC[AES256_GCM,data:mvOJGVSlhNo3b/VX7dsV2i+C+KOyNQBkyvXiQXazwfBlGTO0yXSUoz0VGrPBdC+uhYJVltIDEMfVpruKpa86RVZiSwh7QA5gwSbnRnOK/9m31FLEOuc5uKzrF63WlT08WRJG4bCwpk+nTNol9hA1vlAkwZEqJt7ALztrpGokArw=,iv:bi9NXas4xTbu20G50puVz1+6liHsPBOcyMqXYM9YhNE=,tag:67I9LubQnaE2HFITrEqGnQ==,type:str]",
+		"pgp": null,
+		"encrypted_regex": "^(db_url)$",
+		"version": "3.9.1"
+	}
+}
