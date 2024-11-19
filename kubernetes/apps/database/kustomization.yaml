@@ -13,3 +13,4 @@ resources:
   - mariadb/ks-crds.yaml
   - mariadb/ks-resources.yaml
   - mariadb/ks-phpmyadmin.yaml
+  - dragonfly/ks.yaml
