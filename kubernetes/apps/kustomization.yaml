@@ -18,7 +18,7 @@ resources:
   - invoiceninja
   - zammad/ks.yaml
   #  - rustdesk/ks.yaml
-  - misc-pvcs/ks.yaml
+  #  - misc-pvcs/ks.yaml
   - meshcentral/ks.yaml
   - meshcentral/ks-backup.yaml
   - openproject/ks.yaml
