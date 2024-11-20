@@ -105,7 +105,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - secretName: "network/${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
             hosts:
               - *host
       internal:
