@@ -21,7 +21,7 @@ spec:
   upgrade:
     remediation:
       retries: 3
-#  values:
-#    configuration:
-#      logging:
-#        minimumLevel: Debug
+  values:
+    configuration:
+      logging:
+        minimumLevel: Debug
