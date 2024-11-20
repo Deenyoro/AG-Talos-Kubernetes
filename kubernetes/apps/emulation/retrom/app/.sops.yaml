@@ -1,7 +1,6 @@
 ---
 creation_rules:
   - path_regex: resources/.*\.sops\.json
-    encrypted_regex: "^(db_url)$"
     key_groups:
       - age:
           - "age1zddtwjmvl4ed3jm9e0jd0cnptmmla0z8fjvcccvu6c8jkdd2x9zq0dctqy"

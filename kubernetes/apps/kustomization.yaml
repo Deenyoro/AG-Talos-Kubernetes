@@ -12,7 +12,7 @@ resources:
   - observability
   #  - openebs-system
   - rook-ceph
-  # - retrom/ks.yaml
+  - emulation
   - volsync/ks.yaml
   - vaultwarden
   - invoiceninja

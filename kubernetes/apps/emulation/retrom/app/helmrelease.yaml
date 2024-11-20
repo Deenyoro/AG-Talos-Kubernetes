@@ -61,7 +61,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: retrom.${SECRET_DOMAIN}
+          - host: retrom.${SECRET_DOMAIN_LEGACY}
             paths:
               - path: /
                 service:
@@ -69,7 +69,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - retrom.${SECRET_DOMAIN}
+              - retrom.${SECRET_DOMAIN_LEGACY}
     persistence:
       config:
         type: secret
@@ -79,7 +79,6 @@ spec:
             subPath: config.json
             readOnly: true
       data:
-        enabled: true
-        existingClaim: retrom-game-data-v1
+        existingClaim: emulation-pvc-v1
         globalMounts:
           - path: /library
