@@ -27,3 +27,4 @@ resources:
   - ./intel.yaml
   - ./angelnu-charts.yaml
   - ./ananace-charts.yaml
+  - ./emberstack.yaml

@@ -12,3 +12,4 @@ resources:
   - ./spegel/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./generic-device-plugin/ks.yaml
+  - ./reflector/ks.yaml
