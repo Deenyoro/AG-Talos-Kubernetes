@@ -16,7 +16,10 @@ data:
         "TLSOffload": true,
         "AgentPort": ${PORT},
         "AgentAliasPort": ${ALIAS_PORT},
-        "AgentPong": true,
+        "AgentPing": 55,
+        "AgentPong": 55,
+        "BrowserPing": 55,
+        "BrowserPong": 55,
         "MpsPort": ${MpsPORT},
         "MpsAliasPort": ${MpsALIAS_PORT},
         "MpsTlsOffload": true
