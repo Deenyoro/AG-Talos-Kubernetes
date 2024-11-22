@@ -28,7 +28,6 @@ data:
       "domains": {
         "": {
           "Title": "${COMPANY_NAME}",
-          "allowedOrigin": ${HOSTNAME},
           "newAccounts": false,
           "certUrl": "https://${HOSTNAME}",
           "userQuota": 1048576,
