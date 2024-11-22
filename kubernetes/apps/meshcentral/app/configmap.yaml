@@ -7,6 +7,7 @@ data:
     {
       "settings": {
         "Cert": "${HOSTNAME}",
+        "trustedProxy": "CloudFlare",
         "_WANonly": true,
         "_LANonly": true,
         "Minify": 1,
