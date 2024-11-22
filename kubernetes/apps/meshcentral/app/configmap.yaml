@@ -31,7 +31,20 @@ data:
           "newAccounts": false,
           "certUrl": "https://${HOSTNAME}",
           "userQuota": 1048576,
-          "meshQuota": 248576
+          "meshQuota": 248576,
+          "allowedOrigin": [
+            "meshcentral.${SECRET_DOMAIN}",
+            "10.10.12.121",
+            "10.10.12.122",
+            "10.10.12.123",
+            "10.10.12.124",
+            "10.10.12.125",
+            "10.10.12.111",
+            "10.10.12.112",
+            "10.10.12.113",
+            "localhost",
+            "127.0.0.1"
+          ]
         }
       }
     }
