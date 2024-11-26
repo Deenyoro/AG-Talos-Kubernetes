@@ -28,11 +28,12 @@ spec:
         initContainers:
           01-init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
+              repository:  ghcr.io/onedr0p/postgres-init
               tag: 16.4
             envFrom:
               - secretRef:
                   name: zabbix-init-secrets
+
 
         containers:
           server:
@@ -56,13 +57,6 @@ spec:
           agent-tcp:
             port: 10051
             protocol: TCP
-
-    networkPolicy:
-      enabled: true
-      rules:
-        - type: egress
-          to:
-            - cidr: 10.10.12.0/24
 
     persistence:
       config:
