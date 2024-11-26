@@ -10,17 +10,17 @@ resources:
   - network
   - media
   - observability
-  #  - openebs-system
   - rook-ceph
   - emulation
   - volsync/ks.yaml
   - vaultwarden
   - invoiceninja
   - zammad/ks.yaml
-  #  - rustdesk/ks.yaml
-  #  - misc-pvcs/ks.yaml
   - meshcentral/ks.yaml
   - meshcentral/ks-backup.yaml
   - openproject/ks.yaml
-  - matrix-synapse/ks.yaml
-  - matrix-synapse/element/ks.yaml
+  #  - matrix-synapse/ks.yaml
+  #  - matrix-synapse/element/ks.yaml
+  #  - openebs-system
+  #  - rustdesk/ks.yaml
+  #  - misc-pvcs/ks.yaml
