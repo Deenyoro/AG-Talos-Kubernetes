@@ -1,72 +1,100 @@
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app zabbix-web
+  name: &app vaultwarden
+  namespace: default
 spec:
   interval: 30m
   chart:
-    spec:
-      chart: app-template
-      version: 3.5.1
-      sourceRef:
+@@ -15,90 +13,60 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  maxHistory: 2
   install:
+    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
     controllers:
-      zabbix-web:
-        type: deployment
-        replicas: 1
-
+      vaultwarden:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          web:
+          app:
             image:
-              repository: zabbix/zabbix-web-nginx-pgsql
-              tag: alpine-7.0.1
+              repository: vaultwarden/server
+              tag: 1.32.5@sha256:84015c9306cc58f4be8b09c1adc62cfc3b2648b1430e9c15901482f3d870bd14
             env:
-              ZBX_SERVER_HOST: zabbix-server.observability.svc.cluster.local
+              DATA_FOLDER: data
+              ICON_CACHE_FOLDER: data/icon_cache
+              ATTACHMENTS_FOLDER: data/attachments
+              DOMAIN: "https://vaultwarden.${SECRET_DOMAIN}"
+              TZ: "${TIMEZONE}"
+              SIGNUPS_ALLOWED: "false"
+              WEBSOCKET_ENABLED: "true"
+              WEBSOCKET_ADDRESS: 0.0.0.0
+              WEBSOCKET_PORT: 3012
+              #SMTP_HOST: smtp-relay.default.svc.cluster.local.
+              #SMTP_FROM: vaultwarden@${SECRET_DOMAIN}
+              #SMTP_FROM_NAME: vaultwarden
+              #SMTP_PORT: 2525
+              #SMTP_SECURITY: "off"
             envFrom:
-              - secretRef:
-                  name: zabbix-secrets
+              - secret: vaultwarden-secrets
+            resources:
+              requests:
+                cpu: 100m
+                memory: 100Mi
+              limits:
+                memory: 2Gi
     service:
-      zabbix-web:
+      app:
         controller: *app
-        type: ClusterIP
         ports:
           http:
-            port: 8080
-            protocol: TCP
-          http-alt:
-            port: 8443
-            protocol: TCP
+            port: &port 80
     ingress:
       external:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/enabled: "true"
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}.
-          nginx.ingress.kubernetes.io/proxy-body-size: 100M
-          nginx.ingress.kubernetes.io/enable-cors: "true"
-          nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
+          hajimari.io/icon: mdi:lock
         hosts:
-          - host: "zabbix.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  identifier: zabbix-web
-                  port: http
+                  identifier: app
+                  port: *port
         tls:
           - hosts:
-              - "zabbix.${SECRET_DOMAIN}"
-            secretName: zabbix.${SECRET_DOMAIN}-tls
+              - *host
+      internal:
+        className: internal
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: *port
+        tls:
+          - hosts:
+              - *host
     persistence:
-      tmp:
-        type: emptyDir
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /data

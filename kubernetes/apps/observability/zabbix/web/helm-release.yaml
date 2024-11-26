@@ -48,7 +48,7 @@ spec:
             port: 8443
             protocol: TCP
     ingress:
-      app:
+      external:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/enabled: "true"
@@ -60,7 +60,6 @@ spec:
           - host: "zabbix.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: zabbix-web
                   port: http
