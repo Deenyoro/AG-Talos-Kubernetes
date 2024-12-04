@@ -5,6 +5,7 @@ resources:
   - ./namespace.yaml
   - ./node-feature-discovery/ks.yaml
   - ./cilium/ks.yaml
+#  - ./csi-driver-nfs/ks.yaml
   - ./coredns/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
