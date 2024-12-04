@@ -31,11 +31,7 @@ spec:
     csi:
       cephFSKernelMountOptions: ms_mode=secure # Set when encryption/compression is enabled
       logLevel: 4
-      cephfs:
-        provisioner:
-          extraCreateMetadata: true
-        plugin:
-          setMetadata: true
+      enableMetadata: true
     crds:
       enabled: true
     pspEnable: false
