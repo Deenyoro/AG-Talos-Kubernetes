@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./helmrelease.yaml
+  - ./configmap.yaml
+  - ./secret.sops.yaml
+  - ./resources/librechat.yaml
+  - ./resources/litellm.yaml
+
+configMapGenerator:
+  - name: librechat-config
+    files:
+      - ./resources/librechat.yaml
+  - name: litellm-config
+    files:
+      - ./resources/litellm.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true

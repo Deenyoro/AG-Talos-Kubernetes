@@ -1,74 +1,83 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app bookstack
+  name: bookstack
+  namespace: default
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
   dependsOn:
+    - name: mariadb
+      namespace: databases
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
       namespace: storage
   values:
     controllers:
-      main:
+      bookstack:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/linuxserver/bookstack
-              tag: 24.10.20241104@sha256:35c90e58fdb4504541e4ebd1026f010af48db40e903301c75959ed9c51262301
-            env:
-              TZ: ${TIMEZONE}
-              PGID: 1000
-              PUID: 1000
-            envFrom: &envFrom
+              tag: v24.05.4-ls166
+            envFrom:
               - secretRef:
                   name: bookstack-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 256Mi
+
     service:
-      main:
+      app:
+        controller: bookstack
         ports:
           http:
             port: 80
+
     ingress:
       app:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         hosts:
-          - host: bookstack.${SECRET_DOMAIN}
+          - host: "bookstack.${SECRET_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
                 service:
                   identifier: app
                   port: http
         tls:
           - hosts:
-              - bookstack.${SECRET_DOMAIN}
-            secretName: bookstack.${SECRET_DOMAIN}-tls
+              - "bookstack.${SECRET_DOMAIN}"
+            secretName: "bookstack.${SECRET_DOMAIN}-tls"
+
       internal:
         enabled: true
         className: internal
@@ -76,19 +85,20 @@ spec:
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         hosts:
-          - host: bookstack.${SECRET_DOMAIN}
+          - host: "bookstack.${SECRET_DOMAIN}"
             paths:
               - path: /
+                pathType: Prefix
                 service:
                   identifier: app
                   port: http
         tls:
           - hosts:
-              - bookstack.${SECRET_DOMAIN}
-            secretName: bookstack.${SECRET_DOMAIN}-tls
+              - "bookstack.${SECRET_DOMAIN}"
+            secretName: "bookstack.${SECRET_DOMAIN}-tls"
+
     persistence:
       config:
-        enabled: true
         existingClaim: bookstack
         globalMounts:
           - path: /config
