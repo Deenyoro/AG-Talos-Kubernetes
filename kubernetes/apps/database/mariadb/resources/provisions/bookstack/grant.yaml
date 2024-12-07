@@ -8,6 +8,6 @@ spec:
     name: mariadb-galera
   privileges:
     - "ALL PRIVILEGES"
-  database: "bookstack"
+  database: "bookstackapp"
   table: "*"
   username: bookstack
