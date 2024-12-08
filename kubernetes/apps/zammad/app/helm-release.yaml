@@ -68,11 +68,11 @@ spec:
           replicaCount: 2
           resources:
             requests:
-              #cpu: 50m
-              memory: 3Gi
-            limits:
-              #cpu: 100m
+              cpu: 2
               memory: 6Gi
+            limits:
+              cpu: 4
+              memory: 8Gi
 
       postgresql:
         enabled: false
