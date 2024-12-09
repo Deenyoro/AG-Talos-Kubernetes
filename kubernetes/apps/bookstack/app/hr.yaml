@@ -59,7 +59,7 @@ spec:
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         hosts:
-          - host: "bookstack.${SECRET_DOMAIN}"
+          - host: "documentation.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -68,8 +68,8 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "bookstack.${SECRET_DOMAIN}"
-            secretName: "bookstack.${SECRET_DOMAIN}-tls"
+              - "documentation.${SECRET_DOMAIN}"
+            secretName: "documentation.${SECRET_DOMAIN}-tls"
 
       internal:
         enabled: true
@@ -78,7 +78,7 @@ spec:
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
           nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         hosts:
-          - host: "bookstack.${SECRET_DOMAIN}"
+          - host: "documentation.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -87,8 +87,8 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "bookstack.${SECRET_DOMAIN}"
-            secretName: "bookstack.${SECRET_DOMAIN}-tls"
+              - "documentation.${SECRET_DOMAIN}"
+            secretName: "documentation.${SECRET_DOMAIN}-tls"
 
     persistence:
       config:
