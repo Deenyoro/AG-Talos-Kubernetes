@@ -40,8 +40,8 @@ spec:
           rails-migrate:
             dependsOn: init-db
             image:
-              repository: docker.io/openproject/community
-              tag: 13.4.1-slim
+              repository: docker.io/openproject/openproject
+              tag: 15.0.2-slim
             envFrom:
               - secretRef:
                   name: openproject-secret
@@ -53,8 +53,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/openproject/community
-              tag: 13.4.1-slim
+              repository: docker.io/openproject/openproject
+              tag: 15.0.2-slim
             envFrom:
               - secretRef:
                   name: openproject-secret
@@ -81,8 +81,8 @@ spec:
         containers:
           worker:
             image:
-              repository: docker.io/openproject/community
-              tag: 13.4.1-slim
+              repository: docker.io/openproject/openproject
+              tag: 15.0.2-slim
             envFrom:
               - secretRef:
                   name: openproject-secret
