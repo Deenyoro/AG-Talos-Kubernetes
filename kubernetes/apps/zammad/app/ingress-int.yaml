@@ -17,7 +17,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: zammad.${SECRET_DOMAIN}
+    - host: support.${SECRET_DOMAIN}
       http:
         paths:
           - path: /
@@ -29,5 +29,5 @@ spec:
                   number: 8080
   tls:
     - hosts:
-        - zammad.${SECRET_DOMAIN}
-      secretName: zammad.${SECRET_DOMAIN}-tls
+        - support.${SECRET_DOMAIN}
+      secretName: support.${SECRET_DOMAIN}-tls

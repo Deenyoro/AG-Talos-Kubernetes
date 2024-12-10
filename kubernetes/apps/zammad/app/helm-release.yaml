@@ -43,7 +43,7 @@ spec:
         nginx.ingress.kubernetes.io/enable-cors: "true"
         nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
       hosts:
-        - host: &host zammad.${SECRET_DOMAIN}
+        - host: &host support.${SECRET_DOMAIN}
           paths:
             - path: /
               pathType: ImplementationSpecific
