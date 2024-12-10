@@ -17,7 +17,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: support.${SECRET_DOMAIN}
+    - host: helpdesk.${SECRET_DOMAIN}
       http:
         paths:
           - path: /
@@ -29,5 +29,5 @@ spec:
                   number: 8080
   tls:
     - hosts:
-        - support.${SECRET_DOMAIN}
-      secretName: support.${SECRET_DOMAIN}-tls
+        - helpdesk.${SECRET_DOMAIN}
+      secretName: helpdesk.${SECRET_DOMAIN}-tls
