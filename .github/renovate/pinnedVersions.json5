@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "description": "Pin MariaDB to the supported by operator",
+      "matchDatasources": ["docker"],
+      "allowedVersions": "<=11.4.3",
+      "matchPackagePatterns": ["mariadb"]
+    }
+  ]
+}

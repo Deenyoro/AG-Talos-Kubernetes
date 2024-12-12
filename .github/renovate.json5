@@ -8,7 +8,8 @@
     ":semanticCommits",
     ":automergeBranch",
     "github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/disabledDatasources.json5",
-    "github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/looseVersioning.json5"
+    "github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/looseVersioning.json5",
+    "github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/pinnedVersions.json5"
   ],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
