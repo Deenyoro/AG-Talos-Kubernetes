@@ -1,11 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./helmrelease.yaml
+  - ./hr.yaml
   - ./configmap.yaml
   - ./secret.sops.yaml
   - ./resources/librechat.yaml
   - ./resources/litellm.yaml
+  - ./init-db-secret.sops.yaml
 
 configMapGenerator:
   - name: librechat-config
