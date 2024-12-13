@@ -153,7 +153,6 @@ spec:
 
     ingress:
       app:
-        enabled: true
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
@@ -168,9 +167,22 @@ spec:
         tls:
           - hosts:
               - "aichat.${SECRET_DOMAIN}"
+      app-int:
+        className: internal
+        hosts:
+          - host: "aichat.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - "aichat.${SECRET_DOMAIN}"
+
 
       mongo-express:
-        enabled: true
         className: internal
         hosts:
           - host: "mongolibre.${SECRET_DOMAIN}"
@@ -211,7 +223,6 @@ spec:
           - path: /tmp
 
       data:
-        enabled: true
         existingClaim: librechat
         advancedMounts:
           librechat:
