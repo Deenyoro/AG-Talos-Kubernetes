@@ -7,7 +7,7 @@ data:
   ENDPOINTS: "openAI,google,anthropic,custom,agents,assistants,gptPlugins"
   GOOGLE_MODELS: "gemini-1.5-pro-latest,gemini-1.5-flash-latest"
   OPENAI_MODELS: "chatgpt-4o-latest,gpt-4o,gpt-4o-mini,o1,o1-mini"
-  ANTHROPIC_MODELS: "claude-3-5-sonnet-20241022"
+  ANTHROPIC_MODELS: "claude-3-opus-20240229,claude-3-5-sonnet-20241022"
   GOOGLE_SAFETY_SEXUALLY_EXPLICIT: "BLOCK_ONLY_HIGH"
   GOOGLE_SAFETY_HATE_SPEECH: "BLOCK_ONLY_HIGH"
   GOOGLE_SAFETY_HARASSMENT: "BLOCK_ONLY_HIGH"
