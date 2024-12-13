@@ -28,8 +28,6 @@ spec:
         type: deployment
         annotations:
           reloader.stakater.com/auto: "true"
-          secret.reloader.stakater.com/reload: librechat-secret
-          configmap.reloader.stakater.com/reload: librechat-configmap
         initContainers:
           init-db:
             image:
@@ -37,9 +35,7 @@ spec:
               tag: 16
             envFrom:
               - secretRef:
-                  name: librechat-secret
-              - configMapRef:
-                  name: librechat-configmap
+                  name: librechat-init-secret
         containers:
           app:
             image:
