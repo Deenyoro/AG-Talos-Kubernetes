@@ -4,8 +4,8 @@ resources:
   - ./hr.yaml
   - ./configmap.yaml
   - ./secret.sops.yaml
-  - ./resources/librechat.yaml
-  - ./resources/litellm.yaml
+#  - ./resources/librechat.yaml
+#  - ./resources/litellm.yaml
   - ./init-db-secret.sops.yaml
 
 configMapGenerator:
