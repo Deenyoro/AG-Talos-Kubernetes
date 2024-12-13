@@ -20,6 +20,7 @@ resources:
   - meshcentral/ks-backup.yaml
   - openproject/ks.yaml
   - bookstack/ks.yaml
+  - librechat/ks.yaml
   #  - matrix-synapse/ks.yaml
   #  - matrix-synapse/element/ks.yaml
   #  - openebs-system

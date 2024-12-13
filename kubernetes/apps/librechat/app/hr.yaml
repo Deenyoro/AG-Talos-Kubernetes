@@ -154,7 +154,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:
-          - host: "chat.${SECRET_DOMAIN}"
+          - host: "aichat.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -163,7 +163,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "chat.${SECRET_DOMAIN}"
+              - "aichat.${SECRET_DOMAIN}"
 
       mongo-express:
         enabled: true
