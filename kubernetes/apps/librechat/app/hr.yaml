@@ -74,6 +74,7 @@ spec:
               tag: latest
             env:
               MONGODB_URI: "mongodb://localhost:27017/LibreChat"
+              PROMETHEUS_PORT: "9123"
 
           ragapi:
             image:
