@@ -12,7 +12,7 @@ spec:
       version: 2024.10.5
       sourceRef:
         kind: HelmRepository
-        name: authentik-charts
+        name: authentik
         namespace: flux-system
   install:
     remediation:
@@ -27,7 +27,7 @@ spec:
     recreate: true
     cleanupOnFail: true
   dependsOn:
-    - name: redis
+    - name: dragonfly
       namespace: databases
   values:
     global:
@@ -40,7 +40,7 @@ spec:
       avatars: "initials"
       email:
         host: "smtp-relay.default.svc.cluster.local"
-        port: 587
+        port: 25
         use_tls: false
         from: "no-reply@${SECRET_DOMAIN}"
       secret_key: "${SECRET_AUTHENTIK_SECRET_KEY}"
@@ -48,7 +48,7 @@ spec:
         enable: false
         send_pii: false
       postgresql:
-        host: "postgres-rw.databases.svc.cluster.local"
+        host: "postgres16-rw.database.svc.cluster.local"
         name: "authentik"
         user: "authentik"
         password: "${SECRET_AUTHENTIK_POSTGRES_PASSWORD}"
@@ -57,6 +57,12 @@ spec:
 
     server:
       replicas: 2
+      initContainers:
+       - name: 01-init-db
+         image: ghcr.io/onedr0p/postgres-init:16
+         envFrom:
+              - secretRef:
+                  name: authentik-init-secret
       ingress:
         enabled: true
         ingressClassName: external-nginx
