@@ -5,9 +5,4 @@ kind: Kustomization
 resources:
   - ./secret.sops.yaml
   - ./helm-release.yaml
-configMapGenerator:
-  - name: smtp-relay-configmap
-    files:
-      - maddy.conf=./resources/maddy.conf
-generatorOptions:
-  disableNameSuffixHash: true
+
