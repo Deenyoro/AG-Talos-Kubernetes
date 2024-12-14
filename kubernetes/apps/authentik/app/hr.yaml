@@ -62,7 +62,7 @@ spec:
                   name: authentik-init-secret
       ingress:
         enabled: true
-        ingressClassName: external-nginx
+        ingressClassName: external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:

@@ -4,7 +4,7 @@ metadata:
   name: authentik-internal
   namespace: default
 spec:
-  ingressClassName: internal-nginx
+  ingressClassName: internal
   rules:
     - host: &host "auth.${SECRET_DOMAIN}"
       http:
