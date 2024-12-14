@@ -95,10 +95,10 @@ spec:
               - "RAILS_ENV=production"
             resources:
               requests:
-                cpu: 100m
-                memory: 256Mi
-              limits:
+                cpu: 150m
                 memory: 512Mi
+              limits:
+                memory: 2Gi
     service:
       app:
         controller: openproject
