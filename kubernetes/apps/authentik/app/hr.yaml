@@ -53,7 +53,7 @@ spec:
         user: "authentik"
         password: "${SECRET_AUTHENTIK_POSTGRES_PASSWORD}"
       redis:
-        host: "redis.databases.svc.cluster.local"
+        host: "dragonfly.database.svc.cluster.local"
 
     server:
       replicas: 2
