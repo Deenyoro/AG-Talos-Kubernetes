@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.14.9
+      version: v1.15.6
       sourceRef:
         kind: HelmRepository
         name: rook-release
@@ -21,6 +21,8 @@ spec:
       enabled: true
       image: quay.io/ceph/ceph:v18.2.4
     cephClusterSpec:
+      cephVersion:
+        image: quay.io/ceph/ceph:v18.2.4
       external:
         enable: true
       crashCollector:
@@ -35,3 +37,7 @@ spec:
         connections:
           encryption:
             enabled: true
+
+    cephBlockPools: {}
+    cephFileSystems: {}
+    cephObjectStores: {}
