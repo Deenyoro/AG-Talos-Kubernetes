@@ -5,8 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: postgres-cluster
-    - name: redis
+    - name: cnpg-cluster16
+    - name: dragonfly-cluster
   path: ./kubernetes/apps/authentik/app
   prune: true
   sourceRef:
