@@ -52,7 +52,7 @@ spec:
               - secretRef:
                   name: librechat-secret
               - secretRef:
-                  name: llibrechat-oidc-secret
+                  name: librechat-oidc-secret
               - configMapRef:
                   name: librechat-configmap
             securityContext:
@@ -89,7 +89,7 @@ spec:
               - secretRef:
                   name: librechat-secret
               - secretRef:
-                  name: llibrechat-oidc-secret
+                  name: librechat-oidc-secret
               - configMapRef:
                   name: librechat-configmap
             securityContext:
