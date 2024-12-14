@@ -57,7 +57,7 @@ spec:
         clusterName: zammad
         image:
           repository: docker.elastic.co/elasticsearch/elasticsearch
-          tag: "7.8.0"
+          tag: "8.17.0"
         coordinating:
           replicaCount: 0
         data:
