@@ -30,3 +30,4 @@ resources:
   - ./angelnu-charts.yaml
   - ./ananace-charts.yaml
   - ./emberstack.yaml
+  - ./goauthentik-charts.yaml

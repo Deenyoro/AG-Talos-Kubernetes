@@ -1,8 +1,10 @@
+---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: invoiceninja-release
+  name: authentik-charts
   namespace: flux-system
 spec:
-  interval: 10m
-  url: https://invoiceninja.github.io/dockerfiles
+  interval: 15m
+  url: https://charts.goauthentik.io/
+  timeout: 3m
