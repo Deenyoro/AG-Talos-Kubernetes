@@ -39,7 +39,7 @@ spec:
         host: "smtp-relay.default.svc.cluster.local"
         port: 587
         use_tls: false
-        from: "noreply@${SECRET_DOMAIN}"
+        from: "noreply@${SECRET_DOMAIN_COMP}"
       secret_key: "${SECRET_AUTHENTIK_SECRET_KEY}"
       error_reporting:
         enable: false

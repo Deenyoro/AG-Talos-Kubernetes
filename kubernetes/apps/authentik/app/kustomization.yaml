@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - ./hr.yaml
   - ./int-ingress.yaml
-  - ./secret.sops.yaml
+#  - ./secret.sops.yaml
   - ./secret-init.sops.yaml
