@@ -37,7 +37,7 @@ spec:
       avatars: "initials"
       email:
         host: "smtp-relay.default.svc.cluster.local"
-        port: 25
+        port: 587
         use_tls: false
         from: "noreply@${SECRET_DOMAIN}"
       secret_key: "${SECRET_AUTHENTIK_SECRET_KEY}"
