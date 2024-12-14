@@ -51,6 +51,8 @@ spec:
             envFrom:
               - secretRef:
                   name: librechat-secret
+              - secretRef:
+                  name: llibrechat-oidc-secret
               - configMapRef:
                   name: librechat-configmap
             securityContext:
@@ -86,6 +88,8 @@ spec:
             envFrom:
               - secretRef:
                   name: librechat-secret
+              - secretRef:
+                  name: llibrechat-oidc-secret
               - configMapRef:
                   name: librechat-configmap
             securityContext:

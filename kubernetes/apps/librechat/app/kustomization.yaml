@@ -4,6 +4,7 @@ resources:
   - ./hr.yaml
   - ./configmap.yaml
   - ./secret.sops.yaml
+  - ./secret-openid.sops.yaml
 #  - ./resources/librechat.yaml
 #  - ./resources/litellm.yaml
   - ./init-db-secret.sops.yaml
