@@ -26,9 +26,6 @@ spec:
     timeout: 10m
     recreate: true
     cleanupOnFail: true
-  dependsOn:
-    - name: dragonfly
-      namespace: databases
   values:
     global:
       image:
