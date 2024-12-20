@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.helm.sh/release-name: authentik
     nginx.ingress.kubernetes.io/configuration-snippet: |
-     return 200 '{"subject": null, "links": [{"rel": "http://openid.net/specs/connect/1.0/issuer", "href": "https://auth.kawalink.com/application/o/tailscale/"}]}';
+     return 200 '{\"subject\": null, \"links\": [{\"rel\": \"http://openid.net/specs/connect/1.0/issuer\", \"href\": \"https://auth.kawalink.com/application/o/tailscale/\"}]}';
   labels:
     app.kubernetes.io/component: server
     app.kubernetes.io/instance: authentik
