@@ -91,6 +91,7 @@ spec:
               - bundle
               - exec
               - rake
+              - --trace
             args:
               - "jobs:work"
               - "RAILS_ENV=production"
