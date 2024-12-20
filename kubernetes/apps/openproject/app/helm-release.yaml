@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://flux.jank.ing/helmrelease/v2/github/bjw-s/helm-charts/main/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -53,8 +54,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/openproject/openproject
-              tag: 15.1.0-slim
+              repository: registry.skysolutions.fi/library/openproject
+              tag: 15.1.0
             envFrom:
               - secretRef:
                   name: openproject-secret
@@ -81,8 +82,8 @@ spec:
         containers:
           worker:
             image:
-              repository: docker.io/openproject/openproject
-              tag: 15.1.0-slim
+              repository: registry.skysolutions.fi/library/openproject
+              tag: 15.1.0
             envFrom:
               - secretRef:
                   name: openproject-secret
