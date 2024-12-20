@@ -90,11 +90,9 @@ spec:
             command:
               - bundle
               - exec
-              - rake
-              - --trace
+              - good_job
             args:
-              - "jobs:work"
-              - "RAILS_ENV=production"
+              - "start"
             resources:
               requests:
                 cpu: 150m
