@@ -84,7 +84,7 @@ spec:
           ragapi:
             image:
               repository: ghcr.io/danny-avila/librechat-rag-api-dev-lite
-              tag: latest@sha256:99f12402bc2a2197715485e7df0f63b5f96e8240bd18fa652cbe17a4c8965da2
+              tag: latest@sha256:a6b4babf521ff8bfbe4bdbf3a4362acb94586fc99fed79eb05e1fa42c1e869e1
             envFrom:
               - secretRef:
                   name: librechat-secret
