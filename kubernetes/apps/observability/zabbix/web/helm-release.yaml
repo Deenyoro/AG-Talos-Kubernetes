@@ -21,6 +21,15 @@ spec:
     remediation:
       retries: 3
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1997
+        runAsGroup: 1995
+        fsGroup: 1995
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [20, 1995, 1000, 0]
+        seccompProfile: { type: RuntimeDefault }
     controllers:
       zabbix-web:
         type: deployment
