@@ -32,7 +32,14 @@ data:
           "certUrl": "https://${HOSTNAME}",
           "userQuota": 1048576,
           "meshQuota": 248576,
-          "allowedOrigin": false
+          "allowedOrigin": false,
+          "authStrategies": {
+                "oidc": {
+                    "issuer": "https://auth.kawalink.com/application/o/meshcentral/",
+                    "clientid": "${OIDC_CLIENT_ID}",
+                    "clientsecret": "${OIDC_CLIENT_SECRET}",
+                    "newAccounts": true
+                }
         }
       }
     }
