@@ -64,7 +64,7 @@ spec:
         - name: custom
           existingClaim: authentik
       volumeMounts:
-        - name: media
+        - name: custom
           mountPath: /media
       ingress:
         enabled: true
