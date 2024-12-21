@@ -34,7 +34,7 @@ spec:
               repository: ghcr.io/linuxserver/bookstack
               tag: v24.05.4-ls166
             env:
-              OIDC_DUMP_USER_DETAILS: "true"
+              OIDC_DUMP_USER_DETAILS: "false"
               OIDC_ADDITIONAL_SCOPES: "groups"
               OIDC_GROUPS_CLAIM: "groups"
             envFrom:
