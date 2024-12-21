@@ -6,3 +6,4 @@ resources:
 #  - ./secret.sops.yaml
   - ./secret-init.sops.yaml
   - ./redirect-and-webfinger.yaml
+  - ./pvc.yaml
