@@ -36,6 +36,7 @@ spec:
             env:
               OIDC_DUMP_USER_DETAILS: "true"
               OIDC_ADDITIONAL_SCOPES: "groups"
+              OIDC_GROUPS_CLAIM: "groups"
             envFrom:
               - secretRef:
                   name: bookstack-secret
