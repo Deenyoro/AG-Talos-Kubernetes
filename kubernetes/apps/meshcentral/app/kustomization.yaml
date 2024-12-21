@@ -12,4 +12,4 @@ secretGenerator:
     - name: meshcentral-oidc-secret
       namespace: default
       files:
-        - meshcentral-oidc.enc.sops.yaml
+        - oidc-creds.sops.yaml
