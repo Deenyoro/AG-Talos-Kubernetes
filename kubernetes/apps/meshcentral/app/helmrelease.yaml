@@ -37,9 +37,9 @@ spec:
               TZ: ${TIMEZONE}
               NODE_ENV: production
               HOSTNAME: ${HOSTNAME}
-            # command:
-            #  - /bin/sleep
-            #  - infinity
+            command:
+             - /bin/sleep
+             - infinity
             resources:
               requests:
                 cpu: 100m
