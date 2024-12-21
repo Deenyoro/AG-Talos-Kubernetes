@@ -60,6 +60,12 @@ spec:
          envFrom:
               - secretRef:
                   name: authentik-init-secret
+      volumes:
+        - name: custom
+          existingClaim: authentik
+      volumeMounts:
+        - name: media
+          mountPath: /media
       ingress:
         enabled: true
         ingressClassName: external
