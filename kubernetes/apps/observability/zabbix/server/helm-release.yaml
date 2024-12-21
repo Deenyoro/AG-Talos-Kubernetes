@@ -62,9 +62,6 @@ spec:
       config:
         globalMounts:
           - path: /var/lib/zabbix
-        existingClaim: zabbix-storage
-      certs:
-        globalMounts:
           - path: /usr/share/zabbix/conf/certs/
             subPath: certs
         existingClaim: zabbix-storage
