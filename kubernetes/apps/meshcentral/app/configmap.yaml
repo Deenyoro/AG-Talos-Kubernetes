@@ -33,13 +33,17 @@ data:
           "userQuota": 1048576,
           "meshQuota": 248576,
           "allowedOrigin": false,
-          "authStrategies": {
-                "oidc": {
-                    "issuer": "https://auth.kawalink.com/application/o/meshcentral/",
-                    "clientid": "${OIDC_CLIENT_ID}",
-                    "clientsecret": "${OIDC_CLIENT_SECRET}",
-                    "newAccounts": true
-                }
+          "issuer": {
+            "issuer": "https://auth.kawalink.com/application/o/meshcentral/",
+            "authorization_endpoint": "https://auth.kawalink.com/application/o/authorize/",
+            "token_endpoint": "https://auth.kawalink.com/application/o/token/",
+            "end_session_endpoint": "https://auth.kawalink.com/application/o/meshcentral/end-session/",
+            "jwks_uri": "https://auth.kawalink.com/application/o/meshcentral/jwks/"
+          },
+          "client": {
+            "client_id": "${OIDC_CLIENT_ID}",
+            "client_secret": "${OIDC_CLIENT_SECRET}"
+          },
         }
       }
     }
