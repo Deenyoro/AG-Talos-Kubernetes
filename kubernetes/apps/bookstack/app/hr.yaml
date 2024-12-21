@@ -33,6 +33,8 @@ spec:
             image:
               repository: ghcr.io/linuxserver/bookstack
               tag: v24.05.4-ls166
+            env:
+              OIDC_DUMP_USER_DETAILS: true
             envFrom:
               - secretRef:
                   name: bookstack-secret
