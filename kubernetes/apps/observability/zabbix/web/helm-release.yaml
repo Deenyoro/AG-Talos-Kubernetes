@@ -43,6 +43,7 @@ spec:
            env:
             ZBX_SERVER_HOST: zabbix-server.observability.svc.cluster.local
             ZBX_SSO_SP_CERT: /var/lib/zabbix/certs/sp.crt
+            ZBX_SSO_IDP_CERT: /var/lib/zabbix/certs/sp.crt
             ZBX_SSO_SP_KEY: /var/lib/zabbix/certs/sp.key
            envFrom:
             - secretRef:
