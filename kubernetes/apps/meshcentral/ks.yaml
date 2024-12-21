@@ -16,9 +16,6 @@ spec:
     kind: GitRepository
     name: thepatriots
   postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: meshcentral-oidc-secret
     substitute:
       TIMEZONE: "America/New_York"
       HOSTNAME: "meshcentral.${SECRET_DOMAIN}"
