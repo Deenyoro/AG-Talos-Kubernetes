@@ -5,6 +5,11 @@ resources:
   - pvc.yaml
   - configmap.yaml
   - helmrelease.yaml
-  - oidc-creds.sops.yaml
 generatorOptions:
   disableNameSuffixHash: true
+
+secretGenerator:
+    - name: meshcentral-oidc-secret
+      namespace: default
+      files:
+        - meshcentral-oidc.enc.sops.yaml

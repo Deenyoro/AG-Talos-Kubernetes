@@ -19,7 +19,6 @@ spec:
     substituteFrom:
       - kind: Secret
         name: meshcentral-oidc-secret
-        namespace: *ns
     substitute:
       TIMEZONE: "America/New_York"
       HOSTNAME: "meshcentral.${SECRET_DOMAIN}"
