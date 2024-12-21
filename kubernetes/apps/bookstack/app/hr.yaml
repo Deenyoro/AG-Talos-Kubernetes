@@ -35,6 +35,7 @@ spec:
               tag: v24.05.4-ls166
             env:
               OIDC_DUMP_USER_DETAILS: "false"
+              OIDC_ADDITIONAL_SCOPES: "groups"
             envFrom:
               - secretRef:
                   name: bookstack-secret
