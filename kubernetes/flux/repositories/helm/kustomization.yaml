@@ -8,6 +8,7 @@ resources:
   - ./cilium.yaml
   - ./coredns.yaml
   - ./csi-driver-nfs.yaml
+  - ./nfs-subdir-external-provisioner.yaml
   - ./cloudnative-pg.yaml
   - ./democratic-csi.yaml
   - ./jetstack.yaml

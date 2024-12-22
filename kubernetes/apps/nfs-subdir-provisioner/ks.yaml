@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: nfs-subdir-provisioner
+  namespace: flux-system
+spec:
+  targetNamespace: kube-system
+  path: ./kubernetes/apps/nfs-subdir-provisioner/app/
+  prune: true
+  wait: true # Something might depend on this to be ready
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
