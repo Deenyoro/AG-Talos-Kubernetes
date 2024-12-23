@@ -100,7 +100,7 @@ spec:
           meilisearch:
             image:
               repository: getmeili/meilisearch
-              tag: v1.11.3
+              tag: v1.12.0
             envFrom:
               - secretRef:
                   name: librechat-secret
