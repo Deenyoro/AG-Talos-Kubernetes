@@ -35,10 +35,13 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
-        enabled: true
+        enabled: false
         ingressClassName: internal
         hosts: ["prom-alerts.${SECRET_DOMAIN}"]
         pathType: Prefix
+        tls:
+          - hosts:
+            - prom-alers.${SECRET_DOMAIN}
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
@@ -69,13 +72,16 @@ spec:
     kubeProxy:
       enabled: false
     nodeExporter:
-      enabled: false
+      enabled: true
     prometheus:
       ingress:
         enabled: true
         ingressClassName: internal
         hosts: ["prometheus.${SECRET_DOMAIN}"]
         pathType: Prefix
+        tls:
+          - hosts:
+            - prometheus.${SECRET_DOMAIN}
       prometheusSpec:
         scrapeInterval: 1m # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false
@@ -112,6 +118,8 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
+    kubeStateMetrics:
+      enabled: true
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       metricLabelsAllowlist:
