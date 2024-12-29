@@ -5,6 +5,7 @@ metadata:
   name: alertmanager
   namespace: flux-system
 spec:
+  targetNamespace: observability
   interval: 1h
   path: "./kubernetes/apps/observability/alertmanager/app"
   prune: true
