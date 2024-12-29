@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://flux.jank.ing/helmrelease/v2/github/bjw-s/helm-charts/common-3.6.0/charts/library/common
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -67,12 +68,15 @@ spec:
       app:
         className: internal
         hosts:
-          - host: &host prom-alerts.{SECRET_DOMAIN}
+          - host: &host prom-alerts.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
+        tls:
+          - hosts:
+              - *host
 
     persistence:
       config:
