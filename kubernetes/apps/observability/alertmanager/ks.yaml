@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  path: "./kubernetes/apps/monitoring/alertmanager/app"
+  path: "./kubernetes/apps/observability/alertmanager/app"
   prune: true
   wait: false
   sourceRef:
