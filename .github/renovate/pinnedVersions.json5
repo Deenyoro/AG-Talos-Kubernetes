@@ -6,6 +6,12 @@
       "matchDatasources": ["docker"],
       "allowedVersions": "<=11.4.3",
       "matchPackagePatterns": ["mariadb"]
+    },
+    {
+      "description": "Pin mailiserarch",
+      "matchDatasources":  ["docker"],
+      "allowedVersions": "<=1.11.3",
+      "matchPackageNames": ["getmeili/meilisearch"]
     }
   ]
 }
