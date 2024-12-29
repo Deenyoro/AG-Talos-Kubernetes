@@ -3,12 +3,12 @@ kind: Kustomization
 resources:
   - ./ns.yaml
 #  - ./pvc.yaml
-  - ./plex/ks.yaml
+#  - ./plex/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./prowlarr/ks-secrets.yaml
   - ./prowlarr/ks.yaml
-  - ./radarr/ks-secrets.yaml
-  - ./radarr/ks.yaml
-  - ./sonarr/ks-secrets.yaml
-  - ./sonarr/ks.yaml
+#  - ./radarr/ks-secrets.yaml
+#  - ./radarr/ks.yaml
+#  - ./sonarr/ks-secrets.yaml
+#  - ./sonarr/ks.yaml
   - ./flaresolverr/ks.yaml
