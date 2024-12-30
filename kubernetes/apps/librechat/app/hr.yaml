@@ -105,6 +105,8 @@ spec:
             envFrom:
               - secretRef:
                   name: librechat-secret
+              - configMapRef:
+                  name: librechat-configmap
             env:
               MEILI_DB_PATH: "/meili_data"
             securityContext:
