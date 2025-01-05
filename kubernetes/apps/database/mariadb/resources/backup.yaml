@@ -7,7 +7,6 @@ metadata:
 spec:
   mariaDbRef:
     name: mariadb-galera
-  timeZone: "${TIMEZONE}"
 
   schedule:
     cron: "5 4 * * *"
