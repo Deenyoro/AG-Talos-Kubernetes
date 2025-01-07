@@ -32,6 +32,16 @@ spec:
       plex:
         annotations:
           reloader.stakater.com/auto: "true"
+
+        pod:
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            fsGroup: 65534
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44
+              - 109
         containers:
           app:
             image:
@@ -71,15 +81,6 @@ spec:
               limits:
                 gpu.intel.com/i915: 1
                 memory: 6Gi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [44, 10000]
-        seccompProfile: { type: RuntimeDefault }
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
     service:
