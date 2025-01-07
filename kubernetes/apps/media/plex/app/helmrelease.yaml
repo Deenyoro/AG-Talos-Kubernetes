@@ -35,7 +35,6 @@ spec:
       plex:
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
           securityContext:
             runAsUser: 65534
@@ -100,7 +99,7 @@ spec:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         className: external
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
             paths:
               - path: /
                 service:
@@ -109,21 +108,7 @@ spec:
         tls:
           - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
             hosts:
-              - *host
-      internal:
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        className: internal
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+              - "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
     persistence:
       config:
         existingClaim: plex
