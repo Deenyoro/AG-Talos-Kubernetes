@@ -35,7 +35,7 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
-        enabled: false
+        enabled: true
         ingressClassName: internal
         hosts: ["prom-alerts.${SECRET_DOMAIN}"]
         pathType: Prefix
@@ -83,7 +83,6 @@ spec:
           - hosts:
             - prometheus.${SECRET_DOMAIN}
       prometheusSpec:
-        scrapeInterval: 1m # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
@@ -99,7 +98,7 @@ spec:
           requests:
             cpu: 200m
           limits:
-            memory: 7Gi
+            memory: 2000Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
