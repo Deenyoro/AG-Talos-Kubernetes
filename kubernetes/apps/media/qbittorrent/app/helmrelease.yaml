@@ -145,7 +145,8 @@ spec:
         globalMounts:
           - path: /config
       media:
-        existingClaim: media-pvc-v1
+        type: nfs
+        server: 192.168.90.101
+        path: /mnt/QuadSquad/EC/Downloads
         globalMounts:
-          - path: /media
-            subPath: media
+          - path: /mnt/QuadSquad/EC/Downloads

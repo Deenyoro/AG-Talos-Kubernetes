@@ -141,7 +141,14 @@ spec:
       transcode:
         type: emptyDir
       media:
-        existingClaim: media-pvc-v1
+        type: nfs
+        server: 192.168.90.101
+        path: /mnt/QuadSquad/EC/Videos
         globalMounts:
-          - path: /media
-            subPath: media
+          - path: /mnt/QuadSquad/EC/Videos
+      media-music:
+        type: nfs
+        server: 192.168.90.101
+        path: /mnt/QuadSquad/EC/Music
+        globalMounts:
+          - path: /mnt/QuadSquad/EC/Music
