@@ -44,9 +44,9 @@ spec:
                 sabnzbd.default.svc.cluster,
                 sabnzbd.default.svc.cluster.local,
                 sab.${SECRET_DOMAIN}
-            envFrom:
-              - secretRef:
-                  name: sabnzbd-secret
+#            envFrom:
+#              - secretRef:
+#                  name: sabnzbd-secret
             probes:
               liveness: &probes
                 enabled: true
