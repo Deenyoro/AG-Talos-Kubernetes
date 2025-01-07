@@ -93,9 +93,6 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
-            volumeMounts:
-              - name: dev-net-tun
-                mountPath: /dev/net/tun
     service:
       app:
         controller: sabnzbd
