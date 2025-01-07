@@ -43,11 +43,6 @@ spec:
             supplementalGroups:
               - 44
               - 109
-          volumes:
-            - name: dev-net-tun
-              hostPath:
-                path: /dev/net/tun
-                type: CharDevice
         containers:
           qbit:
             env:
@@ -98,9 +93,6 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
-            volumeMounts:
-              - name: dev-net-tun
-                mountPath: /dev/net/tun
           port-forward:
             image:
               repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
