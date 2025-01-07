@@ -28,6 +28,9 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
+    defaultPodOptions:
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
     controllers:
       plex:
         annotations:
@@ -81,8 +84,6 @@ spec:
               limits:
                 gpu.intel.com/i915: 1
                 memory: 6Gi
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
     service:
       app:
         controller: plex
