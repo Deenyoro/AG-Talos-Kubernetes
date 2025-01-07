@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: sabnzbd
+  name: &app sabnzbd
   namespace: flux-system
 spec:
   targetNamespace: media
@@ -17,3 +17,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "65534"
+      APP_GID: "65534"
+      HOSTNAME: "sab.${SECRET_DOMAIN}"

@@ -43,7 +43,7 @@ spec:
                 sabnzbd.default.svc,
                 sabnzbd.default.svc.cluster,
                 sabnzbd.default.svc.cluster.local,
-                sab.${SECRET_DOMAIN}
+                ${HOSTNAME}
 #            envFrom:
 #              - secretRef:
 #                  name: sabnzbd-secret
@@ -106,7 +106,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: sab.${SECRET_DOMAIN}
+          - host: ${HOSTNAME}
             paths:
               - path: /
                 service:
