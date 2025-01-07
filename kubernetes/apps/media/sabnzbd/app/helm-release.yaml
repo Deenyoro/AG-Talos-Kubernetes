@@ -80,7 +80,7 @@ spec:
               VPN_INTERFACE: tun0
               FIREWALL: on
               DOT: off
-              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_INPUT_PORTS: 80
             envFrom:
               - secretRef:
                   name: openvpn-secret
