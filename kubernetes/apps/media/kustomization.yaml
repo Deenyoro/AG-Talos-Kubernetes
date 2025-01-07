@@ -7,10 +7,10 @@ resources:
   - ./qbittorrent/ks.yaml
   - ./prowlarr/ks-secrets.yaml
   - ./prowlarr/ks.yaml
-#  - ./radarr/ks-secrets.yaml
-#  - ./radarr/ks.yaml
-#  - ./sonarr/ks-secrets.yaml
-#  - ./sonarr/ks.yaml
+  - ./radarr/ks-secrets.yaml
+  - ./radarr/ks.yaml
+  - ./sonarr/ks-secrets.yaml
+  - ./sonarr/ks.yaml
   - ./sabnzbd/ks-secrets.yaml
   - ./sabnzbd/ks.yaml
   - ./flaresolverr/ks.yaml
