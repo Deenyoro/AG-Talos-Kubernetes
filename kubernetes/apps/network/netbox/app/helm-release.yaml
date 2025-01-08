@@ -53,7 +53,7 @@ spec:
           name: sso-custom-pipeline
       - name: sso-extra
         secret:
-          name: sso-extra
+          secretName: sso-extra
     extraVolumeMounts:
       - name: sso-custom-pipeline
         mountPath: /opt/netbox/netbox/netbox/custom_pipeline.py
