@@ -129,6 +129,7 @@ spec:
         metadata:
           annotations:
             nginx.ingress.kubernetes.io/permanent-redirect: https://auth.${SECRET_DOMAIN}/.well-known/webfinger
+            external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           name: authentik-webfinger
         spec:
           ingressClassName: external
@@ -151,6 +152,7 @@ spec:
         metadata:
           annotations:
             nginx.ingress.kubernetes.io/permanent-redirect: https://auth.${SECRET_DOMAIN}
+            external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           name: authentik-root-domain-redirect
         spec:
           ingressClassName: external
