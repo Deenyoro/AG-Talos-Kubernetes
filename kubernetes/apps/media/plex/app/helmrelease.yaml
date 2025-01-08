@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: plex
+  namespace: media
 spec:
   interval: 30m
   chart:
@@ -99,7 +100,7 @@ spec:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         className: external
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+          - host: plex.${SECRET_DOMAIN_LEGACY}
             paths:
               - path: /
                 service:
@@ -108,13 +109,27 @@ spec:
         tls:
           - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
             hosts:
-              - "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+              - plex.${SECRET_DOMAIN_LEGACY}
+      internal:
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        className: internal
+        hosts:
+          - host: plex.${SECRET_DOMAIN_LEGACY}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+            hosts:
+              - plex.${SECRET_DOMAIN_LEGACY}
     persistence:
       config:
         existingClaim: plex
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server
-      # Separate PVC for cache to avoid backing up cache files
       cache:
         existingClaim: plex-cache
         globalMounts:
