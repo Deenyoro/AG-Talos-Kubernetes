@@ -5,5 +5,5 @@ resources:
 #  - ./int-ingress.yaml
 #  - ./secret.sops.yaml
   - ./secret-init.sops.yaml
-  - ./redirect-and-webfinger.yaml
+#  - ./redirect-and-webfinger.yaml
   - ./pvc.yaml
