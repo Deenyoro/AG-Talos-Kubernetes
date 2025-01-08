@@ -38,7 +38,7 @@ spec:
       enabled: True
       header: HTTP_X_AUTH_REQUEST_EMAIL
       groupHeader: HTTP_X_AUTH_REQUEST_GROUPS
-      defaultPermissions: None
+      defaultPermissions: {}
       groupSyncEnabled: True
       groupSeparator: ','
       autoCreateUser: True
