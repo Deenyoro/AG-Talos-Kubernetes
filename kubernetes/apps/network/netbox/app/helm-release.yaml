@@ -64,10 +64,8 @@ spec:
         subPath: extra.py
         readOnly: true
     loginRequired: true
+    debug: true
     timeZone: "America/New_York"
-    extraEnvs:
-      - name: DB_WAIT_DEBUG
-        value: "1"
     existingSecret: netbox-secret
     metricsEnabled: true
     initContainers:
