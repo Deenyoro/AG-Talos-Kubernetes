@@ -26,6 +26,8 @@ spec:
     timeout: 10m
     recreate: true
     cleanupOnFail: true
+  driftDetection:
+    mode: warn
   values:
     global:
       image:
