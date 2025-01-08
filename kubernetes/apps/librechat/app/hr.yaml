@@ -86,6 +86,16 @@ spec:
             image:
               repository: ghcr.io/danny-avila/librechat-rag-api-dev-lite
               tag: latest@sha256:a6b4babf521ff8bfbe4bdbf3a4362acb94586fc99fed79eb05e1fa42c1e869e1
+            env:
+              RAG_MAX_TOKENS: "8192"
+              EMBEDDINGS_PROVIDER: "openai"
+              CHUNK_SIZE: "1500"
+              CHUNK_OVERLAP: "100"
+              RAG_OPENAI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: librechat-secret
+                    key: OPENAI_API_KEY
             envFrom:
               - secretRef:
                   name: librechat-secret
@@ -190,7 +200,6 @@ spec:
         tls:
           - hosts:
               - "aichat.${SECRET_DOMAIN}"
-
 
       mongo-express:
         className: internal
