@@ -22,7 +22,7 @@ spec:
       APP_NS: *ns
       VOLSYNC_CLAIM: netbox-storage
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_ACCESSMODES: ReadWriteOnce
+      VOLSYNC_ACCESSMODES: ReadWriteMany
       VOLSYNC_STORAGECLASS: ceph-rbd
       VOLSYNC_SNAPSHOTCLASS: csi-ceph-blockpool
       VOLSYNC_REPOSITORY_SECRET: netbox-volsync-r2-secret
