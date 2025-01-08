@@ -27,4 +27,3 @@ resources:
   #  - matrix-synapse/element/ks.yaml
   #  - openebs-system
   #  - rustdesk/ks.yaml
-  #  - misc-pvcs/ks.yaml
