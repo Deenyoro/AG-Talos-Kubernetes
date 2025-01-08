@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./authentik.yaml
   - ./backube.yaml
+  - ./bootc.yaml
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
