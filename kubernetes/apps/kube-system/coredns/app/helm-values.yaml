@@ -1,4 +1,5 @@
 ---
+replicaCount: 2
 fullnameOverride: coredns
 k8sAppLabelOverride: kube-dns
 serviceAccount:
@@ -29,7 +30,7 @@ servers:
           pods insecure
           fallthrough in-addr.arpa ip6.arpa
       - name: forward
-        parameters: . /etc/resolv.conf
+        parameters: . 1.1.1.1 8.8.8.8
       - name: cache
         parameters: 30
       - name: loop
