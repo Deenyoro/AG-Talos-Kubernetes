@@ -60,7 +60,7 @@ spec:
         subPath: custom_pipeline.py
         readOnly: true
       - name: sso-extra
-        mountPath: /opt/netbox/netbox/netbox/extra.py
+        mountPath: /etc/netbox/config/extra.py
         subPath: extra.py
         readOnly: true
     loginRequired: true
