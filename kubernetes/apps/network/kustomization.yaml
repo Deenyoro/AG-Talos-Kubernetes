@@ -11,3 +11,5 @@ resources:
   - ./k8s-gateway/ks.yaml
   #  - ./multus/ks.yaml
   - ./unimus
+  - ./netbox/pvc/ks.yaml
+  - ./netbox/ks.yaml

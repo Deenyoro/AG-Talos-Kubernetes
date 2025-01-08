@@ -1,0 +1,108 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: netbox
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: netbox
+      version: 5.0.10
+      sourceRef:
+        kind: HelmRepository
+        name: netbox
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/netbox-community/netbox
+      tag: "v4.2.0"
+    superuser:
+      name: admin
+      email: admin@${SECRET_DOMAIN}
+    admins:
+      - ["Admin", "admin@${SECRET_DOMAIN}"]
+    logging:
+      disable_existing_loggers: false
+      handlers:
+        console:
+          class: logging.StreamHandler
+      loggers:
+        netbox.authentication.*:
+          handlers:
+            - console
+          level: DEBUG
+      version: 1
+      remoteAuth:
+        enabled: True
+        header: HTTP_X_AUTH_REQUEST_EMAIL
+        groupHeader: HTTP_X_AUTH_REQUEST_GROUPS
+        defaultPermissions: None
+        groupSyncEnabled: True
+        groupSeparator: ','
+        autoCreateUser: True
+        superuserGroups:
+          - netbox-admins
+        staffGroups:
+          - netbox-users
+      loginRequired: true
+      timeZone: ${TIMEZONE}
+      existingSecret: netbox-secret
+      metricsEnabled: true
+      initContainers:
+        - name: 01-init-db
+          image: ghcr.io/onedr0p/postgres-init:16.6
+          envFrom:
+            - secretRef:
+                name: netbox-init-secret
+      postgresql:
+        enabled: false
+      redis:
+        enabled: false
+      tasksRedis:
+        host: dragonfly.database.svc.cluster.local
+        database: 10
+        existingSecretName: ""
+        existingSecretKey: "REDIS_PASSWORD"
+      cachingRedis:
+        host: dragonfly.database.svc.cluster.local
+        database: 11
+        existingSecretName: ""
+        existingSecretKey: "REDIS_PASSWORD"
+      externalDatabase:
+        host: postgres16-rw.database.svc.cluster.local
+        port: 5432
+        database: netbox
+        username: netbox
+        existingSecretName: "netbox-secret"
+        existingSecretKey: "NETBOX_PG_PASS"
+      email:
+        server: smtp-relay.default.svc.cluster.local
+        port: 587
+        from: netbox@${SECRET_DOMAIN_COMP}
+      persistence:
+        enabled: true
+        existingClaim: "${VOLSYNC_CLAIM}"
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 60
+        timeoutSeconds: 1
+        periodSeconds: 10
+        successThreshold: 1
+      ingress:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host "netbox.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: netbox
+                    port:
+                      number: 80
+        tls:
+          - hosts:
+              - *host
