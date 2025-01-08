@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - ./authentik.yaml
   - ./backube.yaml
-  - ./bootc.yaml
   - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
@@ -33,3 +32,4 @@ resources:
   - ./ananace-charts.yaml
   - ./emberstack.yaml
   - ./goauthentik-charts.yaml
+  - ./netbox.yaml
