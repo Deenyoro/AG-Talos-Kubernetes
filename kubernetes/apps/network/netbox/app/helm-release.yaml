@@ -36,16 +36,33 @@ spec:
       version: 1
     remoteAuth:
       enabled: True
-      header: HTTP_X_AUTH_REQUEST_EMAIL
-      groupHeader: HTTP_X_AUTH_REQUEST_GROUPS
-      defaultPermissions: {}
-      groupSyncEnabled: True
-      groupSeparator: ','
-      autoCreateUser: True
-      superuserGroups:
-        - netbox-admins
-      staffGroups:
-        - netbox-users
+      backends:
+        - social_core.backends.open_id_connect.OpenIdConnectAuth
+      autoCreateUser: true
+    extraConfig:
+      - values:
+          SOCIAL_AUTH_PIPELINE:
+            [
+              "netbox.custom_pipeline.add_groups",
+              "netbox.custom_pipeline.remove_groups",
+              "netbox.custom_pipeline.set_roles"
+            ]
+    extraVolumes:
+      - name: sso-custom-pipeline
+        configMap:
+          name: sso-custom-pipeline
+      - name: sso-extra
+        configMap:
+          name: sso-extra
+    extraVolumeMounts:
+      - name: sso-custom-pipeline
+        mountPath: /opt/netbox/netbox/netbox/custom_pipeline.py
+        subPath: custom_pipeline.py
+        readOnly: true
+      - name: sso-extra
+        mountPath: /opt/netbox/netbox/netbox/extra.py
+        subPath: extra.py
+        readOnly: true
     loginRequired: true
     timeZone: "America/New_York"
     extraEnvs:

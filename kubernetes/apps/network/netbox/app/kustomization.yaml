@@ -4,3 +4,5 @@ resources:
   - ./netbox-init-secret.sops.yaml
   - ./secret.sops.yaml
   - ./helm-release.yaml
+  - ./sso-custom-pipeline-configmap.yaml
+  - ./sso-extra-configmap.yaml

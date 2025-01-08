@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sso-extra
+data:
+  extra.py: |
+    from os import environ
+
+    SOCIAL_AUTH_OIDC_ENDPOINT = environ.get('SOCIAL_AUTH_OIDC_ENDPOINT')
+    SOCIAL_AUTH_OIDC_KEY = environ.get('SOCIAL_AUTH_OIDC_KEY')
+    SOCIAL_AUTH_OIDC_SECRET = environ.get('SOCIAL_AUTH_OIDC_SECRET')
+    SOCIAL_AUTH_OIDC_SCOPE = ["openid", "profile", "email", "roles"]
+    SOCIAL_AUTH_OIDC_NAME = "Authentik"
+    LOGOUT_REDIRECT_URL = environ.get('LOGOUT_REDIRECT_URL')
