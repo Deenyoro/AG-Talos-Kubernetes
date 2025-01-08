@@ -43,8 +43,6 @@ spec:
       - values:
           SOCIAL_AUTH_PIPELINE:
             [
-              "netbox.custom_pipeline.add_groups",
-              "netbox.custom_pipeline.remove_groups",
               "netbox.custom_pipeline.set_roles"
             ]
     extraVolumes:
