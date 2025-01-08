@@ -50,7 +50,7 @@ spec:
     timeZone: ${TIMEZONE}
     extraEnvs:
       - name: DB_WAIT_DEBUG
-        value: 1
+        value: "1"
     existingSecret: netbox-secret
     metricsEnabled: true
     initContainers:
