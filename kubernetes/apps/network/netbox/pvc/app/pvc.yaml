@@ -4,7 +4,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: "${VOLSYNC_CLAIM:-${APP}}"
 spec:
-  volumeMode: Block
   accessModes:
     - "${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"
   dataSourceRef:
