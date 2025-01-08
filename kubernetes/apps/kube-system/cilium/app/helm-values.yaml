@@ -1,7 +1,7 @@
 ---
 autoDirectNodeRoutes: true
 bpf:
-  masquerade: false # Required for Talos `.machine.features.hostDNS.forwardKubeDNSToHost`
+  masquerade: true # Required for egressGateway
 cgroup:
   automount:
     enabled: false
@@ -19,6 +19,7 @@ envoy:
   enabled: false
 egressGateway:
   enabled: true
+enableIPv4Masquerade: true
 hubble:
   enabled: false
 ipam:
