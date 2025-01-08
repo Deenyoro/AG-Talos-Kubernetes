@@ -73,7 +73,7 @@ spec:
         subPath: extra.py
         readOnly: true
     loginRequired: true
-    debug: true
+    debug: false
     timeZone: "America/New_York"
     existingSecret: netbox-secret
     metricsEnabled: true
