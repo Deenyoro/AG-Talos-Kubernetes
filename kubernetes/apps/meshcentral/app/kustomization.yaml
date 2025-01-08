@@ -5,6 +5,5 @@ resources:
   - pvc.yaml
   - configmap.sops.yaml
   - helmrelease.yaml
-  - ext-ingress.yaml
 generatorOptions:
   disableNameSuffixHash: true
