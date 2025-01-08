@@ -1,22 +1,6 @@
+---
 creation_rules:
-    - age: ENC[AES256_GCM,data:9Yn/u88uWPr/gvdZJ2MfmjY9oue50Y2vkNLfEC+bBoDomcXOHehAxxehb4WoFosx+e8dvybQVim7x68XTlI=,iv:l0rVowCmD7zOwm/q+fOXw6loR/rnCUj9hkXNqz2O+i0=,tag:xJvmPkIjZtijwDYDGE3KFQ==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1zddtwjmvl4ed3jm9e0jd0cnptmmla0z8fjvcccvu6c8jkdd2x9zq0dctqy
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBVSEJHMDkwK1pDYk4xaVRK
-            ZnhxVkxra0pmT0NCQStpbmU5bUJFMW1LVkNBCnpKNnZPcFFCMEY2SHo4N1hIVXMr
-            bjJGT1U0eTMxMlR5Ky9MY3ZYTXJBYTAKLS0tIGYzNis0N3RySE80aDFGelJpQWc0
-            blFKaDAyTDVtMGtmNFVtQzBPZkZBdkEKFaZCFhIN3g2ufKlv+rGC1dRPXKJmZqFJ
-            dzBIJXtZM0/6iVnDcr43y+WwHfF6zx8LR10SbGu6Yf7OXTf2ayO8+w==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-07-31T22:58:51Z"
-    mac: ENC[AES256_GCM,data:zJuFiNtGm34OxwTps90uSKtjqZ3PliXSnzMOCuJHVF3sKC7HMphl98vc41uewZd8wJswcKQ3w3K8rDlb8VpL1JTAlEjRuLCcll7OjbLtegbFjijxlZBum/6fLVRUebo8xiW77k5f1nLd4maWdIsuTsxpBLFPMD9kDAVlvq5RgOI=,iv:fKlGgSDovecadnitfe6yBuPj/hXBfSSNlfN0l1CzPVo=,tag:N1SNIiRh2CbDP5BBqxlPvA==,type:str]
-    pgp: []
-    unencrypted_suffix: _unencrypted
-    version: 3.9.0
+  - key_groups:
+      - age:
+          - "age1zddtwjmvl4ed3jm9e0jd0cnptmmla0z8fjvcccvu6c8jkdd2x9zq0dctqy"
+          - "age17u92e7hgqxt8eftks9knn5w54nh7hqpsssqt62duf7wa8q0ve52smm9erh" # Sky's key
