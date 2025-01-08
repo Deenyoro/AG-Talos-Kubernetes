@@ -1,8 +1,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: unimus-storage-bootstrap
-  namespace: invoiceninja
+  name: ${APP}-bootstrap
 spec:
   restic:
     accessModes:
