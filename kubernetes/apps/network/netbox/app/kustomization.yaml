@@ -6,3 +6,4 @@ resources:
   - ./helm-release.yaml
   - ./sso-custom-pipeline-configmap.yaml
   - ./sso-extra-configmap.yaml
+  - ./sso-secrets.sops.yaml

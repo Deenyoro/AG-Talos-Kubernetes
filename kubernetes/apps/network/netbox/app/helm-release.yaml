@@ -40,6 +40,8 @@ spec:
         - social_core.backends.open_id_connect.OpenIdConnectAuth
       autoCreateUser: true
     extraConfig:
+      - secret:
+          secretName: netbox-sso-secrets
       - values:
           SOCIAL_AUTH_PIPELINE:
             [
