@@ -122,7 +122,6 @@ endpoints:
   agents:
     disableBuilder: false
 
-
   all:
     streamRate: 35 # Higher number 'buffers' incoming chunks to make the output smoother
 
@@ -142,7 +141,6 @@ modelSpecs:
         assistant_id: asst_kqHPerBQICFkmhyiLVsDV9JV
         modelLabel: Web Search
 
-
     - name: gpt-file-analyser
       label: File Analyser
       description: This model can run code to help interpret data you provide
@@ -154,7 +152,6 @@ modelSpecs:
         endpoint: assistants
         assistant_id: asst_bVWZWx9aJUwEAaLJFS1MLEju
         modelLabel: File Analyser
-
 
     - name: claude-3-5-sonnet
       label: Claude
@@ -234,7 +231,6 @@ modelSpecs:
 
           Claude is now being connected with a human.
 
-
     - name: gpt-4o
       label: ChatGPT
       description: ChatGPT is great for general conversation and answering questions
@@ -257,8 +253,7 @@ modelSpecs:
           Image input capabilities: Enabled
           Personality: v2
 
-
-    - name: o1-preview
+    - name: o1
       label: GPT-o1
       description: GPT-o1 is good at performing complex reasoning. It's slower and more verbose than ChatGPT.
       iconURL: https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt-blue.png
@@ -274,7 +269,6 @@ modelSpecs:
         modelLabel: GPT-o1
         greeting: Ask me something complex!
 
-
     - name: "gemini"
       label: "Gemini"
       description: Gemini is useful when you want to process large amounts of data, up to 2,000 pages of text
@@ -284,8 +278,8 @@ modelSpecs:
       default: false
       preset:
         endpoint: "google"
-        model: "gemini-1.5-pro-latest"
-        maxContextTokens: 2097152 # Maximum context tokens
+        model: "gemini-2.0-flash-exp"
+        maxContextTokens: 1040000 # Maximum context tokens
         max_tokens: 8192
         temperature: 0.7
         modelLabel: "Gemini"
