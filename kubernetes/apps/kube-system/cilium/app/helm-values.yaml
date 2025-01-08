@@ -17,6 +17,8 @@ endpointRoutes:
   enabled: true
 envoy:
   enabled: false
+egressGateway:
+  enabled: true
 hubble:
   enabled: false
 ipam:
