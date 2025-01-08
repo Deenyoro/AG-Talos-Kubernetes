@@ -39,7 +39,6 @@ spec:
       backends:
         - social_core.backends.open_id_connect.OpenIdConnectAuth
       autoCreateUser: true
-    extraEnvVarsSecret: "netbox-sso-secrets"
     extraConfig:
       - values:
           SOCIAL_AUTH_PIPELINE:
@@ -53,7 +52,7 @@ spec:
         configMap:
           name: sso-custom-pipeline
       - name: sso-extra
-        configMap:
+        secret:
           name: sso-extra
     extraVolumeMounts:
       - name: sso-custom-pipeline
