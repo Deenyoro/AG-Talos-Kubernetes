@@ -64,7 +64,8 @@ spec:
                   name: authentik-init-secret
       volumes:
         - name: custom
-          existingClaim: authentik
+          persistentVolumeClaim:
+            claimName: authentik
       volumeMounts:
         - name: custom
           mountPath: /media
