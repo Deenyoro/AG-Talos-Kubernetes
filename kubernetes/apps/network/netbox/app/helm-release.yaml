@@ -39,24 +39,26 @@ spec:
       backends:
         - social_core.backends.open_id_connect.OpenIdConnectAuth
       autoCreateUser: true
-    extraConfig:
-      - values:
-          SOCIAL_AUTH_PIPELINE:
-            [
-              "netbox.custom_pipeline.set_roles"
-            ]
+#    extraConfig:
+#      - values:
+#          SOCIAL_AUTH_PIPELINE:
+#            [
+#              "netbox.custom_pipeline.add_groups",
+#              "netbox.custom_pipeline.remove_groups",
+#              "netbox.custom_pipeline.set_roles"
+#            ]
     extraVolumes:
-      - name: sso-custom-pipeline
-        configMap:
-          name: sso-custom-pipeline
+#      - name: sso-custom-pipeline
+#        configMap:
+#          name: sso-custom-pipeline
       - name: sso-extra
         secret:
           secretName: sso-extra
     extraVolumeMounts:
-      - name: sso-custom-pipeline
-        mountPath: /opt/netbox/netbox/netbox/custom_pipeline.py
-        subPath: custom_pipeline.py
-        readOnly: true
+#      - name: sso-custom-pipeline
+#        mountPath: /opt/netbox/netbox/netbox/custom_pipeline.py
+#        subPath: custom_pipeline.py
+#        readOnly: true
       - name: sso-extra
         mountPath: /etc/netbox/config/extra.py
         subPath: extra.py
