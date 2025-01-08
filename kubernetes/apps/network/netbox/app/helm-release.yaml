@@ -47,7 +47,7 @@ spec:
       staffGroups:
         - netbox-users
     loginRequired: true
-    timeZone: ${TIMEZONE}
+    timeZone: "America/New_York"
     extraEnvs:
       - name: DB_WAIT_DEBUG
         value: "1"
@@ -93,6 +93,11 @@ spec:
       timeoutSeconds: 1
       periodSeconds: 10
       successThreshold: 1
+    resources:
+      requests:
+        cpu: 1.5 # One and a half of a cpu core
+        memory: 2Gi
+        ephemeral-storage: 60Mi
     ingress:
       enabled: true
       className: internal
