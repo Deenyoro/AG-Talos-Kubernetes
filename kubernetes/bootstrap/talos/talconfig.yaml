@@ -129,6 +129,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -141,6 +143,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.12.1
+            metric: 25
       - interface: bond1
         bond:
           interfaces:
@@ -149,6 +152,18 @@ nodes:
         mtu: 9000
         addresses:
           - 192.168.90.122/24
+      - interface: bond2
+        bond:
+          interfaces:
+            - eth2
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.23.122/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.23.1
+            metric: 20
     nameservers:
       - 10.10.12.1
   - hostname: "kawg123"
@@ -156,6 +171,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -168,6 +185,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.12.1
+            metric: 25
       - interface: bond1
         bond:
           interfaces:
@@ -176,6 +194,18 @@ nodes:
         mtu: 9000
         addresses:
           - 192.168.90.123/24
+      - interface: bond2
+        bond:
+          interfaces:
+            - eth2
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.23.123/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.23.1
+            metric: 20
     nameservers:
       - 10.10.12.1
   - hostname: "kawg124"
@@ -183,6 +213,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -195,6 +227,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.12.1
+            metric: 25
       - interface: bond1
         bond:
           interfaces:
@@ -203,6 +236,18 @@ nodes:
         mtu: 9000
         addresses:
           - 192.168.90.124/24
+      - interface: bond2
+        bond:
+          interfaces:
+            - eth2
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.23.124/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.23.1
+            metric: 20
     nameservers:
       - 10.10.12.1
   - hostname: "kawg125"
@@ -210,6 +255,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -222,6 +269,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.12.1
+            metric: 25
       - interface: bond1
         bond:
           interfaces:
@@ -230,6 +278,18 @@ nodes:
         mtu: 9000
         addresses:
           - 192.168.90.125/24
+      - interface: bond2
+        bond:
+          interfaces:
+            - eth2
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.23.125/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.23.1
+            metric: 20
     nameservers:
       - 10.10.12.1
 
