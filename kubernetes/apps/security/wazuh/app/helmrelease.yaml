@@ -39,14 +39,14 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: wazuh-secrets
-                    key: indexer-password
+                    key: INDEXER_PASSWORD
               FILEBEAT_SSL_VERIFICATION_MODE: full
               API_USERNAME: wazuh-wui
               API_PASSWORD:
                 valueFrom:
                   secretKeyRef:
                     name: wazuh-secrets
-                    key: api-password
+                    key: API_PASSWORD
             resources:
               requests:
                 memory: 512Mi
@@ -100,13 +100,13 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: wazuh-secrets
-                    key: api-password
+                    key: API_PASSWORD
               DASHBOARD_USERNAME: admin
               DASHBOARD_PASSWORD:
                 valueFrom:
                   secretKeyRef:
                     name: wazuh-secrets
-                    key: dashboard-password
+                    key: DASHBOARD_PASSWORD
             resources:
               requests:
                 memory: 512Mi
