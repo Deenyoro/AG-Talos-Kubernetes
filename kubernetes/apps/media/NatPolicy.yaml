@@ -8,7 +8,7 @@ spec:
   egressGateway:
     nodeSelector:
       matchLabels:
-        plex-gw: true
+        plex-gw: "true"
     interface: bond2
   selectors:
     - podSelector:
