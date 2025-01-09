@@ -23,6 +23,7 @@ resources:
   - bookstack/ks.yaml
   - librechat/ks.yaml
   - smtp-relay/ks.yaml
+  - security
   #  - matrix-synapse/ks.yaml
   #  - matrix-synapse/element/ks.yaml
   #  - openebs-system

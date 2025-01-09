@@ -7,14 +7,12 @@ metadata:
 spec:
   targetNamespace: &ns security
   interval: 10m
-  path: "./kubernetes/apps/wazuh/app"
+  path: "./kubernetes/apps/security/wazuh/app"
   prune: true
   sourceRef:
     kind: GitRepository
     name: thepatriots
   wait: true
-  dependsOn:
-    - name: cert-manager
   postBuild:
     substitute:
       APP: *app
