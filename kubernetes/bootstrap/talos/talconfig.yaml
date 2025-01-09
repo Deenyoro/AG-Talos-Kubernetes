@@ -3,7 +3,7 @@
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
 talosVersion: v1.9.0
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.31.2
+kubernetesVersion: v1.30.3
 clusterName: "thepatriots"
 endpoint: https://10.10.12.105:6443
 clusterPodNets:
@@ -87,6 +87,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -99,6 +101,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 10.10.12.1
+            metric: 25
       - interface: bond1
         bond:
           interfaces:
@@ -107,6 +110,18 @@ nodes:
         mtu: 9000
         addresses:
           - 192.168.90.121/24
+      - interface: bond2
+        bond:
+          interfaces:
+            - eth2
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.23.121/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.23.1
+            metric: 20
     nameservers:
       - 10.10.12.1
   - hostname: "kawg122"
