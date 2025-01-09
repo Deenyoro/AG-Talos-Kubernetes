@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumEgressGatewayPolicy
+metadata:
+  name: media-policy
+spec:
+  destinationCIDRs:
+  - 0.0.0.0/0
+  egressGateway:
+    nodeSelector:
+      matchLabels:
+        plex-gw: true
+    interface: bond2
+  selectors:
+    - podSelector:
+        matchLabels:
+          io.kubernetes.pod.namespace: media
+
