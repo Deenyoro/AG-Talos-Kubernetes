@@ -41,11 +41,11 @@ metadata:
   name: wazuh-indexer-data
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 30Gi
-  storageClassName: ceph-rbd
+  storageClassName: cephfs
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
