@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app wazuh
+  namespace: flux-system
+spec:
+  targetNamespace: &ns security
+  interval: 10m
+  path: "./kubernetes/apps/wazuh/app"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  wait: true
+  dependsOn:
+    - name: cert-manager
+  postBuild:
+    substitute:
+      APP: *app
