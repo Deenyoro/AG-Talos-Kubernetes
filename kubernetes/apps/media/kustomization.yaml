@@ -15,3 +15,5 @@ resources:
   - ./sabnzbd/ks-secrets.yaml
   - ./sabnzbd/ks.yaml
   - ./flaresolverr/ks.yaml
+  - ./jellyseerr/ks-secrets.yaml
+  - ./jellyseerr/ks.yaml
