@@ -12,7 +12,7 @@ spec:
     kind: GitRepository
     name: thepatriots
   dependsOn:
-    - name: recyclarr-secrets
+    - name: recyclarr-secret
   wait: false
   interval: 30m
   retryInterval: 1m
