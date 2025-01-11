@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ./ns.yaml
   - ./NatPolicy.yaml
-#  - ./pvc.yaml
+  #  - ./pvc.yaml
   - ./plex/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./prowlarr/ks-secrets.yaml
@@ -12,8 +12,8 @@ resources:
   - ./radarr/ks.yaml
   - ./sonarr/ks-secrets.yaml
   - ./sonarr/ks.yaml
-  - ./sabnzbd/ks-secrets.yaml
-  - ./sabnzbd/ks.yaml
+  #  - ./sabnzbd/ks-secrets.yaml
+  #  - ./sabnzbd/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./jellyseerr/ks-secrets.yaml
   - ./jellyseerr/ks.yaml
