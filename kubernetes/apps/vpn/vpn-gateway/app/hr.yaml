@@ -49,7 +49,10 @@ spec:
           - secretRef:
               name: openvpn-secret
         securityContext:
-          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+          allowPrivilegeEscalation: false
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
