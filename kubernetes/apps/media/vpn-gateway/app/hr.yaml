@@ -1,0 +1,80 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vpn-gateway
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: pod-gateway
+      version: 6.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: angelnu-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    image:
+      repository: ghcr.io/angelnu/pod-gateway
+      tag: v1.11.1
+
+    addons:
+      netshoot:
+        enabled: true
+      vpn:
+        enabled: true
+        type: gluetun
+        image:
+          repository: docker.io/qmcgaw/gluetun
+          tag: v3.40.0
+        env:
+          - name: VPN_TYPE
+            value: wireguard
+          - name: VPN_INTERFACE
+            value: wg0
+          - name: FIREWALL
+            value: "off"
+          - name: DOT
+            value: "off"
+        envFrom:
+          - secretRef:
+              name: vpn-gateway-vpnconfig
+        securityContext:
+          privileged: true
+
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
+      secret.reloader.stakater.com/reload: vpn-gateway-vpnconfig
+
+    DNS: 172.16.1.1
+    routed_namespaces:
+      - media
+
+    settings:
+      IPV4_ENABLED: true
+      IPV6_ENABLED: false
+      VPN_INTERFACE: "wg0"
+      VXLAN_ID: 44
+      VXLAN_PORT: 4789
+      VXLAN_IP_NETWORK: 172.16.1
+      VXLAN_IPV6_NETWORK: fd60:ca7f:e5d8:42e9
+      VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
+      VPN_BLOCK_OTHER_TRAFFIC: false
+      VPN_TRAFFIC_PORT: "51820"
+      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
+
+    webhook:
+      image:
+        repository: ghcr.io/angelnu/gateway-admision-controller
+        tag: v3.10.0
+      gatewayDefault: false
+      gatewayLabel: setGateway
+      gatewayAnnotation: setGateway
