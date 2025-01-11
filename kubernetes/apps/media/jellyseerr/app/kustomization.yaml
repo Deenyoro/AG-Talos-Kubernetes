@@ -1,5 +1,4 @@
 ---
-<<<<<<< HEAD
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -9,10 +8,3 @@ resources:
   - pvc-cache.yaml
   - replicationsource.yaml
   - replicationdestination.yaml
-=======
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ./hr.yaml
-  - ./pvc.yaml
->>>>>>> 36d10c5 (bazarr)
