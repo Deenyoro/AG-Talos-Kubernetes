@@ -18,4 +18,5 @@ resources:
   - ./jellyseerr/ks-secrets.yaml
   - ./jellyseerr/ks.yaml
   - ./tautulli/ks.yaml
+  - ./bazarr/ks-secrets.yaml
   - ./bazarr/ks.yaml
