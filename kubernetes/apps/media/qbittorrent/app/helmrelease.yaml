@@ -88,10 +88,11 @@ spec:
               repository: ghcr.io/qdm12/gluetun
               tag: latest@sha256:62e76d60e4220950558215647049c2b9ef0fc64272b80f9012562555b140bf84
             securityContext:
+              privileged: true
+              allowPrivilegeEscalation: true
               capabilities:
                 add:
                   - NET_ADMIN
-              allowPrivilegeEscalation: false
             resources:
               requests:
                 kernel.org/tun: 1
