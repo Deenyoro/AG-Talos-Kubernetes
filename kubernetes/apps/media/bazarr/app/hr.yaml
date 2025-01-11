@@ -47,6 +47,7 @@ spec:
               BAZARR__INSTANCE_NAME: Bazarr
               BAZARR__APPLICATION_PATH: /config
               BAZARR__LOG_LEVEL: info
+              POSTGRES_ENABLED: true
               TZ: ${TIMEZONE}
             envFrom:
               - secretRef:
