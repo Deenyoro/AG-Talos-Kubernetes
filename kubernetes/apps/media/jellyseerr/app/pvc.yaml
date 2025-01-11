@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -14,31 +13,3 @@ spec:
     requests:
       storage: "${VOLSYNC_CAPACITY:-1Gi}"
   storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
-=======
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyseerr
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: cephfs
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jellyseerr-cache
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 15Gi
-  storageClassName: cephfs
->>>>>>> 36d10c5 (bazarr)
