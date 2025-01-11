@@ -30,6 +30,7 @@ spec:
       sabnzbd:
         annotations:
           reloader.stakater.com/auto: "true"
+          setGateway: "true"
         containers:
           app:
             image:
@@ -74,25 +75,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-          gluetun:
-            env:
-              VPN_TYPE: openvpn
-              VPN_INTERFACE: tun0
-              FIREWALL: on
-              DOT: off
-              FIREWALL_INPUT_PORTS: 80
-            envFrom:
-              - secretRef:
-                  name: openvpn-secret
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.40.0
-            securityContext:
-              privileged: true
-              allowPrivilegeEscalation: true
-              capabilities:
-                add:
-                  - NET_ADMIN
     service:
       app:
         controller: sabnzbd
