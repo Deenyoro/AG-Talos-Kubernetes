@@ -256,17 +256,31 @@ modelSpecs:
     - name: o1
       label: GPT-o1
       description: GPT-o1 is good at performing complex reasoning. It's slower and more verbose than ChatGPT.
-      iconURL: https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt-blue.png
+      showIconInMenu: true
+      showIconInHeader: true
+      default: false
+      preset:
+        endpoint: openAI
+        model: o1
+        maxContextTokens: 128000
+        max_tokens: 32768
+        temperature: 1
+        modelLabel: GPT-o1
+        greeting: Ask me something complex!
+
+    - name: o1-preview
+      label: GPT-o1 Preview
+      description: GPT-o1 Preview version with potential new features
       showIconInMenu: true
       showIconInHeader: true
       default: false
       preset:
         endpoint: openAI
         model: o1-preview
-        maxContextTokens: 128000 # Maximum context tokens
-        max_tokens: 32768 # Maximum output tokens
+        maxContextTokens: 128000
+        max_tokens: 32768
         temperature: 1
-        modelLabel: GPT-o1
+        modelLabel: GPT-o1 Preview
         greeting: Ask me something complex!
 
     - name: "gemini"
