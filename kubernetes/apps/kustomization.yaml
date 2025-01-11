@@ -24,6 +24,7 @@ resources:
   - librechat/ks.yaml
   - smtp-relay/ks.yaml
   - security
+  - vpn
   #  - matrix-synapse/ks.yaml
   #  - matrix-synapse/element/ks.yaml
   #  - openebs-system

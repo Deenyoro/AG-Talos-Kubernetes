@@ -5,8 +5,8 @@ metadata:
   name: vpn-gateway
   namespace: flux-system
 spec:
-  targetNamespace: media
-  path: ./kubernetes/apps/media/vpn-gateway/app
+  targetNamespace: vpn
+  path: ./kubernetes/apps/vpn/vpn-gateway/app
   prune: true
   sourceRef:
     kind: GitRepository
