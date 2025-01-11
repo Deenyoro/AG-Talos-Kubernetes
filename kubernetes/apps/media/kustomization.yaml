@@ -17,3 +17,4 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./jellyseerr/ks-secrets.yaml
   - ./jellyseerr/ks.yaml
+  - ./vpn-gateway/ks.yaml

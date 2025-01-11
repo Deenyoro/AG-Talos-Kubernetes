@@ -36,13 +36,15 @@ spec:
           tag: v3.40.0
         env:
           - name: VPN_TYPE
-            value: wireguard
+            value: openvpn
           - name: VPN_INTERFACE
-            value: wg0
+            value: tun0
           - name: FIREWALL
-            value: "off"
-          - name: DOT
-            value: "off"
+            value: "on"
+          - name: FIREWALL_INPUT_PORTS
+            value: "8080"
+          - name: VPN_PORT_FORWARDING
+            value: "on"
         envFrom:
           - secretRef:
               name: vpn-gateway-vpnconfig
@@ -64,7 +66,6 @@ spec:
       VXLAN_ID: 44
       VXLAN_PORT: 4789
       VXLAN_IP_NETWORK: 172.16.1
-      VXLAN_IPV6_NETWORK: fd60:ca7f:e5d8:42e9
       VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
       VPN_BLOCK_OTHER_TRAFFIC: false
       VPN_TRAFFIC_PORT: "51820"
