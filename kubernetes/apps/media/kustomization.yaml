@@ -5,7 +5,7 @@ resources:
   - ./NatPolicy.yaml
   #  - ./pvc.yaml
   - ./plex/ks.yaml
-#  - ./qbittorrent/ks.yaml
+  #  - ./qbittorrent/ks.yaml
   - ./prowlarr/ks-secrets.yaml
   - ./prowlarr/ks.yaml
   - ./radarr/ks-secrets.yaml
@@ -17,3 +17,5 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./jellyseerr/ks-secrets.yaml
   - ./jellyseerr/ks.yaml
+  - ./tautulli/ks.yaml
+  - ./bazarr/ks.yaml
