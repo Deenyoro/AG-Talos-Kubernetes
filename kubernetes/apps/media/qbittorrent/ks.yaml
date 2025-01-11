@@ -8,6 +8,7 @@ metadata:
 spec:
   targetNamespace: &ns media
   interval: 10m
+  timeout: 1m
   path: "./kubernetes/apps/media/qbittorrent/app"
   prune: true
   sourceRef:
