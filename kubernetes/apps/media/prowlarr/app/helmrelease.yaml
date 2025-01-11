@@ -93,7 +93,8 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
+          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+            hosts:
               - *host
     persistence:
       config:
