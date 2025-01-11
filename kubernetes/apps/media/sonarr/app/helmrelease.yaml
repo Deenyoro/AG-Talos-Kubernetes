@@ -22,8 +22,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-  - name: rook-ceph-cluster
-    namespace: rook-ceph
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
       sonarr:
@@ -53,8 +53,8 @@ spec:
               SONARR__UPDATE__BRANCH: develop
               TZ: ${TIMEZONE}
             envFrom:
-            - secretRef:
-                name: sonarr-secret
+              - secretRef:
+                  name: sonarr-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -101,15 +101,15 @@ spec:
           gethomepage.dev/name: Sonarr
           gethomepage.dev/icon: sonarr.png
         hosts:
-        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-            - *host
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: *app

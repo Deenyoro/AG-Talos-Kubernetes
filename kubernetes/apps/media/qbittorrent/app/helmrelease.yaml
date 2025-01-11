@@ -118,7 +118,7 @@ spec:
       qbit:
         className: internal
         hosts:
-          - host: &host "qb.${SECRET_DOMAIN}"
+          - host: &host "qb.${SECRET_DOMAIN_LEGACY}"
             paths:
               - path: /
                 pathType: Prefix

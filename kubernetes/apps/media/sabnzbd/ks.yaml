@@ -22,4 +22,4 @@ spec:
       APP: *app
       APP_UID: "65534"
       APP_GID: "65534"
-      HOSTNAME: "sab.${SECRET_DOMAIN}"
+      HOSTNAME: "sab.${SECRET_DOMAIN_LEGACY}"

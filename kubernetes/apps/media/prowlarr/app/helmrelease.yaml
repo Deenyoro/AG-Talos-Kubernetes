@@ -86,7 +86,7 @@ spec:
               prowlarr
             )
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
             paths:
               - path: /
                 service:
