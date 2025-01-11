@@ -14,4 +14,7 @@ spec:
     - podSelector:
         matchLabels:
           io.kubernetes.pod.namespace: media
+    - podSelector:
+        matchLabels:
+          io.kubernetes.pod.namespace: vpn
 
