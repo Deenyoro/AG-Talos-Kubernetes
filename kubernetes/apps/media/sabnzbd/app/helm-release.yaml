@@ -30,8 +30,9 @@ spec:
       sabnzbd:
         annotations:
           reloader.stakater.com/auto: "true"
-        labels:
-          setGateway: "true"
+        pod:
+          labels:
+            setGateway: "true"
         containers:
           app:
             image:
