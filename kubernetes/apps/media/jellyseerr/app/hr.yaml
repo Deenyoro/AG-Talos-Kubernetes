@@ -84,15 +84,11 @@ spec:
 
     ingress:
       app:
-        className: internal
         annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media
-          gethomepage.dev/name: Requests
-          gethomepage.dev/icon: jellyseerr.png
-          gethomepage.dev/description: Media Requests
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_LEGACY}
+        className: external
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+          - host: &host "requests.${SECRET_DOMAIN_LEGACY}"
             paths:
               - path: /
                 service:
@@ -101,6 +97,24 @@ spec:
         tls:
           - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
             hosts:
+              - *host
+      internal:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Requests
+          gethomepage.dev/icon: jellyseerr.png
+          gethomepage.dev/description: Media Requests
+        className: internal
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
               - *host
 
     persistence:
