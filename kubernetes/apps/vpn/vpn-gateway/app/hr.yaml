@@ -48,6 +48,11 @@ spec:
         envFrom:
           - secretRef:
               name: openvpn-secret
+        resources:
+          requests:
+            kernel.org/tun: 1
+          limits:
+            kernel.org/tun: 1
         securityContext:
           capabilities:
             add:
