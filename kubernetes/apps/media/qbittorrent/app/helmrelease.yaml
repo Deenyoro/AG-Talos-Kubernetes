@@ -34,15 +34,6 @@ spec:
         reloader.stakater.com/auto: "true"
     controllers:
       qbittorrent:
-        pod:
-          securityContext:
-            runAsUser: 65534
-            runAsGroup: 65534
-            fsGroup: 65534
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 44
-              - 109
         containers:
           qbit:
             env:
@@ -65,8 +56,8 @@ spec:
                 cpu: 49m
                 memory: 5Gi
             securityContext:
-              runAsUser: 568
-              runAsGroup: 568
+              runAsUser: 65534
+              runAsGroup: 65534
               runAsNonRoot: true
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
