@@ -47,13 +47,13 @@ spec:
             value: "on"
         envFrom:
           - secretRef:
-              name: vpn-gateway-vpnconfig
+              name: vpn-gateway-config
         securityContext:
           privileged: true
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
-      secret.reloader.stakater.com/reload: vpn-gateway-vpnconfig
+      secret.reloader.stakater.com/reload: vpn-gateway-config
 
     DNS: 172.16.1.1
     routed_namespaces:
