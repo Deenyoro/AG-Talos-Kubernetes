@@ -20,3 +20,5 @@ resources:
   - ./tautulli/ks.yaml
   - ./bazarr/ks-secrets.yaml
   - ./bazarr/ks.yaml
+  - ./recyclarr/ks-secrets.yaml
+  - ./recyclarr/ks.yaml
