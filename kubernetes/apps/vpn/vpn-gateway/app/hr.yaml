@@ -31,6 +31,7 @@ spec:
       vpn:
         enabled: true
         networkPolicy:
+          enabled: false
           egress:
             # Allow only VPN traffic to Internet
             - to:
