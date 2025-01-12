@@ -43,8 +43,11 @@ spec:
                 # DNS Over TLS
                 - port: 853
                   protocol: TCP
+                - protocol: TCP
+                  port: 53
                 - port: 443
                   protocol: TCP
+                - protocol: ICMPv4
             # Allow any traffic within k8s
             - to:
                 - ipBlock:
