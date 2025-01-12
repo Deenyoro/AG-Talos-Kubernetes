@@ -48,7 +48,6 @@ spec:
                   port: 53
                 - port: 443
                   protocol: TCP
-                - protocol: ICMPv4
             # Allow any traffic within k8s
             - to:
                 - ipBlock:
