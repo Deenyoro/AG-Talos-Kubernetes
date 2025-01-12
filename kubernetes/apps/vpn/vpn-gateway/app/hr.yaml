@@ -71,6 +71,10 @@ spec:
             value: "on"
           - name: DNS_KEEP_NAMESERVER
             value: "on"
+          - name: HEALTH_VPN_DURATION_INITIAL
+            value: "10s"
+          - name: HEALTH_TARGET_ADDRESS
+            value: "one.one.one.one:443"
         envFrom:
           - secretRef:
               name: openvpn-secret
