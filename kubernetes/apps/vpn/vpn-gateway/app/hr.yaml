@@ -30,8 +30,22 @@ spec:
         enabled: true
       vpn:
         enabled: true
-        #networkPolicy:
-        #  enabled: false
+        networkPolicy:
+          egress:
+            - to:
+                ipBlock:
+                  cidr: 0.0.0.0/0
+              ports:
+                - port: 1194
+                  protocol: UDP
+                - port: 53
+                  protocol: UDP
+                - port: 443
+                  protocol: TCP
+            - to:
+                ipBlock:
+                  # Allow Cluster IPs
+                  cidr: 10.0.0.0/8
         type: gluetun
         image:
           repository: docker.io/qmcgaw/gluetun
