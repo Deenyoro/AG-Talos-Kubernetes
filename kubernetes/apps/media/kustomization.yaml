@@ -22,3 +22,4 @@ resources:
   - ./bazarr/ks.yaml
   - ./recyclarr/ks-secrets.yaml
   - ./recyclarr/ks.yaml
+  - ./netshoot/ks.yaml
