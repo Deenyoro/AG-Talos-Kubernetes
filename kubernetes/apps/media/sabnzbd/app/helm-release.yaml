@@ -50,20 +50,20 @@ spec:
             #            envFrom:
             #              - secretRef:
             #                  name: sabnzbd-secret
-            probes:
-              liveness: &probes
-                enabled: false
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api?mode=version
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-            resources:
+#            probes:
+#              liveness: &probes
+#                enabled: false
+#                custom: true
+#                spec:
+#                  httpGet:
+#                    path: /api?mode=version
+#                    port: *port
+#                  initialDelaySeconds: 0
+#                  periodSeconds: 10
+#                  timeoutSeconds: 1
+#                  failureThreshold: 3
+#              readiness: *probes
+#            resources:
               requests:
                 cpu: 100m
               limits:
