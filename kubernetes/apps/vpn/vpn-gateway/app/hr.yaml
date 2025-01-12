@@ -30,6 +30,8 @@ spec:
         enabled: true
       vpn:
         enabled: true
+        #networkPolicy:
+        #  enabled: false
         type: gluetun
         image:
           repository: docker.io/qmcgaw/gluetun
@@ -42,7 +44,7 @@ spec:
           - name: FIREWALL
             value: "off"
           - name: FIREWALL_INPUT_PORTS
-            value: 8080,1194
+            value: 8080,80
           - name: VPN_PORT_FORWARDING
             value: "on"
         envFrom:
@@ -78,8 +80,8 @@ spec:
       VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
       VPN_BLOCK_OTHER_TRAFFIC: false
       VPN_TRAFFIC_PORT: "1194"
-      VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
+      VPN_LOCAL_CIDRS: "10.96.0.0/16"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.96.0.0/16"
 
     webhook:
       image:
