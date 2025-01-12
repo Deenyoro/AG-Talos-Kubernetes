@@ -63,7 +63,7 @@ spec:
 #                  timeoutSeconds: 1
 #                  failureThreshold: 3
 #              readiness: *probes
-#            resources:
+            resources:
               requests:
                 cpu: 100m
               limits:
