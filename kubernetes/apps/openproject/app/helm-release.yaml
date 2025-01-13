@@ -42,7 +42,7 @@ spec:
             dependsOn: init-db
             image:
               repository: docker.io/openproject/openproject
-              tag: 15.1.0-slim
+              tag: 15.1.1-slim
             envFrom:
               - secretRef:
                   name: openproject-secret
