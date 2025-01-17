@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: registry.skysolutions.fi/library/openproject
-              tag: 15.1.0
+              tag: 15.1.1
             envFrom:
               - secretRef:
                   name: openproject-secret
@@ -83,7 +83,7 @@ spec:
           worker:
             image:
               repository: registry.skysolutions.fi/library/openproject
-              tag: 15.1.0
+              tag: 15.1.1
             envFrom:
               - secretRef:
                   name: openproject-secret
