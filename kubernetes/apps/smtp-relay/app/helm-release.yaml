@@ -34,7 +34,7 @@ spec:
           main:
             image:
               repository: registry.skysolutions.fi/docker.io/boky/postfix
-              tag: 4.3.0-debian
+              tag: v4.4.0-debian
             env:
               RELAYHOST: "smtp.office365.com:587"
               ALLOW_EMPTY_SENDER_DOMAINS: true
