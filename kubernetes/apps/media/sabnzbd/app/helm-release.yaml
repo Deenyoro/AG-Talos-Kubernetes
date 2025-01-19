@@ -50,24 +50,24 @@ spec:
             #            envFrom:
             #              - secretRef:
             #                  name: sabnzbd-secret
-#            probes:
-#              liveness: &probes
-#                enabled: false
-#                custom: true
-#                spec:
-#                  httpGet:
-#                    path: /api?mode=version
-#                    port: *port
-#                  initialDelaySeconds: 0
-#                  periodSeconds: 10
-#                  timeoutSeconds: 1
-#                  failureThreshold: 3
-#              readiness: *probes
+            #            probes:
+            #              liveness: &probes
+            #                enabled: false
+            #                custom: true
+            #                spec:
+            #                  httpGet:
+            #                    path: /api?mode=version
+            #                    port: *port
+            #                  initialDelaySeconds: 0
+            #                  periodSeconds: 10
+            #                  timeoutSeconds: 1
+            #                  failureThreshold: 3
+            #              readiness: *probes
             resources:
               requests:
                 cpu: 100m
               limits:
-                memory: 8Gi
+                memory: 90Gi
             securityContext:
               runAsUser: 65534
               runAsGroup: 65534
@@ -77,25 +77,25 @@ spec:
               capabilities:
                 drop:
                   - ALL
-#          gluetun:
-#            env:
-#              VPN_TYPE: openvpn
-#              VPN_INTERFACE: tun0
-#              FIREWALL: on
-#              DOT: off
-#              FIREWALL_INPUT_PORTS: 80
-#            envFrom:
-#              - secretRef:
-#                  name: openvpn-secret
-#            image:
-#              repository: ghcr.io/qdm12/gluetun
-#              tag: v3.40.0
-#            securityContext:
-#              privileged: true
-#              allowPrivilegeEscalation: true
-#              capabilities:
-#                add:
-#                  - NET_ADMIN
+    #          gluetun:
+    #            env:
+    #              VPN_TYPE: openvpn
+    #              VPN_INTERFACE: tun0
+    #              FIREWALL: on
+    #              DOT: off
+    #              FIREWALL_INPUT_PORTS: 80
+    #            envFrom:
+    #              - secretRef:
+    #                  name: openvpn-secret
+    #            image:
+    #              repository: ghcr.io/qdm12/gluetun
+    #              tag: v3.40.0
+    #            securityContext:
+    #              privileged: true
+    #              allowPrivilegeEscalation: true
+    #              capabilities:
+    #                add:
+    #                  - NET_ADMIN
     service:
       app:
         controller: sabnzbd
