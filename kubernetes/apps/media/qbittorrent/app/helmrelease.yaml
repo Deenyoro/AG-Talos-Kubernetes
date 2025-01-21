@@ -142,12 +142,7 @@ spec:
           - path: /config
     media:
      - type: nfs
-        server: 192.168.90.101
-       path: /mnt/QuadSquad/EC/Downloads
-        globalMounts:
-         - path: /mnt/QuadSquad/EC/Downloads
-     - type: nfs
        server: 192.168.90.101
-       path: /mnt/QuadSquad/EC/Videos
+       path: /mnt/QuadSquad/EC
        globalMounts:
-         - path: /mnt/QuadSquad/EC/Videos
+         - path: /mnt/QuadSquad/EC

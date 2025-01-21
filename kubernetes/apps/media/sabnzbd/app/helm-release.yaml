@@ -125,9 +125,9 @@ spec:
           - path: /config/logs
       tmp:
         type: emptyDir
-      media-downloads:
+      mount:
         type: nfs
         server: 192.168.90.101
-        path: /mnt/QuadSquad/EC/Downloads
+        path: /mnt/QuadSquad/EC
         globalMounts:
-          - path: /mnt/QuadSquad/EC/Downloads
+          - path: /mnt/QuadSquad/EC

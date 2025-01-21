@@ -117,15 +117,9 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
-      media:
+      mount:
         type: nfs
         server: 192.168.90.101
-        path: /mnt/QuadSquad/EC/Videos
+        path: /mnt/QuadSquad/EC
         globalMounts:
-          - path: /mnt/QuadSquad/EC/Videos
-      downloads:
-        type: nfs
-        server: 192.168.90.101
-        path: /mnt/QuadSquad/EC/Downloads
-        globalMounts:
-          - path: /mnt/QuadSquad/EC/Downloads
+          - path: /mnt/QuadSquad/EC
