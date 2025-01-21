@@ -57,7 +57,7 @@ spec:
               limits:
                 memory: 15Gi
               requests:
-                cpu: 49m
+                cpu: 500m
                 memory: 5Gi
             securityContext:
               runAsUser: 65534
