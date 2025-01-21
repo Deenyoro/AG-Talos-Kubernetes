@@ -141,7 +141,7 @@ spec:
         globalMounts:
           - path: /config
       media:
-       - type: nfs
+         type: nfs
          server: 192.168.90.101
          path: /mnt/QuadSquad/EC
          globalMounts:
