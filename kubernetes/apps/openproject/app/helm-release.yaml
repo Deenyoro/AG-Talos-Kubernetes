@@ -41,7 +41,7 @@ spec:
           rails-migrate:
             dependsOn: init-db
             image:
-              repository: registry.skysolutions.fi/library/openproject
+              repository: ghcr.io/skyssolutions/openproject
               tag: 15.2.0
             envFrom:
               - secretRef:
@@ -54,7 +54,7 @@ spec:
         containers:
           app:
             image:
-              repository: registry.skysolutions.fi/library/openproject
+              repository: ghcr.io/skyssolutions/openproject
               tag: 15.2.0
             envFrom:
               - secretRef:
@@ -82,7 +82,7 @@ spec:
         containers:
           worker:
             image:
-              repository: registry.skysolutions.fi/library/openproject
+              repository: ghcr.io/skyssolutions/openproject
               tag: 15.2.0
             envFrom:
               - secretRef:
