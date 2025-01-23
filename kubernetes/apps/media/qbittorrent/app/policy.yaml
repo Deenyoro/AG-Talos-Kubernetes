@@ -1,0 +1,45 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: qbit-to-cluster
+  labels:
+    app.kubernetes.io/instance: &instance qbit
+    app.kubernetes.io/name: &name qbit
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  egress:
+    - toEntities:
+        - cluster
+  ingress:
+    - toEntities:
+        - cluster
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: qbit-vxlan
+  labels:
+    app.kubernetes.io/instance: &instance qbit
+    app.kubernetes.io/name: &name qbit
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: *instance
+      app.kubernetes.io/name: *name
+  egress:
+    - toPorts:
+        - ports:
+            - port: "4789"
+              protocol: UDP
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "4789"
+              protocol: UDP
+    - icmps:
+        - fields:
+            - type: 8
+              family: IPv4
