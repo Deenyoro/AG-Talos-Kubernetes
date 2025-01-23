@@ -5,3 +5,4 @@ resources:
   - ./hr.yaml
   - ./secrets.sops.yaml
   - ./portvpnsecrets.sops.yaml
+  - ./networkpolicy.yaml

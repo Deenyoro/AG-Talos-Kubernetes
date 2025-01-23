@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: vpn-gateway
+  name: &app vpn-gateway
 spec:
   interval: 15m
   chart:
@@ -21,84 +21,11 @@ spec:
     remediation:
       retries: 5
   values:
+    global:
+      fullnameOverride: *app
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.11.1
-
-    addons:
-      netshoot:
-        enabled: true
-      vpn:
-        enabled: true
-        networkPolicy:
-          enabled: false
-          egress:
-            # Allow only VPN traffic to Internet
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-                # VPN Port
-                - port: 1197
-                  protocol: UDP
-                # DNS Over TLS
-                - port: 853
-                  protocol: TCP
-                - protocol: TCP
-                  port: 53
-                - port: 443
-                  protocol: TCP
-            # Allow any traffic within k8s
-            - to:
-                - ipBlock:
-                    cidr: 10.244.0.0/16
-        type: gluetun
-        image:
-          repository: docker.io/qmcgaw/gluetun
-          tag: v3.40.0
-        env:
-          - name: VPN_SERVICE_PROVIDER
-            value: "airvpn"
-          - name: VPN_TYPE
-            value: wireguard
-          - name: VPN_INTERFACE
-            value: wg0
-          - name: FIREWALL
-            value: "off"
-          - name: DOT
-            value: "off"
-          - name: FIREWALL_INPUT_PORTS
-            value: 1637,43373
-          - name: DNS_KEEP_NAMESERVER
-            value: "on"
-          - name: HEALTH_VPN_DURATION_INITIAL
-            value: "10s"
-          - name: HEALTH_TARGET_ADDRESS
-            value: "one.one.one.one:443"
-        envFrom:
-          - secretRef:
-              name: portvpn-secret
-        resources:
-          requests:
-            kernel.org/tun: 1
-          limits:
-            kernel.org/tun: 1
-        securityContext:
-          capabilities:
-            add:
-              - NET_ADMIN
-          allowPrivilegeEscalation: false
-
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: vpn-gateway-pod-gateway
-      secret.reloader.stakater.com/reload: openvpn-secret
-
-    DNS: 172.16.1.1
-    routed_namespaces:
-      - media
-
-    networkPolicy:
-      enabled: false
 
     settings:
       VPN_INTERFACE: "wg0"
@@ -106,10 +33,70 @@ spec:
       VXLAN_PORT: 4789
       VXLAN_IP_NETWORK: 172.16.1
       VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
-      VPN_BLOCK_OTHER_TRAFFIC: false
-      VPN_TRAFFIC_PORT: "1637"
+      VPN_BLOCK_OTHER_TRAFFIC: true
+      GATEWAY_ENABLE_DNSSEC: false
+      VPN_TRAFFIC_PORT: "1194"
       VPN_LOCAL_CIDRS: "10.96.0.0/16 10.244.0.0/16"
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.244.0.0/16 10.96.0.0/16"
+
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: *app
+      secret.reloader.stakater.com/reload: *app
+
+    publicPorts:
+      - hostname: qbittorrent
+        IP: 10
+        ports:
+          - type: udp
+            port: 43373
+          - type: tcp
+            port: 43373
+
+
+    addons:
+      netshoot:
+        enabled: true
+      vpn:
+        enabled: true
+        type: gluetun
+        image:
+          repository: docker.io/qmcgaw/gluetun
+          tag: v3.40.0
+        env:
+          VPN_SERVICE_PROVIDER: airvpn
+          VPN_TYPE: wireguard
+          VPN_INTERFACE: wg0
+          WIREGUARD_MTU: 1320
+          DOT: off
+          FIREWALL_ENABLED_DISABLING_IT_SHOOTS_YOU_IN_YOUR_FOOT: off
+          HTTP_CONTROL_SERVER_ADDRESS: ":80"
+          HTTP_CONTROL_SERVER_LOG: off
+        envFrom:
+          - secretRef:
+              name: portvpn-secret
+        resources:
+          requests:
+            cpu: 5m
+            memory: 64M
+            kernel.org/tun: 1
+          limits:
+            memory: 128M
+            kernel.org/tun: 1
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+          allowPrivilegeEscalation: false
+        # network policy is disabled because we need 2 CiliumNetworkPolicies
+        networkPolicy:
+          enabled: false
+
+    routed_namespaces:
+      - media
+
+    networkPolicy:
+      enabled: false
+
 
     webhook:
       image:
@@ -118,3 +105,36 @@ spec:
       gatewayDefault: false
       gatewayLabel: setGateway
       gatewayAnnotation: setGateway
+
+  # Adding the health check port to service
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Service
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/ports/-
+                value:
+                  name: gluetun
+                  port: 80
+                  protocol: TCP
+                  targetPort: 80
+          - target:
+              kind: Deployment
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/1/ports
+                value: []
+          - target:
+              kind: Deployment
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/template/spec/containers/1/ports/-
+                value:
+                  containerPort: 80
+                  name: gluetun
+                  protocol: TCP
