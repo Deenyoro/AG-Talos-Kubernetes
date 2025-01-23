@@ -14,7 +14,7 @@ spec:
     - toEntities:
         - cluster
   ingress:
-    - toEntities:
+    - fromEntities:
         - cluster
 ---
 apiVersion: cilium.io/v2
