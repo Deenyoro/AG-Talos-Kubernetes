@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://flux.jank.ing/helmrelease/v2/github/bjw-s/helm-charts/main/charts/library/common/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.6.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -29,21 +29,22 @@ spec:
       strategy: uninstall
       retries: 3
   values:
-    defaultPodOptions:
-      hostname: qbittorrent
-      securityContext:
-        runAsUser: 65534
-        runAsGroup: 65534
-        runAsNonRoot: true
-        fsGroup: 65534
-        fsGroupChangePolicy: "OnRootMismatch"
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        capabilities:
-          drop:
-            - ALL
-      labels:
-        setGateway: "true"
+    global:
+      defaultPodOptions:
+        hostname: qbittorrent
+        securityContext:
+          runAsUser: 65534
+          runAsGroup: 65534
+          runAsNonRoot: true
+          fsGroup: 65534
+          fsGroupChangePolicy: "OnRootMismatch"
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+        labels:
+          setGateway: "true"
     controllers:
       qbittorrent:
         containers:
