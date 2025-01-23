@@ -60,9 +60,8 @@ spec:
         enabled: true
         type: gluetun
         image:
-          repository: docker.io/qmcgaw/gluetun
-          tag: v3.40.0
-          imagePullPolicy: Always
+          repository: ghcr.io/qdm12/gluetun
+          tag: latest@sha256:183c74263a07f4c931979140ac99ff4fbc44dcb1ca5b055856ef580b0fafdf1c
         env:
           VPN_SERVICE_PROVIDER: airvpn
           VPN_TYPE: wireguard
