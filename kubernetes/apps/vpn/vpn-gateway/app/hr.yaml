@@ -20,6 +20,8 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  driftDetection:
+    mode: warn
   values:
     global:
       fullnameOverride: *app
