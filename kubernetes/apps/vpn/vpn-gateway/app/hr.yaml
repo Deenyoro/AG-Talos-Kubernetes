@@ -68,7 +68,7 @@ spec:
           - name: DOT
             value: "off"
           - name: FIREWALL_INPUT_PORTS
-            value: 1637
+            value: 1637,43373
           - name: DNS_KEEP_NAMESERVER
             value: "on"
           - name: HEALTH_VPN_DURATION_INITIAL
