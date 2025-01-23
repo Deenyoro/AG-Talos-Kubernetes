@@ -95,6 +95,7 @@ spec:
         networkPolicy:
           enabled: false
 
+    DNS: 172.16.1.1
     routed_namespaces:
       - media
 
