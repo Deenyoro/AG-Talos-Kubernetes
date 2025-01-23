@@ -29,7 +29,7 @@ spec:
       strategy: uninstall
       retries: 3
   values:
-    controller:
+    controllers:
       defaultPodOptions:
         hostname: qbittorrent
         securityContext:
@@ -45,9 +45,6 @@ spec:
               - ALL
         labels:
           setGateway: "true"
-      annotations:
-        reloader.stakater.com/auto: "true"
-    controllers:
       qbittorrent:
         containers:
           qbit:
