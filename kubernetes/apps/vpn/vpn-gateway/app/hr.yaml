@@ -61,7 +61,7 @@ spec:
         type: gluetun
         image:
           repository: docker.io/qmcgaw/gluetun
-          tag: latest@sha256:aaaf6c7c108f7f7caae978499b4cb823a135324992ce7cea4acd405a29298141
+          tag: v3.40.0
         env:
           VPN_SERVICE_PROVIDER: airvpn
           VPN_TYPE: wireguard
