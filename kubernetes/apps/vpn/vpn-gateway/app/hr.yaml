@@ -62,6 +62,7 @@ spec:
         image:
           repository: docker.io/qmcgaw/gluetun
           tag: v3.40.0
+          imagePullPolicy: Always
         env:
           VPN_SERVICE_PROVIDER: airvpn
           VPN_TYPE: wireguard
