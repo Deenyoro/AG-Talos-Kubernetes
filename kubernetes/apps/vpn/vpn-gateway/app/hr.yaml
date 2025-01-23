@@ -74,7 +74,7 @@ spec:
           HTTP_CONTROL_SERVER_LOG: off
           PUBLICIP_API: ip2location
           SERVER_COUNTRIES: Canada
-          WIREGUARD_PERSISTENT_KEEPALIVE_INTERVAL: "15"
+          WIREGUARD_PERSISTENT_KEEPALIVE_INTERVAL: "15m"
         envFrom:
           - secretRef:
               name: portvpn-secret
