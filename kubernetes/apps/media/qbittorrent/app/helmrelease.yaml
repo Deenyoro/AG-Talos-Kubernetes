@@ -29,24 +29,15 @@ spec:
       strategy: uninstall
       retries: 3
   values:
-    global:
-      defaultPodOptions:
-        hostname: qbittorrent
-        securityContext:
-          runAsUser: 65534
-          runAsGroup: 65534
-          runAsNonRoot: true
-          fsGroup: 65534
-          fsGroupChangePolicy: "OnRootMismatch"
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-          capabilities:
-            drop:
-              - ALL
-        labels:
-          setGateway: "true"
     controllers:
       qbittorrent:
+        pod:
+          hostname: qbittorrent
+          securityContext:
+            fsGroup: 65534
+            fsGroupChangePolicy: "OnRootMismatch"
+          labels:
+            setGateway: "true"
         containers:
           qbit:
             env:
@@ -68,6 +59,15 @@ spec:
               requests:
                 cpu: 500m
                 memory: 5Gi
+            securityContext:
+              runAsUser: 65534
+              runAsGroup: 65534
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
     ingress:
       qbit:
         className: internal
