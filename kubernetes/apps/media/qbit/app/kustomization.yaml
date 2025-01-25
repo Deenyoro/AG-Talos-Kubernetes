@@ -3,3 +3,9 @@ kind: Kustomization
 resources:
   - ./pvc.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: qbittorrent-scripts
+    files:
+      - ./config/completed.sh
+generatorOptions:
+  disableNameSuffixHash: true
