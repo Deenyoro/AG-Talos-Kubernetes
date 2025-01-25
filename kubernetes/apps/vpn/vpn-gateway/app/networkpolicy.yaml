@@ -15,6 +15,9 @@ spec:
       app.kubernetes.io/name: *name
   egress:
     - toCIDR:
+        - 1.1.1.0/24
+        - 1.0.0.0/24
+    - toCIDR:
         - 0.0.0.0/0
       toPorts:
         - ports:
