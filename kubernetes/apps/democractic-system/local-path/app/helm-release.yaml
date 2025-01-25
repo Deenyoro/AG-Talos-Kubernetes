@@ -13,21 +13,25 @@ spec:
         kind: HelmRepository
         namespace: flux-system
   values:
-    driver:
-      config:
-        driver: local-hostpath
-        local-hostpath:
-          shareBasePath: &storagePath /var/democratic/local-hostpath
-          controllerBasePath: *storagePath
-          dirPermissionsMode: "0770"
-          dirPermissionsUser: 0
-          dirPermissionsGroup: 0
-
     csiDriver:
       name: "org.democratic-csi.local-hostpath"
       attachRequired: false
-      storageCapacity: true
-      fsGroupPolicy: File
+      storageCapacity: true # With storage capacity tracking, the scheduler filters out nodes which do not have enough capacity.
+      fsGroupPolicy: File # fsGroupChangePolicy
+
+    storageClasses:
+      - name: local-hostpath
+        defaultClass: false
+        reclaimPolicy: Delete
+        volumeBindingMode: WaitForFirstConsumer
+        # distributed support is not yet ready for expansion
+        allowVolumeExpansion: true
+
+    volumeSnapshotClasses:
+      - name: local-hostpath
+        deletionPolicy: Delete
+        parameters:
+          dummy: { }
 
     controller:
       fullnameOverride: *name
@@ -54,36 +58,27 @@ spec:
         extraArgs:
           - --leader-election=false
           - --node-deployment=true
-      storageClasses:
-        - name: local-hostpath
-          defaultClass: false
-          reclaimPolicy: Delete
-          volumeBindingMode: WaitForFirstConsumer
-          allowVolumeExpansion: true
-      volumeSnapshotClasses:
-        - name: local-hostpath
-          deletionPolicy: Delete
-          parameters: {}
+
+    node:
       driver:
-        config:
-          driver: local-hostpath
-          local-hostpath:
-            shareBasePath: &storagePath /var/democratic/local-hostpath
-            controllerBasePath: *storagePath
-            dirPermissionsMode: "0770"
-            dirPermissionsUser: 0
-            dirPermissionsGroup: 0
-      node:
-        driver:
-          image: democraticcsi/democratic-csi:v1.9.3
-          extraVolumeMounts:
-            - name: local-hostpath
-              mountPath: *storagePath
-              mountPropagation: Bidirectional
-        extraVolumes:
+        extraVolumeMounts:
           - name: local-hostpath
-            hostPath:
-              path: *storagePath
-              type: DirectoryOrCreate
-      csiProxy:
-        image: ghcr.io/democratic-csi/csi-grpc-proxy:v0.5.6
+            mountPath: /var/lib/local-hostpath
+            mountPropagation: Bidirectional
+
+      extraVolumes:
+        - name: local-hostpath
+          hostPath:
+            path: /var/lib/local-hostpath
+            type: DirectoryOrCreate
+
+    driver:
+      config:
+        driver: local-hostpath
+        instance_id:
+        local-hostpath:
+          shareBasePath: "/var/lib/local-hostpath/"
+          controllerBasePath: "/var/lib/local-hostpath/"
+          dirPermissionsMode: "0770"
+          dirPermissionsUser: 0
+          dirPermissionsGroup: 0
