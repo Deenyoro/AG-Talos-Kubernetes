@@ -46,6 +46,12 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.namespace
+              PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: qbtools-secret
+                    key: PASSWORD
+
             args: [
               "tagging",
               "--added-on",
@@ -54,6 +60,8 @@ spec:
               "--sites",
               "--unregistered",
               "--server", "qbit.$(POD_NAMESPACE).svc.cluster.local",
+              "--username", "admin",
+              "--password", "$(PASSWORD)"
               "--port", "8080",
               "--config", "/config/config.yaml"
             ]
@@ -72,7 +80,9 @@ spec:
               "--include-tag", "unregistered",
               # "--dry-run",
               "--server", "qbit.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080"
+              "--port", "8080",
+              "--username", "admin",
+              "--password", "$(PASSWORD)"
             ]
             resources: *resources
           expired:
@@ -86,7 +96,9 @@ spec:
               "--include-tag", "added:7d",
               # "--dry-run",
               "--server", "qbit.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080"
+              "--port", "8080",
+              "--username", "admin",
+              "--password", "$(PASSWORD)"
             ]
             resources: *resources
         pod:
@@ -107,7 +119,9 @@ spec:
               "--exclude-pattern", "*/manual/*",
               # "--dry-run",
               "--server", "qbit.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080"
+              "--port", "8080",
+              "--username", "admin",
+              "--password", "$(PASSWORD)"
             ]
             resources: *resources
         pod:
@@ -121,7 +135,9 @@ spec:
               "reannounce",
               "--process-seeding",
               "--server", "qbit.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "8080"
+              "--port", "8080",
+              "--username", "admin",
+              "--password", "$(PASSWORD)"
             ]
             resources: *resources
     defaultPodOptions:
