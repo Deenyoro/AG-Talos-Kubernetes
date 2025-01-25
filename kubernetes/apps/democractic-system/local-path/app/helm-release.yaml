@@ -13,6 +13,22 @@ spec:
         kind: HelmRepository
         namespace: flux-system
   values:
+    driver:
+      config:
+        driver: local-hostpath
+        local-hostpath:
+          shareBasePath: &storagePath /var/democratic/local-hostpath
+          controllerBasePath: *storagePath
+          dirPermissionsMode: "0770"
+          dirPermissionsUser: 0
+          dirPermissionsGroup: 0
+
+    csiDriver:
+      name: "org.democratic-csi.local-hostpath"
+      attachRequired: false
+      storageCapacity: true
+      fsGroupPolicy: File
+
     controller:
       fullnameOverride: *name
       enabled: true
@@ -38,11 +54,6 @@ spec:
         extraArgs:
           - --leader-election=false
           - --node-deployment=true
-      csiDriver:
-        name: "org.democratic-csi.local-hostpath"
-        attachRequired: false
-        storageCapacity: true
-        fsGroupPolicy: File
       storageClasses:
         - name: local-hostpath
           defaultClass: false
