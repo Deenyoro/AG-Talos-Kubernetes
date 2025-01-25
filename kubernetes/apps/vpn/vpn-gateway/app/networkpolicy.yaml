@@ -29,6 +29,8 @@ spec:
         - ports:
             - port: "1194"
               protocol: UDP
+            - port: "1197"
+              protocol: UDP
     - toEntities:
         - cluster
 ---
