@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: qbit
   targetNamespace: media
-  path: ./k8s/media/apps/media/qbit/tools
+  path:  "./kubernetes/apps/media/qbit/tools"
   prune: true
   sourceRef:
     kind: GitRepository
