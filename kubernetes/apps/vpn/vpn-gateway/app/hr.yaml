@@ -30,6 +30,8 @@ spec:
         enabled: true
       vpn:
         enabled: true
+        networkPolicy:
+          enabled: false
         type: gluetun
         image:
           repository: docker.io/qmcgaw/gluetun
