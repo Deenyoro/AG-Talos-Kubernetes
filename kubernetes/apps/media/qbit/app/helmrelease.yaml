@@ -1,0 +1,118 @@
+---
+# yaml-language-server: $schema=https://flux.jank.ing/helmrelease/v2/github/bjw-s/helm-charts/main/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbit
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.6.1
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  interval: 30m
+  maxHistory: 2
+  uninstall:
+    keepHistory: false
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: uninstall
+      retries: 3
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    controllers:
+      qbit:
+        pod:
+          securityContext:
+            fsGroup: 65534
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          qbit:
+            env:
+              QBITTORRENT__BT_PORT: &btport 57430
+              QBITTORRENT__PORT: &port 8080
+              TZ: America/New_York
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              tag: 5.0.3@sha256:19597e4a5c5e52702ff6b4ea5c4b5f9f42433d6c2f1ef1d2db5964938bf44557
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              limits:
+                memory: 15Gi
+              requests:
+                cpu: 500m
+                memory: 5Gi
+            securityContext:
+              runAsUser: 65534
+              runAsGroup: 65534
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    ingress:
+      qbit:
+        className: internal
+        hosts:
+          - host: &host "qbit.${SECRET_DOMAIN_LEGACY}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: qbit
+                  port: http
+        tls:
+          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+            hosts:
+              - *host
+    service:
+      qbittorrent:
+        controller: qbit
+        ports:
+          http:
+            port: *port
+      bittorrent:
+        controller: qbit
+        type: LoadBalancer
+        ports:
+          bt:
+            port: *btport
+            protocol: TCP
+            targetPort: *btport
+    persistence:
+      completed-script:
+        defaultMode: 0775
+        globalMounts:
+          - path: /scripts/completed.sh
+            subPath: completed.sh
+        name: qbittorrent-scripts
+        type: configMap
+      config:
+        existingClaim: qbit-config
+        globalMounts:
+          - path: /config
+      media:
+         type: nfs
+         server: 192.168.90.101
+         path: /mnt/QuadSquad/EC
+         globalMounts:
+           - path: /mnt/QuadSquad/EC
