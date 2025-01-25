@@ -4,10 +4,10 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: vpn-gateway
+  name: vpn-gateway-airvpn
   labels:
-    app.kubernetes.io/instance: &instance vpn-gateway
-    app.kubernetes.io/name: &name pod-gateway
+    app.kubernetes.io/instance: &instance vpn-gateway-airvpn
+    app.kubernetes.io/name: &name vpn-gateway-airvpn
 spec:
   endpointSelector:
     matchLabels:
@@ -24,14 +24,14 @@ spec:
         - cluster
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
-# This policy allows the vpn-gateway to communicate over the VXLAN port 4789
+# This policy allows the vpn-gateway to communicate over the VXLAN port 4790
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: vpn-gateway-vxlan
+  name: vpn-gateway-airvpn-vxlan
   labels:
-    app.kubernetes.io/instance: &instance vpn-gateway
-    app.kubernetes.io/name: &name pod-gateway
+    app.kubernetes.io/instance: &instance vpn-gateway-airvpn
+    app.kubernetes.io/name: &name vpn-gateway-airvpn
 spec:
   endpointSelector:
     matchLabels:
@@ -40,12 +40,12 @@ spec:
   egress:
     - toPorts:
         - ports:
-            - port: "4789"
+            - port: "4790"
               protocol: UDP
   ingress:
     - toPorts:
         - ports:
-            - port: "4789"
+            - port: "4790"
               protocol: UDP
     - icmps:
         - fields:

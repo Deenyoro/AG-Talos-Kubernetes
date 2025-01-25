@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app vpn-gateway
+  name: &app vpn-gateway-airvpn
 spec:
   interval: 15m
   chart:
