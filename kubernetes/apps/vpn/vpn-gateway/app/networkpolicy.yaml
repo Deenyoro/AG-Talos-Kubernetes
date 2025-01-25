@@ -18,6 +18,12 @@ spec:
         - 0.0.0.0/0
       toPorts:
         - ports:
+            # Allow DNS
+            - port: "53"
+              protocol: TCP
+            - port: "53"
+              protocol: UDP
+        - ports:
             - port: "1194"
               protocol: UDP
     - toEntities:
