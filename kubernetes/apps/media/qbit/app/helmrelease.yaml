@@ -90,7 +90,7 @@ spec:
         ports:
           http:
             port: *port
-      qbit-bt:
+      bt:
         controller: qbit
         type: LoadBalancer
         ports:
