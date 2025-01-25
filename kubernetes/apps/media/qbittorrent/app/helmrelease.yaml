@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: qbit
+  name: qbittorrent
   namespace: media
 spec:
   chart:
@@ -118,7 +118,7 @@ spec:
       qbit:
         className: internal
         hosts:
-          - host: &host "qb.${SECRET_DOMAIN_LEGACY}"
+          - host: &host "qbittorrent.${SECRET_DOMAIN_LEGACY}"
             paths:
               - path: /
                 pathType: Prefix
