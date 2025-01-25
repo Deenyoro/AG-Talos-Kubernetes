@@ -7,6 +7,7 @@ resources:
   - ./NatPolicy.yaml
   - ./plex/ks.yaml
   - ./qbit/ks.yaml
+  - ./qbit/ks-tools.yaml
   - ./qbittorrent/ks.yaml
   - ./prowlarr/ks-secrets.yaml
   - ./prowlarr/ks.yaml
