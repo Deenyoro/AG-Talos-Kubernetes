@@ -61,7 +61,7 @@ spec:
               "--unregistered",
               "--server", "qbit.$(POD_NAMESPACE).svc.cluster.local",
               "--username", "admin",
-              "--password", "$(PASSWORD)"
+              "--password", "$(PASSWORD)",
               "--port", "8080",
               "--config", "/config/config.yaml"
             ]
