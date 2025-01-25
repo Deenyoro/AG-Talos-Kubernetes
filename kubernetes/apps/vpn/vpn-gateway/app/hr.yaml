@@ -30,28 +30,6 @@ spec:
         enabled: true
       vpn:
         enabled: true
-        networkPolicy:
-          enabled: false
-          egress:
-            # Allow only VPN traffic to Internet
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-                # VPN Port
-                - port: 1197
-                  protocol: UDP
-                # DNS Over TLS
-                - port: 853
-                  protocol: TCP
-                - protocol: TCP
-                  port: 53
-                - port: 443
-                  protocol: TCP
-            # Allow any traffic within k8s
-            - to:
-                - ipBlock:
-                    cidr: 10.244.0.0/16
         type: gluetun
         image:
           repository: docker.io/qmcgaw/gluetun
