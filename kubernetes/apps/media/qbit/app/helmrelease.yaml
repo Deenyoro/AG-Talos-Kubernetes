@@ -43,7 +43,16 @@ spec:
             env:
               QBITTORRENT__BT_PORT: &btport 57430
               QBITTORRENT__PORT: &port 8080
+              CROSS_SEED_ENABLED: true
+              CROSS_SEED_HOST: cross-seed.media.svc.cluster.local
+              CROSS_SEED_PORT: 2468
+              CROSS_SEED_SLEEP_INTERVAL: 0
               TZ: America/New_York
+              CROSS_SEED_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: sabnzbd-secret
+                    key: CROSS_SEED_API_KEY
             image:
               repository: ghcr.io/onedr0p/qbittorrent
               tag: 5.0.3@sha256:19597e4a5c5e52702ff6b4ea5c4b5f9f42433d6c2f1ef1d2db5964938bf44557
