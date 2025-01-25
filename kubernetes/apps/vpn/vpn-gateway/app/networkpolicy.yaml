@@ -31,6 +31,10 @@ spec:
               protocol: UDP
             - port: "1197"
               protocol: UDP
+      icmps:
+        - fields:
+            - type: 8
+              family: IPv4
     - toEntities:
         - cluster
 ---
