@@ -4,7 +4,6 @@ metadata:
   name: invoiceninja-storage-bootstrap
   namespace: invoiceninja
 spec:
-  cleanupTempDestinationPVC: true
   restic:
     accessModes:
     - ReadWriteOnce
@@ -12,6 +11,8 @@ spec:
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
     capacity: "${VOLSYNC_CAPACITY:-1Gi}"
     copyMethod: Snapshot
+    cleanupTempPVC: true
+    cleanupCachePVC: true
     moverSecurityContext:
       fsGroup: 1000
       runAsGroup: 1000
