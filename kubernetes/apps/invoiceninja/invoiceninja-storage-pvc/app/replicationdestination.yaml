@@ -16,6 +16,7 @@ spec:
       runAsGroup: 1000
       runAsUser: 1000
     repository: ${VOLSYNC_REPOSITORY_SECRET}
+    cleanupTempDestinationPVC: true
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
   trigger:
