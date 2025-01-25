@@ -3,6 +3,7 @@ kind: ReplicationDestination
 metadata:
   name: vaultwarden-bootstrap
 spec:
+  cleanupTempDestinationPVC: true
   restic:
     accessModes:
     - ReadWriteOnce
@@ -15,7 +16,6 @@ spec:
       runAsGroup: 1000
       runAsUser: 1000
     repository: vaultwarden-volsync-r2-secret
-    cleanupTempDestinationPVC: true
     storageClassName: ceph-rbd
     volumeSnapshotClassName: csi-ceph-blockpool
   trigger:

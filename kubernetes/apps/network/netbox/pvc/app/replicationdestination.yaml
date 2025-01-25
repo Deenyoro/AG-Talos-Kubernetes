@@ -3,6 +3,7 @@ kind: ReplicationDestination
 metadata:
   name: ${APP}-bootstrap
 spec:
+  cleanupTempDestinationPVC: true
   restic:
     accessModes:
     - ReadWriteOnce
@@ -15,7 +16,6 @@ spec:
       runAsGroup: 568
       runAsUser: 568
     repository: ${VOLSYNC_REPOSITORY_SECRET}
-    cleanupTempDestinationPVC: true
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-rbd}"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
   trigger:
