@@ -18,7 +18,7 @@ spec:
         - 0.0.0.0/0
       toPorts:
         - ports:
-            - port: "1637"
+            - port: "1194"
               protocol: UDP
     - toEntities:
         - cluster
