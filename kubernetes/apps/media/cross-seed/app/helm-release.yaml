@@ -24,6 +24,10 @@ spec:
   values:
     controllers:
       cross-seed:
+        pod:
+          securityContext:
+            fsGroup: 65534
+            fsGroupChangePolicy: "OnRootMismatch"
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -59,17 +63,14 @@ spec:
               limits:
                 memory: 128Mi
             securityContext:
+              runAsUser: 65534
+              runAsGroup: 65534
+              runAsNonRoot: true
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [65536]
+              capabilities:
+                drop:
+                  - ALL
     persistence:
       config:
         existingClaim: *app
