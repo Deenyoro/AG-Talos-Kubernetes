@@ -85,12 +85,12 @@ spec:
             hosts:
               - *host
     service:
-      qbittorrent:
+      qbit:
         controller: qbit
         ports:
           http:
             port: *port
-      bittorrent:
+      qbit-bt:
         controller: qbit
         type: LoadBalancer
         ports:
