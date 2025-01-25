@@ -5,8 +5,6 @@ metadata:
   name: qbit-tools
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: qbit
   targetNamespace: media
   path:  "./kubernetes/apps/media/qbit/tools"
   prune: true

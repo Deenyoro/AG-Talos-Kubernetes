@@ -23,7 +23,7 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: qbittorrent
+    - name: qbit
       namespace: media
   values:
     controllers:
