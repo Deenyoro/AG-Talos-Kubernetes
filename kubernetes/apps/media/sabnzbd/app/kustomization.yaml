@@ -7,3 +7,9 @@ resources:
   - pvc.yaml
   - replicationdestination.yaml
   - replicationsource.yaml
+configMapGenerator:
+  - name: sabnzbd-scripts
+    files:
+      - post-process.sh=./resources/post-process.sh
+generatorOptions:
+  disableNameSuffixHash: true
