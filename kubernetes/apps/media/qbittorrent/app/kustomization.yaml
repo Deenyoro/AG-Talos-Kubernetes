@@ -4,4 +4,4 @@ resources:
   - ./pvc.yaml
   - ./secrets.sops.yaml
   - ./helmrelease.yaml
-  - ./policy.yaml
+#  - ./policy.yaml
