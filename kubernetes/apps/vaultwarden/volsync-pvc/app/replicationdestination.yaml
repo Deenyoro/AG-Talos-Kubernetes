@@ -3,7 +3,6 @@ kind: ReplicationDestination
 metadata:
   name: vaultwarden-bootstrap
 spec:
-  cleanupTempDestinationPVC: true
   restic:
     accessModes:
     - ReadWriteOnce
@@ -11,6 +10,8 @@ spec:
     cacheStorageClassName: local-hostpath
     capacity: 2Gi
     copyMethod: Snapshot
+    cleanupTempPVC: true
+    cleanupCachePVC: true
     moverSecurityContext:
       fsGroup: 1000
       runAsGroup: 1000

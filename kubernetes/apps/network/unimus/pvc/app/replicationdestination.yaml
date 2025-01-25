@@ -2,7 +2,6 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
   name: unimus-storage-bootstrap
-  namespace: invoiceninja
 spec:
   restic:
     accessModes:
@@ -11,6 +10,8 @@ spec:
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
     capacity: "${VOLSYNC_CAPACITY:-1Gi}"
     copyMethod: Snapshot
+    cleanupTempPVC: true
+    cleanupCachePVC: true
     moverSecurityContext:
       fsGroup: 568
       runAsGroup: 568

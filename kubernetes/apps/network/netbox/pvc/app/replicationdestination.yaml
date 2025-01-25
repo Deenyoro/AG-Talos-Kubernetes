@@ -3,7 +3,6 @@ kind: ReplicationDestination
 metadata:
   name: ${APP}-bootstrap
 spec:
-  cleanupTempDestinationPVC: true
   restic:
     accessModes:
     - ReadWriteOnce
@@ -11,6 +10,8 @@ spec:
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
     capacity: "${VOLSYNC_CAPACITY:-1Gi}"
     copyMethod: Snapshot
+    cleanupTempPVC: true
+    cleanupCachePVC: true
     moverSecurityContext:
       fsGroup: 568
       runAsGroup: 568
