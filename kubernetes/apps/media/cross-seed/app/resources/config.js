@@ -24,7 +24,7 @@ module.exports = {
     1,
     2,
     5,
-  ].map(i => `http://prowlarr.media.svc.cluster.local/$${i}/api?apikey=$PROWLARR_API_KEY`),
+  ].map(i => `http://prowlarr.media.svc.cluster.local:8080/$${i}/api?apikey=$PROWLARR_API_KEY`),
   dataDirs: [
     "/mnt/QuadSquad/EC/Downloads/SABnzbd/Completed"
   ],
