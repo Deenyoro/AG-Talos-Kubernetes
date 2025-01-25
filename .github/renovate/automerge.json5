@@ -1,0 +1,36 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
+      matchUpdateTypes: ["patch", "digest"]
+    },
+    {
+      matchDatasources: ["docker"],
+      automerge: false,
+      automergeType: "branch",
+      ignoreTests: true,
+      matchPackageNames: [
+        "ghcr.io/goauthentik/server",
+        "ghcr.io/onedr0p/qbittorrent",
+        "ghcr.io/home-assistant/home-assistant",
+        "wordpress",
+        "mariadb"
+      ]
+    },
+    {
+      matchDatasources: ["helm"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
+      matchUpdateTypes: ["minor"],
+      matchPackageNames: [
+        "kube-prometheus-stack",
+        "reloader"
+      ]
+    }
+  ]
+}

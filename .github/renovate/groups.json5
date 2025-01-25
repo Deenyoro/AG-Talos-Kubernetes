@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "description": "Flux Group",
+      "groupName": "Flux",
+      "matchPackagePatterns": ["flux"],
+      "matchDatasources": ["docker", "github-tags"],
+      "versioning": "semver",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "Rook-Ceph image and chart",
+      "groupName": "Rook-Ceph",
+      "matchPackagePatterns": ["rook.ceph"],
+      "matchDatasources": ["docker", "helm"],
+      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "Immich images",
+      "groupName": "Immich",
+      "matchPackagePatterns": ["immich"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "intel-device-plugin images",
+      "groupName": "intel-device-plugins",
+      "matchPackagePatterns": ["intel-device-plugins-operator","intel-device-plugins-gpu"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
+    }
+  ]
+}
