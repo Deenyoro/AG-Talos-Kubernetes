@@ -18,13 +18,13 @@ module.exports = {
   outputDir: "/tmp",
   port: Number(process.env.CROSS_SEED_PORT),
   qbittorrentUrl: String(process.env.CROSS_SEED_QBITURL),
-  sonarr: [`http://sonarr.media.svc.cluster.local/?apikey=${SONARR_API_KEY}`], // Template literal
-  radarr: [`http://radarr.media.svc.cluster.local/?apikey=${RADARR_API_KEY}`], // Template literal
+  sonarr: [`http://sonarr.media.svc.cluster.local/?apikey=$${SONARR_API_KEY}`], // Template literal
+  radarr: [`http://radarr.media.svc.cluster.local/?apikey=$${RADARR_API_KEY}`], // Template literal
   torznab: [
     1,
     2,
     5,
-  ].map(i => `http://prowlarr.media.svc.cluster.local:8080/${i}/api?apikey=${PROWLARR_API_KEY}`), // Template literal
+  ].map(i => `http://prowlarr.media.svc.cluster.local:8080/$${i}/api?apikey=$${PROWLARR_API_KEY}`), // Template literal
   dataDirs: [
     "/mnt/QuadSquad/EC/Downloads/SABnzbd/Completed"
   ],
