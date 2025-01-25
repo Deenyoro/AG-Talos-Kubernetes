@@ -63,13 +63,13 @@ spec:
       driver:
         extraVolumeMounts:
           - name: local-hostpath
-            mountPath: /var/lib/local-hostpath
+            mountPath: /var/democratic/local-hostpath
             mountPropagation: Bidirectional
 
       extraVolumes:
         - name: local-hostpath
           hostPath:
-            path: /var/lib/local-hostpath
+            path: /var/democratic/local-hostpath
             type: DirectoryOrCreate
 
     driver:
@@ -77,8 +77,8 @@ spec:
         driver: local-hostpath
         instance_id:
         local-hostpath:
-          shareBasePath: "/var/lib/local-hostpath/"
-          controllerBasePath: "/var/lib/local-hostpath/"
+          shareBasePath: "/var/democratic/local-hostpath"
+          controllerBasePath: "/var/democratic/local-hostpath"
           dirPermissionsMode: "0770"
           dirPermissionsUser: 0
           dirPermissionsGroup: 0
