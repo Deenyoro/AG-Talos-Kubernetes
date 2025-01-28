@@ -5,6 +5,7 @@ resources:
   - cert-manager
   - database
   - democractic-system
+  - downloads
   - flux-system
   - gpu-system
   - kube-system
