@@ -6,10 +6,10 @@ metadata:
   name: &app qbittorrent
   namespace: flux-system
 spec:
-  targetNamespace: &ns media
+  targetNamespace: &ns downloads
   interval: 10m
   timeout: 1m
-  path: "./kubernetes/apps/media/qbittorrent/app"
+  path: "./kubernetes/apps/downloads/qbittorrent/app"
   prune: true
   sourceRef:
     kind: GitRepository
