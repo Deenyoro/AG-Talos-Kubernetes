@@ -137,7 +137,7 @@ spec:
             port: 8080
     persistence:
       config:
-        existingClaim: qbittorrent-config
+        existingClaim: qbittorrent-config-v2
         globalMounts:
           - path: /config
       media:
