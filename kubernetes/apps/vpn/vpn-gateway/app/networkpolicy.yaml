@@ -14,7 +14,6 @@ spec:
       app.kubernetes.io/instance: *instance
       app.kubernetes.io/name: *name
   egress:
-    - icmps: [{}]
     - toCIDR:
         - 0.0.0.0/0
       toPorts:
@@ -31,6 +30,10 @@ spec:
               protocol: UDP
     - toEntities:
         - cluster
+    - icmps:
+        - fields:
+            - type: 8
+              family: IPv4
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 # This policy allows the vpn-gateway to communicate over the VXLAN port 4789
