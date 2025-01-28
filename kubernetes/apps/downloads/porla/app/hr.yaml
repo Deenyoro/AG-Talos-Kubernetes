@@ -75,7 +75,7 @@ spec:
               VPN_INTERFACE: tun0
               FIREWALL: on
               DOT: off
-              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_INPUT_PORTS: 1337
               VPN_PORT_FORWARDING: on
             envFrom:
               - secretRef:
@@ -120,6 +120,13 @@ spec:
         existingClaim: porla-config-v1
         globalMounts:
           - path: /config
+      config-file:
+        type: configMap
+        name: porla-configmap
+        globalMounts:
+          - path: /config/config.toml
+            subPath: config.toml
+            readOnly: true
       media:
         type: nfs
         server: 192.168.90.101
