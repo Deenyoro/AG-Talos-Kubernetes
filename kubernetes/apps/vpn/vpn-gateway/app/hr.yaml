@@ -53,6 +53,8 @@ spec:
 #            value: "on"
           - name: DNS_KEEP_NAMESERVER
             value: "on"
+          - name: FIREWALL_ENABLED_DISABLING_IT_SHOOTS_YOU_IN_YOUR_FOOT
+            value: "off"
           - name: HEALTH_VPN_DURATION_INITIAL
             value: "10s"
           - name: HEALTH_TARGET_ADDRESS
