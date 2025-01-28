@@ -14,9 +14,7 @@ spec:
       app.kubernetes.io/instance: *instance
       app.kubernetes.io/name: *name
   egress:
-    - toCIDR:
-        - 1.1.1.0/24
-        - 1.0.0.0/24
+    - icmps: [{}]
     - toCIDR:
         - 0.0.0.0/0
       toPorts:
@@ -31,10 +29,6 @@ spec:
               protocol: UDP
             - port: "1197"
               protocol: UDP
-      icmps:
-        - fields:
-            - type: 8
-              family: IPv4
     - toEntities:
         - cluster
 ---

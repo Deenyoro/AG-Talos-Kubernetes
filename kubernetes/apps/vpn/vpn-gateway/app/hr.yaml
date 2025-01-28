@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: vpn-gateway
+  name: &app vpn-gateway
 spec:
   interval: 15m
   chart:
@@ -21,6 +21,8 @@ spec:
     remediation:
       retries: 5
   values:
+    global:
+      fullnameOverride: *app
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.11.1
@@ -87,7 +89,7 @@ spec:
       VXLAN_IP_NETWORK: 172.16.1
       VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
       VPN_BLOCK_OTHER_TRAFFIC: false
-      VPN_TRAFFIC_PORT: "1194"
+      VPN_TRAFFIC_PORT: "1197"
       VPN_LOCAL_CIDRS: "10.96.0.0/16 10.244.0.0/16"
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.244.0.0/16"
 
@@ -98,3 +100,12 @@ spec:
       gatewayDefault: false
       gatewayLabel: setGateway
       gatewayAnnotation: setGateway
+
+  # Because chart is not respecting it.
+  postRenderers:
+    - kustomize:
+       images:
+         - name: docker.io/qmcgaw/gluetun
+           newName: docker.io/qmcgaw/gluetun
+           newTag: v3.40.0
+
