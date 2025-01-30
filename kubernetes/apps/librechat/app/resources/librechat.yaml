@@ -91,31 +91,8 @@ fileConfig:
 
 endpoints:
   custom:
-    - name: Perplexity
-      apiKey: "$${PERPLEXITY_API_KEY}"
-      baseURL: "https://api.perplexity.ai/"
-      models:
-        default:
-          [
-            "llama-3.1-sonar-small-128k-online",
-            "llama-3.1-sonar-large-128k-online",
-            "llama-3.1-sonar-huge-128k-online",
-            "llama-3.1-sonar-small-128k-chat",
-            "llama-3.1-sonar-large-128k-chat",
-            "llama-3.1-8b-instruct",
-            "llama-3.1-70b-instruct",
-          ]
-        fetch: false
-      titleConvo: true
-      titleModel: "llama-3.1-sonar-small-128k-chat"
-      summarize: false
-      summaryModel: "llama-3.1-sonar-small-128k-chat"
-      forcePrompt: false
-      dropParams: ["stop", "frequency_penalty"]
-      modelDisplayLabel: "Perplexity"
-
     - name: Ollama
-      baseURL: "http://10.10.11.109:11434/api/generate"
+      baseURL: "http://10.10.11.109:11434/v1"
       models:
         default: ["deepseek-r1:14b"]
         fetch: false
