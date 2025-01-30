@@ -18,6 +18,11 @@ model_list:
       api_key: "os.environ/ANTHROPIC_API_KEY"
       max_tokens: 8192
 
+  - model_name: deepseek-r1:14b
+    litellm_params:
+      model: "ollama/deepseek-r1:14b"
+      api_base: "http://10.10.11.109:11434"
+
 litellm_settings: # module level litellm settings - https://github.com/BerriAI/litellm/blob/main/litellm/__init__.py
   drop_params: True
   default_max_tokens: 8192

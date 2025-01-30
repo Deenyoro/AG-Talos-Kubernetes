@@ -105,7 +105,7 @@ endpoints:
             "llama-3.1-8b-instruct",
             "llama-3.1-70b-instruct",
           ]
-        fetch: false # fetching list of models is not supported
+        fetch: false
       titleConvo: true
       titleModel: "llama-3.1-sonar-small-128k-chat"
       summarize: false
@@ -113,6 +113,17 @@ endpoints:
       forcePrompt: false
       dropParams: ["stop", "frequency_penalty"]
       modelDisplayLabel: "Perplexity"
+
+    - name: Ollama
+      baseURL: "http://10.10.11.109:11434/api/generate"
+      models:
+        default: ["deepseek-r1:14b"]
+        fetch: false
+      modelDisplayLabel: "Ollama"
+      forcePrompt: false
+      dropParams: ["stop", "frequency_penalty"]
+      temperature: 0.7
+      summarize: false
 
   assistants:
     disableBuilder: false
