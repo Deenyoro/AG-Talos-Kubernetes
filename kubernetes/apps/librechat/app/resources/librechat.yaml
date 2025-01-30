@@ -91,16 +91,18 @@ fileConfig:
 
 endpoints:
   custom:
-    - name: Ollama
-      baseURL: "http://10.10.11.109:11434/v1"
+    - name: "Ollama"
+      apiKey: "ollama"
+      baseURL: "http://10.10.11.109:11434/v1/"
       models:
         default: ["deepseek-r1:14b"]
         fetch: false
-      modelDisplayLabel: "Ollama"
-      forcePrompt: false
-      dropParams: ["stop", "frequency_penalty"]
-      temperature: 0.7
+      titleConvo: true
+      titleModel: "current_model"
       summarize: false
+      summaryModel: "current_model"
+      forcePrompt: false
+      modelDisplayLabel: "Ollama"
 
   assistants:
     disableBuilder: false
