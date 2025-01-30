@@ -103,6 +103,8 @@ endpoints:
       summaryModel: "current_model"
       forcePrompt: false
       modelDisplayLabel: "Ollama"
+      addParams:
+        max_tokens: 131000
 
   assistants:
     disableBuilder: false
