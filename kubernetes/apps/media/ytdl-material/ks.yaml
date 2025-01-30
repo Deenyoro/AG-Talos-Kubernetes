@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: media
-  path: ./kubernetes/apps/ytdl-material/app
+  path: ./kubernetes/apps/media/ytdl-material/app
   prune: true
   sourceRef:
     kind: GitRepository
