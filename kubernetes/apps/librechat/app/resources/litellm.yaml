@@ -18,9 +18,9 @@ model_list:
       api_key: "os.environ/ANTHROPIC_API_KEY"
       max_tokens: 8192
 
-  - model_name: deepseek-r1:14b
+  - model_name: deepseek-r1:8b
     litellm_params:
-      model: "ollama/deepseek-r1:14b"
+      model: "ollama/deepseek-r1:8b"
       api_base: "http://10.10.11.109:11434"
       max_tokens: 131000
 
