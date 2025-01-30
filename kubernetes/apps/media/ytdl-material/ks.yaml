@@ -5,7 +5,7 @@ metadata:
   name: ytdl-material
   namespace: flux-system
 spec:
-  targetNamespace: default
+  targetNamespace: media
   path: ./kubernetes/apps/ytdl-material/app
   prune: true
   sourceRef:

@@ -25,3 +25,4 @@ resources:
   - ./recyclarr/ks-secrets.yaml
   - ./recyclarr/ks.yaml
   - ./netshoot/ks.yaml
+  - ./ytdl-material/ks.yaml
