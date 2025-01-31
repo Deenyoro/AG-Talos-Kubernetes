@@ -5,7 +5,6 @@ metadata:
   name: &app wazuh
   namespace: flux-system
 spec:
-  targetNamespace: &ns security
   interval: 10m
   path: "./kubernetes/apps/security/wazuh/app"
   prune: true
