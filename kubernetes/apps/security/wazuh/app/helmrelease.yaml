@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: wazuh/wazuh-manager
-              tag: 4.10.0-rc3
+              tag: 4.10.1
             env:
               INDEXER_URL: http://localhost:9200
               INDEXER_USERNAME: admin
@@ -66,7 +66,7 @@ spec:
           app:
             image:
               repository: wazuh/wazuh-indexer
-              tag: 4.10.0-rc3
+              tag: 4.10.1
             env:
               OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
               bootstrap.memory_lock: "true"
@@ -91,7 +91,7 @@ spec:
           app:
             image:
               repository: wazuh/wazuh-dashboard
-              tag: 4.10.0-rc3
+              tag: 4.10.1
             env:
               OPENSEARCH_HOSTS: http://wazuh-indexer.svc.cluster.lcoal:9200
               WAZUH_API_URL: http://wazuh-manager.svc.cluster.local:55000
