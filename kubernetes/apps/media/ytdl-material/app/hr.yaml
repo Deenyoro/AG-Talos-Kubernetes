@@ -97,9 +97,7 @@ spec:
           - path: /app/appdata
       downloads:
         enabled: true
-        type: nfs
-        server: "192.168.90.101"
-        path: /mnt/QuadSquad/EC/ytdl
+        existingClaim: ytdl-material-media
         globalMounts:
           - path: /app/audio
             subPath: audio

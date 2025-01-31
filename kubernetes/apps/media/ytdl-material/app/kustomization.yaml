@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./hr.yaml
   - ./pvc.yaml
+  - ./media-pvc.yaml
