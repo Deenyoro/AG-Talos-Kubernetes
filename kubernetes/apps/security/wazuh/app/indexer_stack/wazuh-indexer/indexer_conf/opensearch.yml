@@ -11,10 +11,11 @@ path.logs: /var/log/wazuh-indexer
 plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/certs/node/tls.crt
 plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/certs/node/tls.key
 plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/node/ca.crt
-plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/certs/admin/tls.crt
-plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/certs/admin/tls.key
-plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/admin/ca.crt
+#plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/certs/admin/tls.crt
+#plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/certs/admin/tls.key
+#plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/certs/admin/ca.crt
 plugins.security.ssl.http.enabled: true
+plugins.security.ssl.transport.enabled: false
 plugins.security.ssl.transport.enforce_hostname_verification: false
 plugins.security.ssl.transport.resolve_hostname: false
 plugins.security.authcz.admin_dn:
