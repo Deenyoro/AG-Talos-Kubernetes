@@ -20,9 +20,9 @@ spec:
       tag: v4.0.2
     nfs:
       server: "192.168.90.101"
-      # path: "TBD"
+      path: "/mnt/QuadSquad/EC/k8s"
     mountOptions:
-    - nfsvers=3
+    - nfsvers=4.1
     - tcp
     - intr
     - hard

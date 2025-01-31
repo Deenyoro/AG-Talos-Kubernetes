@@ -10,6 +10,7 @@ resources:
   - gpu-system
   - kube-system
   - network
+  - nfs-subdir-provisioner/ks.yaml
   - media
   - observability
   - rook-ceph
