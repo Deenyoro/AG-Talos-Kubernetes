@@ -5,7 +5,7 @@
 # License (version 2) as published by the FSF - Free Software
 # Foundation.
 
-# Indexer StatefulSet: 3 master nodes.
+# Indexer StatefulSet
 
 apiVersion: apps/v1
 kind: StatefulSet
@@ -13,7 +13,7 @@ metadata:
   name: wazuh-indexer
   namespace: wazuh
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: wazuh-indexer
