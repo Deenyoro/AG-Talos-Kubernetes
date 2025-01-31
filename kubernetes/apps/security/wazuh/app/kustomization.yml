@@ -16,13 +16,22 @@ configMapGenerator:
     files:
       - indexer_stack/wazuh-indexer/indexer_conf/opensearch.yml
       - indexer_stack/wazuh-indexer/indexer_conf/internal_users.yml
+    options:
+      labels:
+        kustomize.toolkit.fluxcd.io/substitute: "disabled"
   - name: wazuh-conf
     files:
       - wazuh_managers/wazuh_conf/master.conf
       - wazuh_managers/wazuh_conf/worker.conf
+    options:
+      labels:
+        kustomize.toolkit.fluxcd.io/substitute: "disabled"
   - name: dashboard-conf
     files:
       - indexer_stack/wazuh-dashboard/dashboard_conf/opensearch_dashboards.yml
+    options:
+      labels:
+        kustomize.toolkit.fluxcd.io/substitute: "disabled"
 
 resources:
   - base/wazuh-ns.yaml
