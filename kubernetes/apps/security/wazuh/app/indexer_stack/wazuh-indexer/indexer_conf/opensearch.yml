@@ -19,11 +19,11 @@ plugins.security.ssl.transport.enabled: false
 plugins.security.ssl.transport.enforce_hostname_verification: false
 plugins.security.ssl.transport.resolve_hostname: false
 plugins.security.authcz.admin_dn:
-  - CN=admin,O=Wazuh, Inc.,L=California,C=US
+  - "CN=admin,O=Wazuh, Inc.,L=California,C=US"
 plugins.security.check_snapshot_restore_write_privileges: true
 plugins.security.enable_snapshot_restore_privilege: true
 plugins.security.nodes_dn:
-  - CN=indexer,O=Wazuh, Inc.,L=California,C=US
+  - "CN=indexer,O=Wazuh, Inc.,L=California,C=US"
 plugins.security.restapi.roles_enabled:
   - "all_access"
   - "security_rest_api_access"
