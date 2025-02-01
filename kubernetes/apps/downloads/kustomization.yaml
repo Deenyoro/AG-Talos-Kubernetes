@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ns.yaml
   - qbittorrent/ks.yaml
-  - porla/ks.yaml
+#  - porla/ks.yaml
