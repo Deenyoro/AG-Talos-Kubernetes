@@ -32,7 +32,7 @@ spec:
         pod:
           hostname: deluge
           labels:
-            setGateway: "true"
+            setAirGateway: "true"
         containers:
           deluge:
             image:
