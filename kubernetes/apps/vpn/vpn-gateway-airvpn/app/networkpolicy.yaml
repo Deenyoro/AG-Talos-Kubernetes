@@ -18,10 +18,36 @@ spec:
         - 0.0.0.0/0
       toPorts:
         - ports:
+            # Allow DNS
+            - port: "53"
+              protocol: TCP
+            - port: "53"
+              protocol: UDP
+            # DNS Over TLS
+            - port: "853"
+              protocol: TCP
+        - ports:
             - port: "1637"
               protocol: UDP
     - toEntities:
         - cluster
+
+    # We are explicitly allowing access to Kube DNS
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - icmps:
+        - fields:
+            - type: 8
+              family: IPv4
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 # This policy allows the vpn-gateway to communicate over the VXLAN port 4790
