@@ -38,6 +38,14 @@ nodes:
             gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
+      - interface: bond1
+        bond:
+          interfaces:
+            - eth1
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.90.111/24
     nameservers:
       - 10.10.12.1
   - hostname: "kcp112"
@@ -59,6 +67,14 @@ nodes:
             gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
+      - interface: bond1
+        bond:
+          interfaces:
+            - eth1
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.90.112/24
     nameservers:
       - 10.10.12.1
   - hostname: "kcp113"
@@ -80,6 +96,14 @@ nodes:
             gateway: 10.10.12.1
         vip:
           ip: "10.10.12.105"
+      - interface: bond1
+        bond:
+          interfaces:
+            - eth1
+          mode: active-backup
+        mtu: 9000
+        addresses:
+          - 192.168.90.113/24
     nameservers:
       - 10.10.12.1
   - hostname: "kawg121"
@@ -87,8 +111,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-#    nodeLabels:
-#      plex-gw: "true"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -129,8 +153,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-#    nodeLabels:
-#      plex-gw: "true"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -171,8 +195,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-#    nodeLabels:
-#      plex-gw: "true"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -255,14 +279,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-    schematic:
-      customization:
-        systemExtensions:
-          officialExtensions:
-            - siderolabs/i915
-            - siderolabs/intel-ucode
-    #nodeLabels:
-    #  plex-gw: "true"
+    nodeLabels:
+      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
