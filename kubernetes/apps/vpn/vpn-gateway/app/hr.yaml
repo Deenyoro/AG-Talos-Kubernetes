@@ -48,7 +48,7 @@ spec:
           - name: DOT
             value: "off"
           - name: FIREWALL_INPUT_PORTS
-            value: 8080,80,4789
+            value: 8080,80,4789,8112
 #          - name: VPN_PORT_FORWARDING
 #            value: "on"
           - name: DNS_KEEP_NAMESERVER
