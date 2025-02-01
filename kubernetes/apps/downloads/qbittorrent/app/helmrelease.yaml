@@ -76,9 +76,11 @@ spec:
             env:
               VPN_TYPE: openvpn
               VPN_INTERFACE: tun0
-              FIREWALL: on
+              FIREWALL_ENABLED_DISABLING_IT_SHOOTS_YOU_IN_YOUR_FOOT: on
+              HEALTH_VPN_DURATION_INITIAL: 10s
+              HEALTH_TARGET_ADDRESS: one.one.one.one:443
               DOT: off
-              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_INPUT_PORTS: 8080,80,4789
               VPN_PORT_FORWARDING: on
             envFrom:
               - secretRef:
