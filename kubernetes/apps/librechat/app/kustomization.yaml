@@ -14,9 +14,9 @@ configMapGenerator:
   - name: librechat-config
     files:
       - ./resources/librechat.yaml
-  - name: litellm-config
-    files:
-      - ./resources/litellm.yaml
+#  - name: litellm-config
+#    files:
+#      - ./resources/litellm.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
