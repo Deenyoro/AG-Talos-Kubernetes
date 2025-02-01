@@ -30,7 +30,7 @@ spec:
         containers:
           app:
             image:
-              repository: registry.skysolutions.fi/docker.io/jesec/flood
+              repository: docker.io/jesec/flood
               tag: 4.9.3
             env:
               TZ: "${TIMEZONE}"
