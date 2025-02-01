@@ -113,8 +113,14 @@ spec:
       gatewayLabel: setAirGateway
       gatewayAnnotation: setAirGateway
 
-  # Adding the health check port to service
   postRenderers:
+    # Because chart is not respecting it.
+    - kustomize:
+        images:
+          - name: docker.io/qmcgaw/gluetun
+            newName: docker.io/qmcgaw/gluetun
+            newTag: v3.40.0
+      # Adding the health check port to service
     - kustomize:
         patches:
           - target:
