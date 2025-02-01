@@ -28,6 +28,10 @@ spec:
   values:
     controllers:
       deluge:
+        defaultPodOptions:
+          hostname: deluge
+          labels:
+            setAirGateway: "true"
         containers:
           deluge:
             image:
@@ -48,33 +52,8 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
-          gluetun:
-            env:
-              VPN_TYPE: openvpn
-              VPN_INTERFACE: tun0
-              FIREWALL: on
-              DOT: off
-              FIREWALL_INPUT_PORTS: 1337
-              VPN_PORT_FORWARDING: on
-            envFrom:
-              - secretRef:
-                  name: openvpn-secret
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.40.0
-            securityContext:
-              privileged: true
-              allowPrivilegeEscalation: true
-              capabilities:
-                add:
-                  - NET_ADMIN
-            resources:
-              requests:
-                kernel.org/tun: 1
-              limits:
-                kernel.org/tun: 1
     service:
-      main:
+      deluge:
         controller: deluge
         ports:
           http:
@@ -88,7 +67,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: deluge
                   port: http
         tls:
           - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
