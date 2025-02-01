@@ -4,6 +4,7 @@ resources:
   - ./ns.yaml
   - ./cross-seed/ks-secrets.yaml
   - ./cross-seed/ks.yaml
+  - ./flood/ks.yaml
   - ./NatPolicy.yaml
   - ./plex/ks.yaml
   - ./qbit/ks.yaml
