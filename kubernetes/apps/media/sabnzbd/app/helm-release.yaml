@@ -32,7 +32,7 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           labels:
-            setGateway: "true"
+            setAirGateway: "true"
         containers:
           app:
             image:
