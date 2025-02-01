@@ -87,8 +87,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-    nodeLabels:
-      plex-gw: "true"
+#    nodeLabels:
+#      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -129,8 +129,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-    nodeLabels:
-      plex-gw: "true"
+#    nodeLabels:
+#      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -171,8 +171,8 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-    nodeLabels:
-      plex-gw: "true"
+#    nodeLabels:
+#      plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
@@ -255,8 +255,14 @@ nodes:
     controlPlane: false
     installDiskSelector:
       size: "<=89GB"
-    nodeLabels:
-      plex-gw: "true"
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915
+            - siderolabs/intel-ucode
+    #nodeLabels:
+    #  plex-gw: "true"
     networkInterfaces:
       - interface: bond0
         bond:
