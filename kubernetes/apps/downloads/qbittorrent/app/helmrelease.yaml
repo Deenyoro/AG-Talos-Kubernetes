@@ -35,6 +35,10 @@ spec:
     controllers:
       qbittorrent:
         pod:
+          dnsConfig:
+            options:
+              - name: ndots
+                value: "1"
           securityContext:
             fsGroup: 65534
             fsGroupChangePolicy: "OnRootMismatch"
