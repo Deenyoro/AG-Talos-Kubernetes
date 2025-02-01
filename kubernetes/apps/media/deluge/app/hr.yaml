@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      hostname: deluge
+      labels:
+        setAirGateway: "true"
     controllers:
       deluge:
         defaultPodOptions:
