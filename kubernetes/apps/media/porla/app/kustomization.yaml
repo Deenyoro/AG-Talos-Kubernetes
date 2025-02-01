@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./pvc.yaml
   - ./hr.yaml
+  - ./secrets.sops.yaml
 #  - ./policy.yaml
 configMapGenerator:
   - name: porla-configmap
