@@ -75,7 +75,7 @@ spec:
                 kernel.org/tun: 1
     service:
       main:
-        controller: main
+        controller: deluge
         ports:
           http:
             port: 8112
