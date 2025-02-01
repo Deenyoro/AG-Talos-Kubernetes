@@ -6,10 +6,10 @@ metadata:
   name: &app porla
   namespace: flux-system
 spec:
-  targetNamespace: &ns downloads
+  targetNamespace: &ns media
   interval: 10m
   timeout: 1m
-  path: "./kubernetes/apps/downloads/porla/app"
+  path: "./kubernetes/apps/media/porla/app"
   prune: true
   sourceRef:
     kind: GitRepository
