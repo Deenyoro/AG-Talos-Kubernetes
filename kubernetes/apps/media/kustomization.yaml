@@ -5,7 +5,8 @@ resources:
   - ./cross-seed/ks-secrets.yaml
   - ./cross-seed/ks.yaml
   - ./NatPolicy.yaml
-  - ./porla/ks.yaml
+  - ./deluge/ks.yaml
+#  - ./porla/ks.yaml
   - ./plex/ks.yaml
   - ./qbit/ks.yaml
   - ./qbit/ks-tools.yaml
