@@ -7,7 +7,7 @@ metadata:
   name: vpn-gateway-airvpn
   labels:
     app.kubernetes.io/instance: &instance vpn-gateway-airvpn
-    app.kubernetes.io/name: &name vpn-gateway-airvpn
+    app.kubernetes.io/name: &name pod-gateway
 spec:
   endpointSelector:
     matchLabels:
@@ -31,7 +31,7 @@ metadata:
   name: vpn-gateway-airvpn-vxlan
   labels:
     app.kubernetes.io/instance: &instance vpn-gateway-airvpn
-    app.kubernetes.io/name: &name vpn-gateway-airvpn
+    app.kubernetes.io/name: &name pod-gateway
 spec:
   endpointSelector:
     matchLabels:
