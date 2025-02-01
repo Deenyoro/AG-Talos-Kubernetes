@@ -2,11 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: vpn-gateway
+  name: vpn-gateway-airvpn
   namespace: flux-system
 spec:
   targetNamespace: vpn
-  path: ./kubernetes/apps/vpn/vpn-gateway/app
+  path: ./kubernetes/apps/vpn/vpn-gateway-airvpn/app
   prune: true
   sourceRef:
     kind: GitRepository
