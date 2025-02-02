@@ -125,6 +125,14 @@ spec:
           - path: /config/Library/Application Support/Plex Media Server/Logs
       tmp:
         type: emptyDir
+      cert:
+        type: secret
+        name: ${SECRET_DOMAIN_LEGACY/./-}-production-tls
+        advancedMounts:
+          plex:
+            app:
+              - path: /config/certs
+                readOnly: true
       transcode:
         type: emptyDir
       media:
