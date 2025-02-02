@@ -47,18 +47,18 @@ spec:
             supplementalGroups:
               - 44
               - 109
-#        initContainers:
-#            01-pkcs12-reencrypt:
-#              image:
-#                repository: ghcr.io/onedr0p/plex
-#                tag: 1.41.3.9292-bc7397402
-#              command:
-#                - /bin/sh
-#                - -c
-#              args:
-#                - openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/p12-password -noenc -out /tmp/temp.pem &&
-#                  openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/p12-password -in /tmp/temp.pem &&
-#                  rm -f /tmp/temp.pem
+        initContainers:
+            01-pkcs12-reencrypt:
+              image:
+                repository: ghcr.io/onedr0p/plex
+                tag: 1.41.3.9292-bc7397402
+              command:
+                - /bin/sh
+                - -c
+              args:
+                - openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/p12-password -noenc -out /tmp/temp.pem &&
+                  openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/p12-password -in /tmp/temp.pem &&
+                  rm -f /tmp/temp.pem
         containers:
           app:
             image:
@@ -142,18 +142,18 @@ spec:
         type: secret
         name: ${SECRET_DOMAIN_LEGACY/./-}-production-tls
         globalMounts:
-          -  path: /config/certs
+          -  path: /config/certs-old
              readOnly: true
-#      cert-secret:
-#        type: secret
-#        name: legacy-cert-p12
-#        globalMounts:
-#          - path: /pkcs12-password
-#            readOnly: true
-#      cert-tmp:
-#        type: emptyDir
-#        globalMounts:
-#          - path: /config/certs
+      cert-secret:
+        type: secret
+        name: legacy-cert-p12
+        globalMounts:
+          - path: /pkcs12-password
+            readOnly: true
+      cert-tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /config/certs
       transcode:
         type: emptyDir
       media:
