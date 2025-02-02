@@ -1,0 +1,10 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: plex-vpn
+spec:
+  endpoints:
+    - dnsName: "external-vpn.${SECRET_DOMAIN_LEGACY}"
+      recordType: CNAME
+      targets: ["kawaplex.airdns.org"]
