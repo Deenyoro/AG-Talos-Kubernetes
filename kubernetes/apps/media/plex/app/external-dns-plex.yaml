@@ -7,4 +7,4 @@ spec:
   endpoints:
     - dnsName: "external-vpn.${SECRET_DOMAIN_LEGACY}"
       recordType: CNAME
-      targets: ["kawaplex.airdns.org"]
+      targets: ["smokeyplex.airdns.org"]
