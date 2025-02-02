@@ -59,7 +59,7 @@ spec:
               - secret: plex-secret
             probes:
               liveness: &probes
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   httpGet:
@@ -71,7 +71,7 @@ spec:
                   failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: true
+                enabled: false
                 spec:
                   failureThreshold: 30
                   periodSeconds: 10
