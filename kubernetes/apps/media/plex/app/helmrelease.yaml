@@ -48,16 +48,18 @@ spec:
               - 44
               - 109
         initContainers:
-          - name: pkcs12-reencrypt
-            image: ubuntu:24.04
-            command:
-              - /bin/sh
-              - -c
-            args:
-              - apt update && apt install openssl -y &&
-                openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/password -noenc -out /tmp/temp.pem &&
-                openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/password -in /tmp/temp.pem &&
-                rm -f /tmp/temp.pem
+            01-pkcs12-reencrypt:
+              image:
+                repository: ubuntu
+                tag: 24.04
+              command:
+                - /bin/sh
+                - -c
+              args:
+                - apt update && apt install openssl -y &&
+                  openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/password -noenc -out /tmp/temp.pem &&
+                  openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/password -in /tmp/temp.pem &&
+                  rm -f /tmp/temp.pem
         containers:
           app:
             image:
