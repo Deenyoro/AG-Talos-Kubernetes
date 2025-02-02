@@ -120,7 +120,7 @@ spec:
         tls:
           - hosts:
               - *host-int
-        secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+            secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
     persistence:
       config:
         existingClaim: plex
