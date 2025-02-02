@@ -1,10 +1,10 @@
 apiVersion: cilium.io/v2
 kind: CiliumEgressGatewayPolicy
 metadata:
-  name: media-policy
+  name: policy
 spec:
   destinationCIDRs:
-  - 0.0.0.0/0
+    - 0.0.0.0/0
   egressGateway:
     nodeSelector:
       matchLabels:
@@ -13,8 +13,4 @@ spec:
   selectors:
     - podSelector:
         matchLabels:
-          io.kubernetes.pod.namespace: media
-    - podSelector:
-        matchLabels:
           io.kubernetes.pod.namespace: vpn
-
