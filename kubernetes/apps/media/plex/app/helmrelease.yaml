@@ -56,8 +56,8 @@ spec:
                 - /bin/sh
                 - -c
               args:
-                - openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/password -noenc -out /tmp/temp.pem &&
-                  openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/password -in /tmp/temp.pem &&
+                - openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/p12-password -noenc -out /tmp/temp.pem &&
+                  openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/p12-password -in /tmp/temp.pem &&
                   rm -f /tmp/temp.pem
         containers:
           app:
