@@ -8,6 +8,12 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
+  keystores:
+    pkcs12:
+      create: true
+      passwordSecretRef:
+        key: p12-password
+        name: ${SECRET_DOMAIN_LEGACY/./-}-production-p12
   commonName: "${SECRET_DOMAIN_LEGACY}"
   dnsNames:
     - "${SECRET_DOMAIN_LEGACY}"
