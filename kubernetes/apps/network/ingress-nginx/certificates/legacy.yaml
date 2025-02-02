@@ -11,7 +11,7 @@ spec:
   keystores:
     pkcs12:
       create: true
-      profile: Modern2023
+      # profile: Modern2023
       passwordSecretRef:
         key: p12-password
         name: legacy-cert-p12
