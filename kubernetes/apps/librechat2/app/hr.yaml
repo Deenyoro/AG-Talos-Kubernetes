@@ -30,8 +30,8 @@ spec:
         type: deployment
         annotations:
           reloader.stakater.com/auto: "true"
-          secret.reloader.stakater.com/reload: librechat-secret
-          configmap.reloader.stakater.com/reload: librechat-configmap
+          secret.reloader.stakater.com/reload: librechat2-secret
+          configmap.reloader.stakater.com/reload: librechat2-configmap
         initContainers:
           init-db:
             image:
@@ -94,7 +94,7 @@ spec:
               RAG_OPENAI_API_KEY:
                 valueFrom:
                   secretKeyRef:
-                    name: librechat-secret
+                    name: librechat2-secret
                     key: OPENAI_API_KEY
             envFrom:
               - secretRef:
@@ -184,7 +184,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "aichat.${SECRET_DOMAIN}"
+              - "aichat2.${SECRET_DOMAIN}"
       app-int:
         className: internal
         annotations:
