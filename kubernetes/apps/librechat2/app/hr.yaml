@@ -39,7 +39,7 @@ spec:
               tag: 16
             envFrom:
               - secretRef:
-                  name: librechat-init-secret
+                  name: librechat2-init-secret
         containers:
           app:
             image:
