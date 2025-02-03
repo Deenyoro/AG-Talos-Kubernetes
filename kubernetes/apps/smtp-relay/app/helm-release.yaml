@@ -33,7 +33,7 @@ spec:
         containers:
           main:
             image:
-              repository: registry.skysolutions.fi/docker.io/boky/postfix
+              repository: docker.io/boky/postfix
               tag: v4.4.0-debian
             env:
               RELAYHOST: "smtp.office365.com:587"
