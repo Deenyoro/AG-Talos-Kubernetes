@@ -1,0 +1,152 @@
+# For more information, see the Configuration Guide:
+# https://www.librechat.ai/docs/configuration/librechat_yaml
+
+# Configuration version (required)
+version: 1.1.8
+
+# Cache settings: Set to true to enable caching
+cache: true
+
+# Custom interface configuration
+interface:
+  # # Privacy policy settings
+  # privacyPolicy:
+  #   externalUrl: 'https://librechat.ai/privacy-policy'
+  #   openNewTab: true
+
+  # # Terms of service
+  # termsOfService:
+  #   externalUrl: 'https://librechat.ai/tos'
+  #   openNewTab: true
+
+  endpointsMenu: true
+  modelSelect: true
+  parameters: true
+  sidePanel: true
+  presets: false
+  prompts: true
+  bookmarks: true
+  multiConvo: true
+  agents: true
+
+# Example Registration Object Structure (optional)
+registration:
+  socialLogins: ["openid"]
+  # allowedDomains:
+  # - "gmail.com"
+
+speech:
+  speechTab:
+    conversationMode: false
+    advancedMode: false
+    speechToText:
+      engineSTT: "external"
+      languageSTT: "English (New Zealand)"
+      autoTranscribeAudio: true
+      decibelValue: -45
+      autoSendText: 0
+    textToSpeech:
+      engineTTS: "external"
+      voice: "alloy"
+      languageTTS: "en"
+      automaticPlayback: false
+      playbackRate: 1.0
+      cacheTTS: true
+  tts:
+    openai:
+      apiKey: "$${SPEECH_API_KEY}"
+      model: "tts-1"
+      voices: ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
+  stt:
+    openai:
+      apiKey: "$${SPEECH_API_KEY}"
+      model: "whisper-1"
+
+rateLimits:
+  fileUploads:
+    #ipMax: 100
+    #ipWindowInMinutes: 60  # Rate limit window for file uploads per IP
+    userMax: 50
+    userWindowInMinutes: 60 # Rate limit window for file uploads per user
+  conversationsImport:
+    ipMax: 100
+    ipWindowInMinutes: 60 # Rate limit window for conversation imports per IP
+    userMax: 50
+    userWindowInMinutes: 60 # Rate limit window for conversation imports per user
+
+fileConfig:
+  endpoints:
+    assistants:
+      disabled: false
+    default:
+      disabled: false
+    openAI:
+      disabled: false
+    google:
+      disabled: false
+    anthropic:
+      disabled: false
+  serverFileSizeLimit: 200
+  avatarSizeLimit: 2
+
+endpoints:
+  assistants:
+    disableBuilder: false
+    pollIntervalMs: 3000
+    timeoutMs: 180000
+
+  agents:
+    disableBuilder: false
+
+  all:
+    streamRate: 35 # Higher number 'buffers' incoming chunks to make the output smoother
+
+modelSpecs:
+  enforce: false
+  prioritize: false
+  list:
+    - name: gpt-websearch-assistant
+      label: Web Search
+      description: This model can search the internet for information
+      iconURL: https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt-yellowish.png
+      showIconInMenu: true
+      showIconInHeader: true
+      default: false
+      preset:
+        endpoint: assistants
+        assistant_id: asst_kqHPerBQICFkmhyiLVsDV9JV
+        modelLabel: Web Search
+
+    - name: gpt-file-analyser
+      label: File Analyser
+      description: This model can run code to help interpret data you provide
+      iconURL: https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt-purple.png
+      showIconInMenu: true
+      showIconInHeader: true
+      default: false
+      preset:
+        endpoint: assistants
+        assistant_id: asst_bVWZWx9aJUwEAaLJFS1MLEju
+        modelLabel: File Analyser
+
+    - name: gpt-4o
+      label: ChatGPT
+      description: ChatGPT is great for general conversation and answering questions
+      iconURL: https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt.png
+      showIconInMenu: true
+      showIconInHeader: true
+      default: false
+      preset:
+        endpoint: openAI
+        model: chatgpt-4o-latest
+        maxContextTokens: 128000 # Maximum context tokens
+        max_tokens: 16384 # Maximum output tokens
+        temperature: 0.7
+        modelLabel: ChatGPT
+        greeting: Hi, I'm ChatGPT! How can I help you today?
+        promptPrefix: |
+          You are ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture.
+
+          Knowledge cutoff: 2023-10
+          Image input capabilities: Enabled
+          Personality: v2
