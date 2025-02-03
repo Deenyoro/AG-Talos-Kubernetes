@@ -221,7 +221,7 @@ spec:
         type: configMap
         name: librechat2-config
         advancedMounts:
-          librechat:
+          librechat2:
             app:
               - subPath: librechat.yaml
                 path: /app/librechat.yaml
@@ -230,7 +230,7 @@ spec:
         enabled: true
         type: emptyDir
         advancedMounts:
-          librechat:
+          librechat2:
             app:
               - path: /app/data
               - path: /app/api/data
@@ -244,7 +244,7 @@ spec:
       data:
         existingClaim: librechat2
         advancedMounts:
-          librechat:
+          librechat2:
             app:
               - subPath: logs
                 path: /app/api/logs
