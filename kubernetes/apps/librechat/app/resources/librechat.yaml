@@ -95,8 +95,8 @@ endpoints:
       apiKey: "ollama"
       baseURL: "http://10.10.11.109:11434/v1/chat/completions"
       models:
-        default: ["deepseek-r1:8b"]
-        fetch: true
+        default: ["deepseek-r1:14b"]
+        fetch: false
       titleConvo: true
       titleModel: "current_model"
       summarize: false
