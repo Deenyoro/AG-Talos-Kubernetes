@@ -5,8 +5,8 @@ resources:
   - ./configmap.yaml
   - ./secret.sops.yaml
   - ./secret-openid.sops.yaml
-#  - ./resources/librechat.yaml
-#  - ./resources/litellm.yaml
+  #  - ./resources/librechat.yaml
+  #  - ./resources/litellm.yaml
   - ./init-db-secret.sops.yaml
   - ./pvc.yaml
 
@@ -14,9 +14,9 @@ configMapGenerator:
   - name: librechat-config
     files:
       - ./resources/librechat.yaml
-#  - name: litellm-config
-#    files:
-#      - ./resources/litellm.yaml
+  - name: litellm-config
+    files:
+      - ./resources/litellm.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
