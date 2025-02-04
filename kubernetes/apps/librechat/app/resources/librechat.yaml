@@ -78,8 +78,8 @@ endpoints:
       baseURL: "http://10.10.11.109:11434/v1/chat/completions"
       models:
         default: [
-          "deepseek:14b",
-          "deepseek:8b",
+          "deepseek-r1:14b",
+          "deepseek-r1:8b",
           "dolphin-mixtral",
           "mistral-openorca"
         ]
