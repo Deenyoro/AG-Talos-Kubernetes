@@ -75,10 +75,15 @@ endpoints:
   custom:
     - name: "Ollama"
       apiKey: "ollama"
-      baseURL: "http://10.10.11.109:11434/v1/"
+      baseURL: "http://10.10.11.109:11434/v1/chat/completions"
       models:
-        default: ["deepseek-r1:14b"]
-        fetch: false
+        default: [
+          "deepseek:14b",
+          "deepseek:8b",
+          "dolphin-mixtral",
+          "mistral-openorca"
+        ]
+        fetch: true
       titleConvo: true
       titleModel: "current_model"
       summarize: false
