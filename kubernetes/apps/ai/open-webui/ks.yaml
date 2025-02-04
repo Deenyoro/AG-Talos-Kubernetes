@@ -10,11 +10,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./k8s/nebula/apps/ai/open-webui/app
+  path: ./kubernetes/apps/ai/open-webui/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: thepatriots
   wait: false
   interval: 30m
   timeout: 5m
