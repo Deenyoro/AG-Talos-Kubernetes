@@ -81,7 +81,7 @@ endpoints:
     - name: "Ollama"
       apiKey: "ollama"
       baseURL: "http://10.10.11.109:11434/v1/"
-      # List both models so you can choose between deepseek-r1:8b and deepseek-r1:14b
+      # Explicitly quote model IDs to avoid YAML parsing issues.
       models:
         default: ["deepseek-r1:8b", "deepseek-r1:14b"]
         fetch: false
@@ -93,6 +93,8 @@ endpoints:
       modelDisplayLabel: "Ollama"
       addParams:
         max_tokens: 131000
+        # Disable streaming for Ollama since it may not support it.
+        stream: false
 
   assistants:
     disableBuilder: false
