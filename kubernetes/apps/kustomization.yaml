@@ -25,6 +25,7 @@ resources:
   - bookstack/ks.yaml
   - librechat/ks.yaml
   - librechat2/ks.yaml
+  - ai/open-webui/ks.yaml
   - smtp-relay/ks.yaml
   - security
   - vpn

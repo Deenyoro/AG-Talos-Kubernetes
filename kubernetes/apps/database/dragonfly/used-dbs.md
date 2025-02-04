@@ -7,5 +7,6 @@
 | Paperless    | 5         |
 | Immich       | 6         |
 | Librechat    | 7         |
+| OpenWebui    | 9         |
 | Netbox       | 10        |
 | Paperless    | 11        |

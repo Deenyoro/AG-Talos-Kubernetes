@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app open-webui
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      open-webui:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/rafaribe/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: openwebui-init-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/open-webui/open-webui
+              tag: 0.5.7
+            env:
+              OLLAMA_BASE_URL: "http://10.10.11.109:11434"
+              ENABLE_RAG_WEB_SEARCH: false
+              # Redis
+              # https://docs.openwebui.com/getting-started/advanced-topics/env-configuration/#redis
+              ENABLE_WEBSOCKET_SUPPORT: true
+              ENABLE_OAUTH_SIGNUP: true
+              OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
+              OAUTH_PROVIDER_NAME: "Authentik"
+              OPENID_PROVIDER_URL: "https://auth.${SECRET_DOMAIN}/application/o/openwebui/.well-known/openid-configuration"
+              OAUTH_SCOPES: "openid email profile"
+              OPENID_REDIRECT_URI: "https://openwebui.${SECRET_DOMAIN}/oauth/oidc/callback"
+              WEBSOCKET_MANAGER: "redis"
+              WEBSOCKET_REDIS_URL: "redis://dragonfly.database:6379/9"
+
+            envFrom:
+              - secretRef:
+                  name: openwebui-secret
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+    service:
+      app:
+        controller: open-webui
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host "openwebui.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /app/backend/data
