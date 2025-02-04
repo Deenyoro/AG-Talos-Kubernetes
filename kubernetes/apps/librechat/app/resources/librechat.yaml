@@ -91,10 +91,6 @@ endpoints:
       summaryModel: "current_model"
       forcePrompt: false
       modelDisplayLabel: "Ollama"
-      addParams:
-        max_tokens: 131000
-        # Disable streaming for Ollama since it may not support it.
-        stream: false
 
   assistants:
     disableBuilder: false
