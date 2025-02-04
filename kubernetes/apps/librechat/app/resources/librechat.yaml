@@ -1,5 +1,5 @@
 # librechat.yaml
-# For more information, see the Configuration Guide:
+# For more information, see:
 # https://www.librechat.ai/docs/configuration/librechat_yaml
 
 version: 1.2.1
@@ -76,9 +76,8 @@ endpoints:
     - name: "Ollama"
       apiKey: "ollama"
       baseURL: "http://10.10.11.109:11434/v1/"
-      # List both models so you can choose between deepseek-r1:8b and deepseek-r1:14b.
       models:
-        default: ["deepseek-r1:8b", "deepseek-r1:14b"]
+        default: ["deepseek-r1:14b"]
         fetch: false
       titleConvo: true
       titleModel: "current_model"
@@ -86,8 +85,7 @@ endpoints:
       summaryModel: "current_model"
       forcePrompt: false
       modelDisplayLabel: "Ollama"
-      addParams:
-        stream: false # Only disable streaming (do not send max_tokens)
+      addParams: {} # Do not include extra parameters like max_tokens
   assistants:
     disableBuilder: false
     pollIntervalMs: 3000
@@ -138,15 +136,7 @@ modelSpecs:
         temperature: 0.7
         modelLabel: Claude
         greeting: "How can Claude help you today?"
-        promptPrefix: |
-          The assistant is Claude, created by Anthropic.
-          Claude's knowledge base was last updated on April 2024. It answers questions about events prior to and after April 2024 the way a highly informed individual in April 2024 would if they were talking to someone from that time, and can let the human know this when relevant.
-          If asked about events or news that may have happened after its cutoff date, Claude never claims or implies they are unverified or rumors or that they only allegedly happened or that they are inaccurate, since Claude can't know either way and lets the human know this.
-          Claude cannot open URLs, links, or videos. If it seems like the human is expecting Claude to do so, it clarifies the situation and asks the human to paste the relevant text or image content into the conversation.
-          If it is asked to assist with tasks involving the expression of views held by a significant number of people, Claude provides assistance with the task regardless of its own views.
-          When presented with a math problem, logic problem, or other problem benefiting from systematic thinking, Claude thinks through it step by step before giving its final answer.
-          If Claude is asked about a very obscure person, object, or topic, i.e. if it is asked for the kind of information that is unlikely to be found more than once or twice on the internet, Claude ends its response by reminding the human that although it tries to be accurate, it may hallucinate in response to questions like this. It uses the term 'hallucinate' to describe this since the human will understand what it means.
-          Claude avoids peppering the human with questions and tries to only ask the single most relevant follow-up question when it does ask a follow up.
+        promptPrefix: "The assistant is Claude, created by Anthropic. ..."
     - name: gpt-4o
       label: ChatGPT
       description: ChatGPT is great for general conversation and answering questions (via OpenAI)
@@ -162,11 +152,7 @@ modelSpecs:
         temperature: 0.7
         modelLabel: ChatGPT
         greeting: "Hi, I'm ChatGPT! How can I help you today?"
-        promptPrefix: |
-          You are ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture.
-          Knowledge cutoff: 2023-10
-          Image input capabilities: Enabled
-          Personality: v2
+        promptPrefix: "You are ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture. ..."
     - name: o1
       label: GPT-o1
       description: GPT-o1 is good at performing complex reasoning. It's slower and more verbose than ChatGPT.
