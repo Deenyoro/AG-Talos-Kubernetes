@@ -15,19 +15,17 @@ spec:
         name: bjw-s
         namespace: flux-system
   values:
+    defaultPodOptions:
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "PreferNoSchedule"
     controllers:
       meshcentral:
         annotations:
           reloader.stakater.com/auto: "true"
-        # pod:
-        #   annotations:
-        #     k8s.v1.cni.cncf.io/networks: |
-        #       [{
-        #         "name":"macvlan-lan",
-        #         "interface": "eth1",
-        #         "namespace": "kube-system",
-        #         "ips": ["10.10.12.224/24"]
-        #       }]
         containers:
           app:
             image:
@@ -37,9 +35,6 @@ spec:
               TZ: ${TIMEZONE}
               NODE_ENV: production
               HOSTNAME: ${HOSTNAME}
-            # command:
-            #  - /bin/sleep
-            #  - infinity
             resources:
               requests:
                 cpu: 100m
@@ -68,7 +63,6 @@ spec:
           - hosts:
               - ${HOSTNAME}
             secretName: "${HOSTNAME/./-}-tls"
-
       internal:
         className: internal
         annotations:
@@ -93,14 +87,6 @@ spec:
             app:
               - path: /opt/meshcentral/meshcentral-data/config.json
                 subPath: config.json
-#      cert:
-#        type: secret
-#        name: ${HOSTNAME/./-}-tls
-#        advancedMounts:
-#          meshcentral:
-#            app:
-#              - path: /opt/meshcentral/meshcentral-data/webserver-cert-public.crt
-#                subPath: webserver-cert-public.crt
       data:
         existingClaim: meshcentral-v2
         globalMounts:
