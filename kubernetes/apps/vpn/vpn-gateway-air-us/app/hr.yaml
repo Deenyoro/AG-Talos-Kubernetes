@@ -74,6 +74,7 @@ spec:
           HTTP_CONTROL_SERVER_LOG: off
           PUBLICIP_API: ip2location
           SERVER_COUNTRIES: "United States"
+          SERVER_NAMES: "Metallah,Ursa,Khambalia"
           WIREGUARD_PERSISTENT_KEEPALIVE_INTERVAL: "15m"
         envFrom:
           - secretRef:
