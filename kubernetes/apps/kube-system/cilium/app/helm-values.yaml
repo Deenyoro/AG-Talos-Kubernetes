@@ -13,7 +13,7 @@ cni:
   exclusive: false
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
-devices: bond*
+devices: bond0,bond2
 endpointRoutes:
   enabled: true
 envoy:
