@@ -37,8 +37,8 @@ spec:
           reloader.stakater.com/auto: "true"
 
         pod:
-          labels:
-            setAirUsGateway: "true"
+#          labels:
+#            setAirUsGateway: "true"
           securityContext:
             runAsUser: 65534
             runAsGroup: 65534
@@ -107,6 +107,22 @@ spec:
           http:
             port: 32400
     ingress:
+      external:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_LEGACY}
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        hosts:
+          - host: &host "plex.${SECRET_DOMAIN_LEGACY}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
       internal:
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
