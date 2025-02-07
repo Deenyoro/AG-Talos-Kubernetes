@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - ./ns.yaml
   - ./natPolicy.yaml
-  - ./vpn-gateway/ks.yaml
+#  - ./vpn-gateway/ks.yaml
   - ./vpn-gateway-airvpn/ks.yaml
   - ./vpn-gateway-air-us/ks.yaml
