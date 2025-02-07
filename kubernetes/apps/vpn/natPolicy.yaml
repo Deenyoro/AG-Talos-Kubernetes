@@ -13,4 +13,7 @@ spec:
   selectors:
     - podSelector:
         matchLabels:
+          plex-gw: "true"
+    - podSelector:
+        matchLabels:
           io.kubernetes.pod.namespace: vpn

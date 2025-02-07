@@ -37,7 +37,8 @@ spec:
           reloader.stakater.com/auto: "true"
 
         pod:
-#          labels:
+          labels:
+            plex-gw: "true"
 #            setAirUsGateway: "true"
           securityContext:
             runAsUser: 65534
