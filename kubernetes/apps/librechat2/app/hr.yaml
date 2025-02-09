@@ -44,7 +44,7 @@ spec:
           app:
             image:
               repository: ghcr.io/danny-avila/librechat-dev
-              tag: latest@sha256:adeb4cd373cb1073134c9f2f8108fced3e3c1ab8e06dccb57f3301225afca8a6
+              tag: latest@sha256:8db2d7e427848cfec8429bcb4e93e07b745010cc38f04b0f9e46cb7730965ed8
             env:
               PORT: "3080"
               NODE_ENV: "production"
