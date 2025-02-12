@@ -245,10 +245,10 @@ nodes:
         mtu: 9000
         addresses:
           - 10.10.12.125/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 10.10.12.1
-            metric: 25
+#        routes:
+#          - network: 0.0.0.0/0
+#            gateway: 10.10.12.1
+#            metric: 25
       - interface: bond1
         bond:
           interfaces:

@@ -25,6 +25,8 @@ spec:
   values:
     global:
       fullnameOverride: *app
+      nodeSelector:
+        kubernetes.io/hostname: kawg125
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.11.1
