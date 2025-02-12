@@ -26,9 +26,9 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-#    defaultPodOptions:
-#      nodeSelector:
-#        kubernetes.io/hostname: kawg125
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: kawg125
     controllers:
       sabnzbd:
         annotations:
@@ -73,7 +73,7 @@ spec:
               requests:
                 cpu: 100m
               limits:
-                memory: 90Gi
+                memory: 10Gi
             securityContext:
               runAsUser: 65534
               runAsGroup: 65534
