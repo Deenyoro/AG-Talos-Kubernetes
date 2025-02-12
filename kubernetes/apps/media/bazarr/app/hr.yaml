@@ -75,6 +75,8 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: kawg125
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534

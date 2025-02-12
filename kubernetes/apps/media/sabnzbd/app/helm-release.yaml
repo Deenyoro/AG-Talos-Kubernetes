@@ -26,6 +26,9 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: kawg125
     controllers:
       sabnzbd:
         annotations:

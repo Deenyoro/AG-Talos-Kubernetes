@@ -79,6 +79,8 @@ spec:
               limits:
                 memory: 6Gi
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: kawg125
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
