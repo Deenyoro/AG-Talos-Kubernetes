@@ -23,10 +23,10 @@ spec:
   driftDetection:
     mode: warn
   values:
+    nodeSelector:
+      kubernetes.io/hostname: kawg125
     global:
       fullnameOverride: *app
-      nodeSelector:
-        kubernetes.io/hostname: kawg125
     image:
       repository: ghcr.io/angelnu/pod-gateway
       tag: v1.11.1
@@ -125,14 +125,6 @@ spec:
       # Adding the health check port to service
     - kustomize:
         patches:
-          - target:
-              kind: Deployment
-              name: *app
-            patch: |
-              - op: add
-                path: /spec/template/spec/spec/nodeSelector
-                value:
-                  kubernetes.io/hostname: kawg125
           - target:
               kind: Service
               name: *app
