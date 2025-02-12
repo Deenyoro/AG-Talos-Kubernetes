@@ -126,6 +126,14 @@ spec:
     - kustomize:
         patches:
           - target:
+              kind: Deployment
+              name: *app
+            patch: |
+              - op: add
+                path: /spec/template/spec/spec/nodeSelector
+                value:
+                  kubernetes.io/hostname: kawg125
+          - target:
               kind: Service
               name: *app
             patch: |
