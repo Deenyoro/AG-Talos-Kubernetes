@@ -28,6 +28,9 @@ spec:
       strategy: uninstall
       retries: 3
   values:
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: kawg125
     controller:
       annotations:
         reloader.stakater.com/auto: "true"
