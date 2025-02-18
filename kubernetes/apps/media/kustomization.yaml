@@ -17,6 +17,7 @@ resources:
   - ./sonarr/ks.yaml
   - ./sabnzbd/ks-secrets.yaml
   - ./sabnzbd/ks.yaml
+  - ./unpackerr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./jellyseerr/ks-secrets.yaml
   - ./jellyseerr/ks.yaml
