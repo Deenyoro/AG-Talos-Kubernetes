@@ -38,6 +38,7 @@ spec:
               UN_WEBSERVER_LISTEN_ADDR: 0.0.0.0:80
               UN_WEBSERVER_LOG_FILE: /logs/webserver.log
               UN_ACTIVITY: true
+              UN_PARALLEL: 5
               UN_SONARR_0_URL: http://sonarr.media.svc.cluster.local
               UN_SONARR_0_PATHS_0: /mnt/QuadSquad/EC/Downloads/SABnzbd/Completed/sonarr
               UN_SONARR_0_PATHS_1: /mnt/QuadSquad/EC/Downloads/Torrents/Completed
