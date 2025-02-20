@@ -14,7 +14,7 @@ sonarr:
     quality_profiles:
       - name: Web 1080p
         upgrade:
-          allowed: true
+          allowed: false
           until_quality: Web-1080p
           until_score: 10000
         min_format_score: 0
@@ -41,7 +41,7 @@ sonarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: true
+          allowed: false
           until_quality: Web-720p
           until_score: 10000
         min_format_score: 0
@@ -151,7 +151,7 @@ radarr:
         reset_unmatched_scores:
           enabled: true
         upgrade:
-          allowed: true
+          allowed: false
           until_quality: Remux-1080p
           until_score: 10000
         min_format_score: 0
