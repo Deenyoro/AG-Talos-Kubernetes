@@ -38,6 +38,15 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       }
+    },
+    {
+      "description": "Wazuh images",
+      "groupName": "Wazuh",
+      "matchPackagePatterns": ["wazuh"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
     }
   ]
 }
