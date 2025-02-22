@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/netbox-community/netbox
-      tag: "v4.2.3"
+      tag: "v4.2.4"
     superuser:
       name: admin
       email: admin@${SECRET_DOMAIN}
