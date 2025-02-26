@@ -39,7 +39,7 @@ spec:
         containers:
           app:
             image:
-              repository: registry.skysolutions.fi/library/sabnzbd
+              repository: ghcr.io/skyssolutions/sabnzbd
               tag: 4.4.1
             env:
               CROSS_SEED_HOST: cross-seed.media.svc.cluster.local
