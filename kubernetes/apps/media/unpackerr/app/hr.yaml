@@ -40,11 +40,11 @@ spec:
               UN_ACTIVITY: true
               UN_PARALLEL: 5
               UN_SONARR_0_URL: http://sonarr.media.svc.cluster.local
-              UN_SONARR_0_PATHS_0: /mnt/QuadSquad/EC/Downloads/SABnzbd/Completed/sonarr
-              UN_SONARR_0_PATHS_1: /mnt/QuadSquad/EC/Downloads/Torrents/Completed
+              UN_SONARR_0_PATHS_0: /mnt/QuadSquad/EC/Downloads/Torrents/Completed
               UN_RADARR_0_URL: http://radarr.media.svc.cluster.local
-              UN_RADARR_0_PATHS_0: /mnt/QuadSquad/EC/Downloads/SABnzbd/Completed/radarr
-              UN_RADARR_0_PATHS_1: /mnt/QuadSquad/EC/Downloads/Torrents/Completed
+              UN_RADARR_0_PATHS_0: /mnt/QuadSquad/EC/Downloads/Torrents/Completed
+              UN_FOLDER_0_PATH: /mnt/QuadSquad/EC/Downloads/SABnzbd/Completed
+              UN_FOLDER_0_DELETE_AFTER: 1h
             envFrom:
               - secretRef:
                   name: unpackerr-secret
