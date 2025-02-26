@@ -41,9 +41,6 @@ spec:
         - ports:
             - port: "53"
               protocol: UDP
-          rules:
-            dns:
-              - matchPattern: "*"
     - icmps:
         - fields:
             - type: 8
