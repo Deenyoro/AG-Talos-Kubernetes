@@ -18,7 +18,8 @@
         "ghcr.io/onedr0p/qbittorrent",
         "ghcr.io/home-assistant/home-assistant",
         "wordpress",
-        "mariadb"
+        "mariadb",
+        "gluetun"
       ]
     },
     {
