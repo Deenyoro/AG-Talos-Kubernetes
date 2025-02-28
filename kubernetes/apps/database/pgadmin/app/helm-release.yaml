@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: dpage/pgadmin4
-              tag: 8.12
+              tag: 9.1
             env:
               PGADMIN_DEFAULT_EMAIL: deen@${SECRET_DOMAIN}
             envFrom:
