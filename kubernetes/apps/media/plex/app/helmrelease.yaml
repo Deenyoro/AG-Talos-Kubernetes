@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.1
+      version: 3.6.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -35,7 +35,6 @@ spec:
       plex:
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
           labels:
             plex-gw: "true"
@@ -52,7 +51,7 @@ spec:
             01-pkcs12-reencrypt:
               image:
                 repository: ghcr.io/onedr0p/plex
-                tag: 1.41.4.9463-630c9f557
+                tag: 1.41.3.9292-bc7397402
               command:
                 - /bin/sh
                 - -c
@@ -64,7 +63,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.41.4.9463-630c9f557@sha256:7e169d17670c8f34bcb1f40500747b1b689c1c2ef7b80e604b968b5375e62022
+              tag: 1.41.3.9292-bc7397402@sha256:9a9196a109437035b9b20c8d368c569555623f14faf2247c3aa0a84cf568242d
             env:
               TZ: America/New_York
             envFrom:
@@ -113,6 +112,9 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_LEGACY}
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
           - host: &host "plex.${SECRET_DOMAIN_LEGACY}"
             paths:
@@ -125,9 +127,12 @@ spec:
               - *host
             secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
       internal:
+        className: internal
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        className: internal
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
           - host: &host-int "plex-int.${SECRET_DOMAIN_LEGACY}"
             paths:
