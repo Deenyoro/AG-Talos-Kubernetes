@@ -48,22 +48,22 @@ spec:
               - 44
               - 109
         initContainers:
-            01-pkcs12-reencrypt:
-              image:
-                repository: ghcr.io/onedr0p/plex
-                tag: 1.41.4.9463-630c9f557
-              command:
-                - /bin/sh
-                - -c
-              args:
-                - openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/p12-password -noenc -out /tmp/temp.pem &&
-                  openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/p12-password -in /tmp/temp.pem &&
-                  rm -f /tmp/temp.pem
+          01-pkcs12-reencrypt:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.41.3.9292-bc7397402
+            command:
+              - /bin/sh
+              - -c
+            args:
+              - openssl pkcs12 -legacy -in /config/certs-old/keystore.p12 -passin file:/pkcs12-password/p12-password -noenc -out /tmp/temp.pem &&
+                openssl pkcs12 -export -out /config/certs/keystore.p12 -passout file:/pkcs12-password/p12-password -in /tmp/temp.pem &&
+                rm -f /tmp/temp.pem
         containers:
           app:
             image:
               repository: ghcr.io/onedr0p/plex
-              tag: 1.41.4.9463-630c9f557@sha256:7e169d17670c8f34bcb1f40500747b1b689c1c2ef7b80e604b968b5375e62022
+              tag: 1.41.3.9292-bc7397402@sha256:9a9196a109437035b9b20c8d368c569555623f14faf2247c3aa0a84cf568242d
             env:
               TZ: America/New_York
             envFrom:
@@ -115,8 +115,73 @@ spec:
           nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            # App root redirect: If a request to / comes in -> 302 redirect to the plex landing page
+            # (but only if it doesn't contain the X-Plex-Device-Name header or query argument)
+            # This retains API endpoint access for official Plex clients and authenticated sessions.
+            set $r "";
+            if ($http_x_plex_device_name = '') { set $r "Y"; }
+            if ($arg_X-Plex-Device-Name = '') { set $r "$${r}Y"; }
+            if ($r = YY) {
+              rewrite ^/$ https://$http_host/web/index.html;
+            }
+
+            gzip on;
+            gzip_vary on;
+            gzip_min_length 256;
+            gzip_proxied any;
+            gzip_comp_level 9;
+            gzip_disable "MSIE [1-6]\.";
+            gzip_types
+              text/css
+              text/xml
+              text/plain
+              text/javascript
+              text/cache-manifest
+              text/x-cross-domain-policy
+              application/javascript
+              application/x-javascript
+              application/json
+              application/manifest+json
+              application/xml
+              application/xml+rss
+              application/xhtml+xml
+              application/rss+xml
+              application/rdf+xml
+              application/atom+xml
+              application/atom_xml
+              application/geo+json
+              application/ttf
+              application/x-ttf
+              application/x-font-ttf
+              application/x-font-otf
+              application/x-font-truetype
+              application/x-font-opentype
+              application/x-web-app-manifest+json
+              application/vnd.ms-fontobject
+              font/eot
+              font/otf
+              font/ttf
+              font/opentype
+              image/svg+xml
+              image/x-icon
+              image/bmp;
+
+            send_timeout 3600; # some players don't reopen a socket and playback stops totally instead of resuming after an extended pause (e.g. Chrome)
+
+            proxy_set_header Sec-Websocket-Extensions $http_sec_websocket_extensions;
+            proxy_set_header Sec-Websocket-Key $http_sec_websocket_key;
+            proxy_set_header Sec-Websocket-Protocol $http_sec_websocket_protocol;
+            proxy_set_header Sec-Websocket-Version $http_sec_websocket_version;
+
+            proxy_set_header Accept-Encoding "";
+
+            add_header Referrer-Policy "same-origin" always;
+            add_header X-Content-Type-Options "nosniff" always;
+            add_header X-Frame-Options sameorigin;
+            add_header X-XSS-Protection "1; mode=block" always;
         hosts:
-          - host: &host "plex.${SECRET_DOMAIN_LEGACY}"
+          - host: "{{ .Release.Name }}.zebernst.dev"
             paths:
               - path: /
                 service:
@@ -124,7 +189,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host
+              - "{{ .Release.Name }}.zebernst.dev"
             secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
       internal:
         className: internal
@@ -134,7 +199,7 @@ spec:
           nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
         hosts:
-          - host: &host-int "plex-int.${SECRET_DOMAIN_LEGACY}"
+          - host: "plex-int.${SECRET_DOMAIN_LEGACY}"
             paths:
               - path: /
                 service:
@@ -142,7 +207,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host-int
+              - "plex-int.${SECRET_DOMAIN_LEGACY}"
             secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
     persistence:
       config:
@@ -162,10 +227,10 @@ spec:
         type: emptyDir
       cert:
         type: secret
-        name: ${SECRET_DOMAIN_LEGACY/./-}-production-tls
+        name: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
         globalMounts:
-          -  path: /config/certs-old
-             readOnly: true
+          - path: /config/certs-old
+            readOnly: true
       cert-secret:
         type: secret
         name: legacy-cert-p12
