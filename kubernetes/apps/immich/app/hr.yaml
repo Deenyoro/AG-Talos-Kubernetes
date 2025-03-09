@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.128.0
+              tag: v1.129.0
             env:
               TZ: "${TIMEZONE}"
               IMMICH_MEDIA_LOCATION: /data
@@ -59,7 +59,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.128.0
+              tag: v1.129.0
             env:
               TZ: "${TIMEZONE}"
               IMMICH_MEDIA_LOCATION: /data
@@ -87,7 +87,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.128.0
+              tag: v1.129.0
             env:
               TZ: "${TIMEZONE}"
               IMMICH_MEDIA_LOCATION: /data
