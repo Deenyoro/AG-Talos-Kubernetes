@@ -73,6 +73,17 @@ spec:
         ports:
           http:
             port: *port
+    route:
+      app:
+        hostnames: [ "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}" ]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     ingress:
       app:
         enabled: true
