@@ -17,7 +17,8 @@ devices: bond0 bond2
 endpointRoutes:
   enabled: true
 envoy:
-  enabled: false
+  enabled: true
+  rollOutPods: true
 gatewayAPI:
   enabled: true
   # The number of additional GatewayAPI proxy hops from the right side of the HTTP header to trust when determining the origin client's IP address.
