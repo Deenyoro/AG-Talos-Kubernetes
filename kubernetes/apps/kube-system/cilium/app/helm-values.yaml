@@ -18,6 +18,10 @@ endpointRoutes:
   enabled: true
 envoy:
   enabled: false
+gatewayAPI:
+  enabled: true
+  # The number of additional GatewayAPI proxy hops from the right side of the HTTP header to trust when determining the origin client's IP address.
+  xffNumTrustedHops: 1
 egressGateway:
   enabled: true
 enableIPv4Masquerade: true
