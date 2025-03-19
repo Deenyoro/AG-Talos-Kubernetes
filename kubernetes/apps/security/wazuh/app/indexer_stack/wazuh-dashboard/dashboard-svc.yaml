@@ -21,7 +21,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: wazuh-dashboard
   ports:
