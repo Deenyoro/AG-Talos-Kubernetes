@@ -269,9 +269,11 @@ spec:
         globalMounts:
           - path: /config/certs
       transcode:
-        existingClaim: plex-transcoding-tmp
+        existingClaim: plex-cache
         globalMounts:
           - path: /transcode
+            subPath: transcode
+
       media:
         type: nfs
         server: 192.168.90.101
