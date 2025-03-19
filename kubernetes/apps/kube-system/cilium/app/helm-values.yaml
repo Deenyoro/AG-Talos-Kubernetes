@@ -2,6 +2,8 @@
 autoDirectNodeRoutes: true
 bpf:
   masquerade: true # Required for egressGateway
+  preallocateMaps: true
+  tproxy: true
 cgroup:
   automount:
     enabled: false
@@ -21,6 +23,7 @@ envoy:
   rollOutPods: true
 gatewayAPI:
   enabled: true
+  enableAlpn: true
   # The number of additional GatewayAPI proxy hops from the right side of the HTTP header to trust when determining the origin client's IP address.
   xffNumTrustedHops: 1
 egressGateway:
@@ -37,9 +40,11 @@ kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: true
+l7Proxy: true
 loadBalancer:
+  acceleration: disabled
   algorithm: maglev
-  mode: "dsr"
+  mode: dsr
 localRedirectPolicy: true
 operator:
   replicas: 1

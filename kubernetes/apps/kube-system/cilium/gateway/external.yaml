@@ -33,7 +33,6 @@ spec:
         certificateRefs:
           - kind: Secret
             name: "${SECRET_DOMAIN/./-}-production-tls"
-            namespace: network
     - name: http2
       protocol: HTTP
       port: 80
@@ -52,5 +51,4 @@ spec:
         certificateRefs:
           - kind: Secret
             name: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            namespace: network
 
