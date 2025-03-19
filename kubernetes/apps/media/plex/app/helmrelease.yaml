@@ -115,6 +115,71 @@ spec:
           nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            # App root redirect: If a request to / comes in -> 302 redirect to the plex landing page
+            # (but only if it doesn't contain the X-Plex-Device-Name header or query argument)
+            # This retains API endpoint access for official Plex clients and authenticated sessions.
+            set $r "";
+            if ($http_x_plex_device_name = '') { set $r "Y"; }
+            if ($arg_X-Plex-Device-Name = '') { set $r "$${r}Y"; }
+            if ($r = YY) {
+              rewrite ^/$ https://$http_host/web/index.html;
+            }
+
+            gzip on;
+            gzip_vary on;
+            gzip_min_length 256;
+            gzip_proxied any;
+            gzip_comp_level 9;
+            gzip_disable "MSIE [1-6]\.";
+            gzip_types
+              text/css
+              text/xml
+              text/plain
+              text/javascript
+              text/cache-manifest
+              text/x-cross-domain-policy
+              application/javascript
+              application/x-javascript
+              application/json
+              application/manifest+json
+              application/xml
+              application/xml+rss
+              application/xhtml+xml
+              application/rss+xml
+              application/rdf+xml
+              application/atom+xml
+              application/atom_xml
+              application/geo+json
+              application/ttf
+              application/x-ttf
+              application/x-font-ttf
+              application/x-font-otf
+              application/x-font-truetype
+              application/x-font-opentype
+              application/x-web-app-manifest+json
+              application/vnd.ms-fontobject
+              font/eot
+              font/otf
+              font/ttf
+              font/opentype
+              image/svg+xml
+              image/x-icon
+              image/bmp;
+
+            send_timeout 3600;
+
+            proxy_set_header Sec-Websocket-Extensions $http_sec_websocket_extensions;
+            proxy_set_header Sec-Websocket-Key $http_sec_websocket_key;
+            proxy_set_header Sec-Websocket-Protocol $http_sec_websocket_protocol;
+            proxy_set_header Sec-Websocket-Version $http_sec_websocket_version;
+
+            proxy_set_header Accept-Encoding "";
+
+            add_header Referrer-Policy "same-origin" always;
+            add_header X-Content-Type-Options "nosniff" always;
+            add_header X-Frame-Options sameorigin;
+            add_header X-XSS-Protection "1; mode=block" always;
         hosts:
           - host: &host "plex.${SECRET_DOMAIN_LEGACY}"
             paths:
