@@ -23,12 +23,13 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
     remediation:
+      strategy: rollback
       retries: 3
+  driftDetection:
+    mode: enabled
   uninstall:
     keepHistory: false
   values:
-    webhook:
-      enabled: false
     controller:
       volumeSnapshotClasses:
         - name: csi-ceph-blockpool
