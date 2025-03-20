@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.15.1
+      version: 1.15.2
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -74,9 +74,12 @@ spec:
     sources:
       - ingress
       - crd
+      - gateway-httproute
+      - gateway-tlsroute
 
     extraArgs:
       - --ingress-class=internal
+      - --gateway-name=internal
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
 
