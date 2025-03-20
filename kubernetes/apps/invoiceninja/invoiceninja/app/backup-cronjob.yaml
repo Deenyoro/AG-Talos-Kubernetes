@@ -36,7 +36,7 @@ spec:
                 - name: DB_USER
                   value: invoiceninja
                 - name: DB_SERVER
-                  value: invoiceninja-mariadb
+                  value: mariadb-galera-maxscale.database.svc.cluster.local
                 - name: DB_PORT
                   value: "3306"
                 - name: DB_PASS
