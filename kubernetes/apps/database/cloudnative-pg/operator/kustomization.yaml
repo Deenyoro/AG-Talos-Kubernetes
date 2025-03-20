@@ -5,6 +5,7 @@ namespace: databases
 resources:
   - helm-release.yaml
   - secret.sops.yaml
+  - secret-s3.sops.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
