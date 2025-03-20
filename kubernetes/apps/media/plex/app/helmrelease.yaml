@@ -241,14 +241,15 @@ spec:
         existingClaim: plex
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server
-          - path: /transcode
-            subPath: transcode
 
       # Separate PVC for cache to avoid backing up cache files
       cache:
         existingClaim: plex-cache
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server/Cache
+          - path: /transcode
+            subPath: transcode
+
       logs:
         type: emptyDir
         globalMounts:
