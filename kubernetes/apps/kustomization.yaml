@@ -30,7 +30,3 @@ resources:
   - security
   - vpn
   - paperless/ks.yaml
-  #  - matrix-synapse/ks.yaml
-  #  - matrix-synapse/element/ks.yaml
-  #  - openebs-system
-  #  - rustdesk/ks.yaml

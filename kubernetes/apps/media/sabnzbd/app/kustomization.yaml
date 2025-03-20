@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - pvc.yaml
-  - replicationdestination.yaml
+  #  - ./replicationdestination.yaml # to pvc TODO: Uncomment this line when re-deploying
   - replicationsource.yaml
 configMapGenerator:
   - name: sabnzbd-scripts

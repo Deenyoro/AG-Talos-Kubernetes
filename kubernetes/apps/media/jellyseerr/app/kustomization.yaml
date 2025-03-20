@@ -7,4 +7,4 @@ resources:
   - pvc.yaml
   - pvc-cache.yaml
   - replicationsource.yaml
-  - replicationdestination.yaml
+#  - ./replicationdestination.yaml # to pvc TODO: Uncomment this line when re-deploying
