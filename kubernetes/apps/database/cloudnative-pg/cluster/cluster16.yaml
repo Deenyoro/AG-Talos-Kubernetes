@@ -41,4 +41,21 @@ spec:
       - { regex: cluster, action: labeldrop }
   backup:
     target: prefer-standby
-    retentionPolicy: 30d
+    retentionPolicy: "30d"
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      data:
+        compression: bzip2
+      destinationPath: s3://backups-postgres/
+      endpointURL: http://10.10.13.52/
+      serverName: &currentCluster postgres16-v1
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg-secret
+          key: aws-access-key-id
+        secretAccessKey:
+          name: cloudnative-pg-secret
+          key: aws-secret-access-key
+
