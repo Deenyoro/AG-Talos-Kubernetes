@@ -49,7 +49,7 @@ spec:
       data:
         compression: bzip2
       destinationPath: s3://backups-postgres/
-      endpointURL: http://10.10.13.52/
+      endpointURL: http://10.10.13.52:9000
       serverName: &currentCluster postgres16-v1
       s3Credentials:
         accessKeyId:
