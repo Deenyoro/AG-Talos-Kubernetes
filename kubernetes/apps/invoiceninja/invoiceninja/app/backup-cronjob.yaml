@@ -23,6 +23,7 @@ spec:
             - name: invoiceninja-db-backup
               image: docker.io/databack/mysql-backup:latest
               imagePullPolicy: IfNotPresent
+              args: ["dump"]
               env:
                 - name: DB_DUMP_TARGET
                   value: /backups
