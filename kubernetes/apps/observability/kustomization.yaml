@@ -4,9 +4,9 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./prometheus-operator-crds/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
+#  - ./kube-prometheus-stack/ks.yaml
   - ./uptimekuma/ks.yaml
-  - ./zabbix/ks-secrets.yaml
-  - ./zabbix/ks-pvc.yaml
-  - ./zabbix/ks-server.yaml
-  - ./zabbix/ks-web.yaml
+#  - ./zabbix/ks-secrets.yaml
+#  - ./zabbix/ks-pvc.yaml
+#  - ./zabbix/ks-server.yaml
+#  - ./zabbix/ks-web.yaml
