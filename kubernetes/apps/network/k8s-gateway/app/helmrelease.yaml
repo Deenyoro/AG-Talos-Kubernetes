@@ -31,24 +31,24 @@ spec:
         io.cilium/lb-ipam-ips: "10.10.12.249"
       externalTrafficPolicy: Cluster
     watchedResources: ["Ingress", "Service", "HTTPRoute"]
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              apiVersion: rbac.authorization.k8s.io/v1
-              kind: ClusterRole
-              metadata:
-                name: k8s-gateway
-                labels:
-                  app.kubernetes.io/name: k8s-gateway
-                  app.kubernetes.io/instance: k8s-gateway
-              rules:
-                - apiGroups:
-                    - gateway.networking.k8s.io
-                  resources:
-                    - '*'
-                  verbs:
-                    - watch
-                    - list
+#  postRenderers:
+#    - kustomize:
+#        patches:
+#          - patch: |-
+#              apiVersion: rbac.authorization.k8s.io/v1
+#              kind: ClusterRole
+#              metadata:
+#                name: k8s-gateway
+#                labels:
+#                  app.kubernetes.io/name: k8s-gateway
+#                  app.kubernetes.io/instance: k8s-gateway
+#              rules:
+#                - apiGroups:
+#                    - gateway.networking.k8s.io
+#                  resources:
+#                    - '*'
+#                  verbs:
+#                    - watch
+#                    - list
 
 
