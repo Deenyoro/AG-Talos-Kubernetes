@@ -54,8 +54,8 @@ spec:
       s3Credentials:
         accessKeyId:
           name: cnpg-s3-creds
-          key: aws-access-key-id
+          key: AWS_ACCESS_KEY_ID
         secretAccessKey:
           name: cnpg-s3-creds
-          key: aws-secret-access-key
+          key: AWS_SECRET_ACCESS_KEY
 
