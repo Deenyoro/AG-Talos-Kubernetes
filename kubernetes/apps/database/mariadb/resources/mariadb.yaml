@@ -10,7 +10,7 @@ spec:
 
   storage:
     size: 5Gi
-    storageClassName: local-hostpath
+    storageClassName: ceph-rbd
 
   replicas: 3
   image: "mariadb:11.5.2"
@@ -21,6 +21,11 @@ spec:
 
   maxScale:
     enabled: true
+
+    config:
+      volumeClaimTemplate:
+        storageClassName: local-hostpath
+
 
     auth:
       adminUsername: root
