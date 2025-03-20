@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph
-      version: v1.15.8
+      version: v1.16.5
       sourceRef:
         kind: HelmRepository
         name: rook-release
@@ -23,6 +23,7 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
@@ -32,6 +33,8 @@ spec:
       cephFSKernelMountOptions: ms_mode=secure # Set when encryption/compression is enabled
       logLevel: 4
       enableMetadata: true
+      enableCephfsDriver: true
+      enableCephfsSnapshotter: true
     crds:
       enabled: true
     pspEnable: false
