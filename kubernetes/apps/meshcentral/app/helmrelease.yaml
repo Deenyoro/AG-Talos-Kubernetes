@@ -78,21 +78,21 @@ spec:
           - hosts:
               - ${HOSTNAME}
             secretName: "${HOSTNAME/./-}-tls"
-      internal:
-        className: internal
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hosts:
-          - host: ${HOSTNAME}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - ${HOSTNAME}
-            secretName: "${HOSTNAME/./-}-tls"
+#      internal:
+#        className: internal
+#        annotations:
+#          cert-manager.io/cluster-issuer: "letsencrypt-production"
+#        hosts:
+#          - host: ${HOSTNAME}
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - hosts:
+#              - ${HOSTNAME}
+#            secretName: "${HOSTNAME/./-}-tls"
     persistence:
       config:
         type: configMap
