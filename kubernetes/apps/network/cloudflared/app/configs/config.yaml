@@ -3,6 +3,8 @@ originRequest:
   originServerName: "external.${SECRET_DOMAIN}"
 
 ingress:
+  - hostname: "meshcentral.${SECRET_DOMAIN}"
+    service: https://cilium-gateway-external.kube-system.svc.cluster.local:443
   - hostname: "${SECRET_DOMAIN}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
