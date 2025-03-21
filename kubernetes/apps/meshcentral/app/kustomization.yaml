@@ -6,5 +6,6 @@ resources:
   - pvc.yaml
   - configmap.sops.yaml
   - helmrelease.yaml
+  - dnsendpoint.yaml
 generatorOptions:
   disableNameSuffixHash: true
