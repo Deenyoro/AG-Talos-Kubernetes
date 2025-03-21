@@ -40,6 +40,8 @@ spec:
       - --cloudflare-proxied
       - --events
       - --ignore-ingress-tls-spec
+      # https://github.com/kubernetes-sigs/external-dns/issues/4687
+      - --txt-prefix '%{record_type}-'
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
     policy: upsert-only
