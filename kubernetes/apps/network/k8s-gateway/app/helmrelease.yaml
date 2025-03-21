@@ -21,6 +21,10 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      registry: ghcr.io
+      repository: samip5/k8s_gateway
+      tag: v0.9.2
     fullnameOverride: k8s-gateway
     domain: "${SECRET_DOMAIN}"
     ttl: 1
@@ -30,6 +34,6 @@ spec:
       annotations:
         io.cilium/lb-ipam-ips: "10.10.12.249"
       externalTrafficPolicy: Cluster
-    watchedResources: ["Ingress"]
+    watchedResources: ["Ingress", "HTTPRoute"]
 
 
