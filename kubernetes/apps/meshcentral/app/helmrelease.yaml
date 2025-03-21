@@ -61,23 +61,22 @@ spec:
           - backendRefs:
               - name: *app
                 port: ${PORT}
-    ingress:
-      external:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hosts:
-          - host: ${HOSTNAME}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - ${HOSTNAME}
-            secretName: "${HOSTNAME/./-}-tls"
+#    ingress:
+#      external:
+#        className: external
+#        annotations:
+#          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+#        hosts:
+#          - host: ${HOSTNAME}
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - hosts:
+#              - ${HOSTNAME}
+#            secretName: "${HOSTNAME/./-}-tls"
 #      internal:
 #        className: internal
 #        annotations:
