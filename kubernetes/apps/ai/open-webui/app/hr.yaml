@@ -79,7 +79,19 @@ spec:
         controller: open-webui
         ports:
           http:
-            port: 8080
+            port: &port 8080
+    route:
+      app:
+        hostnames:
+          - "openwebui.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     ingress:
       app:
         enabled: true

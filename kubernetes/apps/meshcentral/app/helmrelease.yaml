@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: meshcentral
+  name: &app meshcentral
 spec:
   interval: 30m
   chart:
@@ -46,6 +46,21 @@ spec:
         ports:
           http:
             port: ${PORT}
+    route:
+      app:
+        hostnames:
+          - "${HOSTNAME}"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https2
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: ${PORT}
     ingress:
       external:
         className: external

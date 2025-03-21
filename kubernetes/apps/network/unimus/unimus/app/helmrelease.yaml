@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: unimus
+  name: &app unimus
 spec:
   interval: 15m
   chart:
@@ -46,7 +46,19 @@ spec:
         controller: unimus
         ports:
           http:
-            port: 8085
+            port: &port 8085
+    route:
+      app:
+        hostnames:
+          - "${HOSTNAME}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
     ingress:
       main:
         enabled: true
