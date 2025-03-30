@@ -7,4 +7,5 @@ resources:
   - ./secret.sops.yaml
   - ./helm-release.yaml
   - ./sso-custom-pipeline-configmap.yaml
-  - ./ext-ingress.yaml
+  - ./HTTPRoute.yaml
+#  - ./ext-ingress.yaml
