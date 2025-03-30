@@ -3,12 +3,20 @@ originRequest:
   originServerName: "external.${SECRET_DOMAIN}"
 
 ingress:
-  - hostname: "meshcentral.${SECRET_DOMAIN}"
-    service: https://cilium-gateway-external.kube-system.svc.cluster.local:443
+  - hostname: "openproject.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "auth.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "flux-webhook.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "invoice.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "aichat2.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "${SECRET_DOMAIN}"
-    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+    service: https://cilium-gateway-external.kube-system.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
-    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+    service: https://cilium-gateway-external.kube-system.svc.cluster.local:443
   - hostname: "${SECRET_DOMAIN_CHAT}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN_CHAT}"
