@@ -59,21 +59,21 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-    ingress:
-      main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: "${HOSTNAME}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: 8085
-        tls:
-          - hosts:
-              - "${HOSTNAME}"
+#    ingress:
+#      main:
+#        enabled: true
+#        className: internal
+#        hosts:
+#          - host: "${HOSTNAME}"
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: main
+#                  port: 8085
+#        tls:
+#          - hosts:
+#              - "${HOSTNAME}"
 
 
     persistence:
