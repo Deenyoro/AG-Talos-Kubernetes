@@ -33,4 +33,8 @@ spec:
       externalTrafficPolicy: Cluster
     watchedResources: ["Ingress", "HTTPRoute"]
 
+    filters:
+      ingressClasses: "internal"
+      gatewayClasses: "internal"
+
 
