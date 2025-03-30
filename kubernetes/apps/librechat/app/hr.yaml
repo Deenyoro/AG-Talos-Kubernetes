@@ -186,7 +186,7 @@ spec:
               - name: *app
                 port: *port
       mongolibre:
-        hostname:
+        hostnames:
           - "mongolibre.${SECRET_DOMAIN}"
         parentRefs:
           - name: internal
