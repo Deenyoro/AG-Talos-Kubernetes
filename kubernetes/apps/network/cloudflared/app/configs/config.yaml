@@ -13,6 +13,10 @@ ingress:
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "aichat2.${SECRET_DOMAIN}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "helpdesk.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+  - hostname: "documentation.${SECRET_DOMAIN}"
+    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "${SECRET_DOMAIN}"
     service: https://cilium-gateway-external.kube-system.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
