@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: deluge
+  name: &app deluge
   namespace: default
 spec:
   interval: 15m
@@ -61,22 +61,21 @@ spec:
         controller: deluge
         ports:
           http:
-            port: 8112
-    ingress:
-      deluge:
-        className: internal
-        hosts:
-          - host: &host "deluge.${SECRET_DOMAIN_LEGACY}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: deluge
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - *host
+            port: &port 8112
+
+    route:
+      app:
+        hostnames:
+          - "deluge.${SECRET_DOMAIN_LEGACY}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
     persistence:
       config:
         existingClaim: deluge-config-v1

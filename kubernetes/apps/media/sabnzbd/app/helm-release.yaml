@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sabnzbd
+  name: &app sabnzbd
 spec:
   interval: 30m
   chart:
@@ -109,20 +109,33 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+
+    route:
       app:
-        className: internal
-        hosts:
-          - host: ${HOSTNAME}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - ${HOSTNAME}
+        hostnames:
+          - "${HOSTNAME}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+#    ingress:
+#      app:
+#        className: internal
+#        hosts:
+#          - host: ${HOSTNAME}
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+#            hosts:
+#              - ${HOSTNAME}
     persistence:
       config:
         existingClaim: sabnzbd

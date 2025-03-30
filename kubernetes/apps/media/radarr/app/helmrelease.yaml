@@ -94,26 +94,45 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+
+    route:
       app:
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
           gethomepage.dev/name: Radarr
           gethomepage.dev/icon: radarr.png
           gethomepage.dev/description: Movie Downloads
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - *host
+        hostnames:
+          - "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+#    ingress:
+#      app:
+#        className: internal
+#        annotations:
+#          gethomepage.dev/enabled: "true"
+#          gethomepage.dev/group: Downloads
+#          gethomepage.dev/name: Radarr
+#          gethomepage.dev/icon: radarr.png
+#          gethomepage.dev/description: Movie Downloads
+#        hosts:
+#          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+#            hosts:
+#              - *host
     persistence:
       config:
         existingClaim: *app

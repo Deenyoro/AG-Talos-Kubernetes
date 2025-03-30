@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: porla
+  name: &app porla
 spec:
   chart:
     spec:
@@ -97,21 +97,33 @@ spec:
                 kernel.org/tun: 1
               limits:
                 kernel.org/tun: 1
-    ingress:
-      porla:
-        className: internal
-        hosts:
-          - host: &host "porla.${SECRET_DOMAIN_LEGACY}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: porla
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - *host
+    route:
+      app:
+        hostnames:
+          - "porla.${SECRET_DOMAIN_LEGACY}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: 1337
+#    ingress:
+#      porla:
+#        className: internal
+#        hosts:
+#          - host: &host "porla.${SECRET_DOMAIN_LEGACY}"
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: porla
+#                  port: http
+#        tls:
+#          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+#            hosts:
+#              - *host
     service:
       porla:
         controller: porla

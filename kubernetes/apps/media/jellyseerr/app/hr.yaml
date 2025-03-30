@@ -82,40 +82,62 @@ spec:
           http:
             port: *port
 
-    ingress:
+    route:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_LEGACY}
-        className: external
-        hosts:
-          - host: &host "requests.${SECRET_DOMAIN_LEGACY}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - *host
-      internal:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
           gethomepage.dev/name: Requests
           gethomepage.dev/icon: jellyseerr.png
           gethomepage.dev/description: Media Requests
-        className: internal
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames:
+          - "requests.${SECRET_DOMAIN_LEGACY}"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https2
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+#    ingress:
+#      app:
+#        annotations:
+#          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_LEGACY}
+#        className: external
+#        hosts:
+#          - host: &host "requests.${SECRET_DOMAIN_LEGACY}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+#            hosts:
+#              - *host
+#      internal:
+#        annotations:
+#          gethomepage.dev/enabled: "true"
+#          gethomepage.dev/group: Media
+#          gethomepage.dev/name: Requests
+#          gethomepage.dev/icon: jellyseerr.png
+#          gethomepage.dev/description: Media Requests
+#        className: internal
+#        hosts:
+#          - host: *host
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - hosts:
+#              - *host
 
     persistence:
       config:

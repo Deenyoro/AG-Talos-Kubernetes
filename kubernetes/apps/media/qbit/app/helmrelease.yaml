@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: qbit
+  name: &app qbit
   namespace: media
 spec:
   chart:
@@ -82,21 +82,34 @@ spec:
               capabilities:
                 drop:
                   - ALL
-    ingress:
-      qbit:
-        className: internal
-        hosts:
-          - host: &host "qbit.${SECRET_DOMAIN_LEGACY}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: qbit
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - *host
+
+    route:
+      app:
+        hostnames:
+          - "qbit.${SECRET_DOMAIN_LEGACY}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+#    ingress:
+#      qbit:
+#        className: internal
+#        hosts:
+#          - host: &host "qbit.${SECRET_DOMAIN_LEGACY}"
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: qbit
+#                  port: http
+#        tls:
+#          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+#            hosts:
+#              - *host
     service:
       qbit:
         controller: qbit

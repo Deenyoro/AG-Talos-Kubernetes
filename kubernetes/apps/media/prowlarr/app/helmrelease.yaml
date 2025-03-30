@@ -75,19 +75,6 @@ spec:
             port: *port
     route:
       app:
-        hostnames: [ "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}" ]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https2
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-    ingress:
-      app:
-        enabled: true
-        className: internal
         annotations:
           hajimari.io/icon: mdi:movie-search
           gethomepage.dev/enabled: "true"
@@ -99,17 +86,41 @@ spec:
             app in (
               prowlarr
             )
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
-            hosts:
-              - *host
+        hostnames: [ "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}" ]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+#    ingress:
+#      app:
+#        enabled: true
+#        className: internal
+#        annotations:
+#          hajimari.io/icon: mdi:movie-search
+#          gethomepage.dev/enabled: "true"
+#          gethomepage.dev/name: Prowlarr
+#          gethomepage.dev/description: Torrent and Usenet Indexer manager/proxy.
+#          gethomepage.dev/group: Media
+#          gethomepage.dev/icon: prowlarr.png
+#          gethomepage.dev/pod-selector: >-
+#            app in (
+#              prowlarr
+#            )
+#        hosts:
+#          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+#            hosts:
+#              - *host
     persistence:
       config:
         enabled: true
