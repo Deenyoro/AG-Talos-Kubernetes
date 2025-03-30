@@ -177,10 +177,10 @@ spec:
         parentRefs:
           - name: internal
             namespace: kube-system
-            sectionName: https2
+            sectionName: https1
           - name: external
             namespace: kube-system
-            sectionName: https2
+            sectionName: https1
         rules:
           - backendRefs:
               - name: *app
