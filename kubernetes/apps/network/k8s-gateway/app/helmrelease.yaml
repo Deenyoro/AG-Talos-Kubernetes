@@ -23,7 +23,7 @@ spec:
       pullPolicy: IfNotPresent
 
     fullnameOverride: k8s-gateway
-    apex: "k8s-gateway.arpa"
+    apex: "k8s-gateway"
     domain: "${SECRET_DOMAIN} ${SECRET_DOMAIN_LEGACY}"
     ttl: 1
     service:
@@ -33,9 +33,5 @@ spec:
         io.cilium/lb-ipam-ips: "10.10.12.249"
       externalTrafficPolicy: Cluster
     watchedResources: ["Ingress", "HTTPRoute"]
-
-    filters:
-      ingressClasses: "internal"
-      gatewayClasses: "internal"
 
 
