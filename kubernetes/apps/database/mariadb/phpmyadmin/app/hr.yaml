@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: phpmyadmin
+  name: &app phpmyadmin
 spec:
   interval: 30m
   chart:
@@ -49,19 +49,31 @@ spec:
         controller: phpmyadmin
         ports:
           http:
-            port: 80
-    ingress:
-      main:
-        enabled: true
-        className: "internal"
-        hosts:
-          - host: &host "phpmyadmin.${SECRET_DOMAIN}"
-            paths:
-              - path: "/"
-                pathType: Prefix
-                service:
-                  identifier: phpmyadmin
-                  port: 80
-        tls:
-          - hosts:
-              - "phpmyadmin.${SECRET_DOMAIN}"
+            port: &port 80
+    route:
+      app:
+        hostnames:
+          - "phpmyadmin.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https1
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+#    ingress:
+#      main:
+#        enabled: true
+#        className: "internal"
+#        hosts:
+#          - host: &host "phpmyadmin.${SECRET_DOMAIN}"
+#            paths:
+#              - path: "/"
+#                pathType: Prefix
+#                service:
+#                  identifier: phpmyadmin
+#                  port: 80
+#        tls:
+#          - hosts:
+#              - "phpmyadmin.${SECRET_DOMAIN}"

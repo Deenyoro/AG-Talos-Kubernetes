@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: pgadmin
+  name: &app pgadmin
 spec:
   interval: 15m
   chart:
@@ -59,7 +59,20 @@ spec:
         controller: main
         ports:
           http:
-            port: 80
+            port: &port 80
+
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https1
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:
@@ -78,18 +91,18 @@ spec:
             subPath: config_local.py
             readOnly: true
 
-    ingress:
-      main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: pgadmin.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        tls:
-          - hosts:
-              - pgadmin.${SECRET_DOMAIN}
+#    ingress:
+#      main:
+#        enabled: true
+#        className: internal
+#        hosts:
+#          - host: pgadmin.${SECRET_DOMAIN}
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: main
+#                  port: http
+#        tls:
+#          - hosts:
+#              - pgadmin.${SECRET_DOMAIN}
