@@ -45,7 +45,7 @@ spec:
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
     policy: upsert-only
-    logLevel: debug
+    logLevel: info
     sources: ["gateway-httproute", "crd", "ingress"]
     txtPrefix: k8s.
     txtOwnerId: default
