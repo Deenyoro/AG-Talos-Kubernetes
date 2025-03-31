@@ -37,6 +37,7 @@ spec:
             key: api-token
     extraArgs:
       - --ingress-class=external
+      - --gateway-name=external
       - --cloudflare-proxied
       - --events
       - --ignore-ingress-tls-spec
