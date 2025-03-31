@@ -77,6 +77,8 @@ spec:
 
     route:
       app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hostnames:
           - "paperless.${SECRET_DOMAIN}"
         parentRefs:
