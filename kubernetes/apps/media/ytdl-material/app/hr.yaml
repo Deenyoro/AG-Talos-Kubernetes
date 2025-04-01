@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ytdl-material
+  name: &app ytdl-material
   namespace: media
 spec:
   interval: 15m
@@ -52,9 +52,21 @@ spec:
         controller: main
         ports:
           http:
-            port: 17442
+            port: &port 17442
 
-    ingress:
+    route:
+      app:
+        hostnames: [ "ytdl.${SECRET_DOMAIN}" ]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https1
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+#    ingress:
 #      main:
 #        className: external
 #        annotations:
@@ -80,20 +92,20 @@ spec:
 #              - *host
 #            secretName: "ytdl.${SECRET_DOMAIN}-tls"
 
-      internal:
-        className: internal
-        hosts:
-          - host: "ytdl.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        tls:
-          - hosts:
-              - "ytdl.${SECRET_DOMAIN}"
-            secretName: "ytdl.${SECRET_DOMAIN}-tls"
+#      internal:
+#        className: internal
+#        hosts:
+#          - host: "ytdl.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: main
+#                  port: http
+#        tls:
+#          - hosts:
+#              - "ytdl.${SECRET_DOMAIN}"
+#            secretName: "ytdl.${SECRET_DOMAIN}-tls"
 
     persistence:
       config:
