@@ -11,8 +11,8 @@ ingress:
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "invoice.${SECRET_DOMAIN}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
-  - hostname: "aichat2.${SECRET_DOMAIN}"
-    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+#  - hostname: "aichat2.${SECRET_DOMAIN}"
+#    service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "helpdesk.${SECRET_DOMAIN}"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "documentation.${SECRET_DOMAIN}"
