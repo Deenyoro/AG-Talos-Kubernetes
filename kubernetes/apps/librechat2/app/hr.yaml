@@ -164,7 +164,7 @@ spec:
           http:
             port: &port 3080
           mongo-express:
-            port: 8081
+            port: &mongo 8081
           metrics:
             port: 9123
 
@@ -185,6 +185,19 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+      mongo-express:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        hostnames:
+          - "mongolibre2.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https1
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *mongo
 
 #    ingress:
 #      app:
