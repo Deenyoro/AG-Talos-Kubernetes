@@ -16,6 +16,9 @@ spec:
     remediation:
       retries: 3
   values:
+    debug:
+      enabled: true
+      level: 5
     image:
       registry: ghcr.io
       repository: k8s-gateway/k8s_gateway
@@ -34,7 +37,8 @@ spec:
       externalTrafficPolicy: Cluster
     watchedResources: ["Ingress", "HTTPRoute"]
 
-#    filters:
-#      gatewayClasses: "internal"
+    filters:
+      ingressClasses: "internal"
+      gatewayClasses: "internal"
 
 
