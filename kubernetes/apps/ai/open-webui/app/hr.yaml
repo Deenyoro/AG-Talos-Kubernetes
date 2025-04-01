@@ -92,20 +92,20 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host "openwebui.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+#    ingress:
+#      app:
+#        enabled: true
+#        className: internal
+#        hosts:
+#          - host: &host "openwebui.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                service:
+#                  identifier: app
+#                  port: http
+#        tls:
+#          - hosts:
+#              - *host
     persistence:
       config:
         enabled: true
