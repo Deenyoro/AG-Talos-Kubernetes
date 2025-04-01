@@ -219,19 +219,19 @@ spec:
 #          - hosts:
 #              - "aichat2.${SECRET_DOMAIN}"
 
-      mongo-express:
-        className: internal
-        hosts:
-          - host: "mongolibre2.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: mongo-express
-        tls:
-          - hosts:
-              - "mongolibre2.${SECRET_DOMAIN}"
+#      mongo-express:
+#        className: internal
+#        hosts:
+#          - host: "mongolibre2.${SECRET_DOMAIN}"
+#            paths:
+#              - path: /
+#                pathType: Prefix
+#                service:
+#                  identifier: app
+#                  port: mongo-express
+#        tls:
+#          - hosts:
+#              - "mongolibre2.${SECRET_DOMAIN}"
 
     persistence:
       config:
