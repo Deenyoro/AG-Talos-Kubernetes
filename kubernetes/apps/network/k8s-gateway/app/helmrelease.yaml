@@ -17,7 +17,7 @@ spec:
       retries: 3
   values:
     debug:
-      enabled: true
+      enabled: false
       level: 5
     image:
       registry: ghcr.io
