@@ -39,6 +39,6 @@ spec:
 
     filters:
       ingressClasses: "internal"
-      gatewayClasses: "internal"
+      gatewayClasses: "cilium"
 
 
