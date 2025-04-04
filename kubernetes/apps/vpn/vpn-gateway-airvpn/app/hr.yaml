@@ -29,7 +29,7 @@ spec:
       fullnameOverride: *app
     image:
       repository: ghcr.io/angelnu/pod-gateway
-      tag: v1.11.1
+      tag: v1.12.0
 
     settings:
       VPN_INTERFACE: "wg0"
