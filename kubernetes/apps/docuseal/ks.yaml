@@ -1,0 +1,21 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app cluster-apps-docuseal
+  namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
+spec:
+  targetNamespace: default
+  suspend: false
+  dependsOn:
+    - name: cnpg-cluster16
+  path: ./kubernetes/apps/docuseal/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: thepatriots
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
