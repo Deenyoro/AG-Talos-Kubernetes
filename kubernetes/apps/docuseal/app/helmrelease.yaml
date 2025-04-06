@@ -47,6 +47,9 @@ spec:
             env:
               DOCUSEAL_DB_URI: "postgres://docuseal:${DOCUSEAL_POSTGRES_PASS}@postgres16-rw.database.svc.cluster.local/docuseal"
               TZ: "${TIMEZONE}"
+            envFrom:
+              - secretRef:
+                  name: docuseal-init-secret
             resources:
               requests:
                 memory: 128Mi
@@ -55,6 +58,7 @@ spec:
                 memory: 512Mi
     service:
       main:
+        controller: main
         ports:
           http:
             port: 3000
@@ -79,7 +83,4 @@ spec:
     persistence:
       data:
         enabled: true
-        type: persistentVolumeClaim
-        storageClass: cephfs
-        size: 1Gi
-        accessMode: ReadWriteOnce
+        existingClaim: docuseal-data
