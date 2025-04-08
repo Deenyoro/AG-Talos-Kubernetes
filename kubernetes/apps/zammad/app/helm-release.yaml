@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/zammad/zammad
-      tag: "6.5@sha256:4e4e0d8c63eb93ddbf04ee6b65c7e0cf49143f088f989fe54e470289242f13b7"
+      tag: "6.5@sha256:267ecdc6230da1bc1312f4367b96910f8893b35cfe4de97c98c99dd285972c2f"
 
     service:
       type: ClusterIP
