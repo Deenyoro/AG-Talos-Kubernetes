@@ -85,7 +85,7 @@ spec:
           ragapi:
             image:
               repository: ghcr.io/danny-avila/librechat-rag-api-dev-lite
-              tag: latest@sha256:84a33b249f0ebdc4016edb2e7473558898224f9c57ffdae22f09a57c329a1858
+              tag: latest@sha256:566585698235431cd7a206ee4f71f899daec94214480ce5e5e1d5d9f41b4f228
             env:
               RAG_MAX_TOKENS: "8192"
               EMBEDDINGS_PROVIDER: "openai"
