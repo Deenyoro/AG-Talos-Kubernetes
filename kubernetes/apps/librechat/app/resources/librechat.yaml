@@ -72,23 +72,23 @@ fileConfig:
   avatarSizeLimit: 2
 
 endpoints:
-  custom:
-    - name: "Ollama"
-      apiKey: "ollama"
-      baseURL: "http://10.10.11.109:11434/api/v1"
-      models:
-        default: [
-          "deepseek-r1:14b",
-          "deepseek-r1:8b"
-        ]
-        fetch: true
-      titleConvo: true
-      titleModel: "current_model"
-      summarize: false
-      summaryModel: "current_model"
-      forcePrompt: false
-      modelDisplayLabel: "Ollama"
-      addParams: {} # Do not include extra parameters like max_tokens
+#  custom:
+#    - name: "Ollama"
+#      apiKey: "ollama"
+#      baseURL: "http://10.10.11.109:11434/api/v1"
+#      models:
+#        default: [
+#          "deepseek-r1:14b",
+#          "deepseek-r1:8b"
+#        ]
+#        fetch: true
+#      titleConvo: true
+#      titleModel: "current_model"
+#      summarize: false
+#      summaryModel: "current_model"
+#      forcePrompt: false
+#      modelDisplayLabel: "Ollama"
+#      addParams: {} # Do not include extra parameters like max_tokens
   assistants:
     disableBuilder: false
     pollIntervalMs: 3000
