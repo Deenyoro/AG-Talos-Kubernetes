@@ -218,6 +218,7 @@ modelSpecs:
 
     - name: gemini-2.5-pro-prev-experimental
       label: Gemini 2.5 Pro Preview (experimental)
+      description: Gemini is useful when you want to process large amounts of data, up to 2,000 pages of text. Google will use the feedback from this model to improve the next version of Gemini
       iconURL: "https://holmesazaepubshare.blob.core.windows.net/pub/gemini.png"
       showIconInMenu: true
       showIconInHeader: true
