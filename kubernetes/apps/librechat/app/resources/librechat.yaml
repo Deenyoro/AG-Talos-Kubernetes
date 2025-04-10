@@ -14,7 +14,7 @@ interface:
   prompts: true
   bookmarks: true
   multiConvo: true
-  agents: true
+  agents: false
 
 registration:
   socialLogins: ["openid"]
@@ -75,7 +75,7 @@ endpoints:
   custom:
     - name: "Ollama"
       apiKey: "ollama"
-      baseURL: "http://10.10.11.109:11434"
+      baseURL: "http://10.10.11.109:11434/api/v1"
       models:
         default: [
           "deepseek-r1:14b",
@@ -102,17 +102,17 @@ modelSpecs:
   enforce: false
   prioritize: false
   list:
-    - name: gpt-websearch-assistant
-      label: Web Search
-      description: This model can search the internet for information
-      iconURL: "https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt-yellowish.png"
-      showIconInMenu: true
-      showIconInHeader: true
-      default: false
-      preset:
-        endpoint: assistants
-        assistant_id: asst_kqHPerBQICFkmhyiLVsDV9JV
-        modelLabel: Web Search
+#    - name: gpt-websearch-assistant
+#      label: Web Search
+#      description: This model can search the internet for information
+#      iconURL: "https://holmesazaepubshare.blob.core.windows.net/pub/chatgpt-yellowish.png"
+#      showIconInMenu: true
+#      showIconInHeader: true
+#      default: false
+#      preset:
+#        endpoint: assistants
+#        assistant_id: asst_kqHPerBQICFkmhyiLVsDV9JV
+#        modelLabel: Web Search
     - name: gpt-file-analyser
       label: File Analyser
       description: This model can run code to help interpret data you provide
@@ -230,9 +230,9 @@ modelSpecs:
         temperature: 0.7
         modelLabel: Gemini
         greeting: "Gemini here, what can I do for you?"
-    - name: search agent
-      label: Search Agent
-      description: Search agent
-      preset:
-        endpoint: agents
-        agent_id: agent_sGMmnLSMbLgcbL1CAWU9s
+#    - name: search agent
+#      label: Search Agent
+#      description: Search agent
+#      preset:
+#        endpoint: agents
+#        agent_id: agent_sGMmnLSMbLgcbL1CAWU9s
