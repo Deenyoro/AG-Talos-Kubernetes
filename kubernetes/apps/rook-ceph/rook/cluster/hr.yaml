@@ -18,10 +18,10 @@ spec:
   values:
     toolbox:
       enabled: true
-      image: quay.io/ceph/ceph:v18.2.4
+      image: quay.io/ceph/ceph:v18.2.5
     cephClusterSpec:
       cephVersion:
-        image: quay.io/ceph/ceph:v18.2.4
+        image: quay.io/ceph/ceph:v18.2.5
       external:
         enable: true
       crashCollector:
