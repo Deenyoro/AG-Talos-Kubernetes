@@ -215,6 +215,21 @@ modelSpecs:
         temperature: 0.7
         modelLabel: Gemini
         greeting: "Gemini here, what can I do for you?"
+
+    - name: gemini-2.5-pro-prev-experimental
+      label: Gemini 2.5 Pro Preview (experimental)
+      iconURL: "https://holmesazaepubshare.blob.core.windows.net/pub/gemini.png"
+      showIconInMenu: true
+      showIconInHeader: true
+      default: false
+      preset:
+        endpoint: google
+        model: gemini-2.5-pro-exp-03-25
+        maxContextTokens: 1048576
+        max_tokens: 65536
+        temperature: 0.7
+        modelLabel: Gemini
+        greeting: "Gemini here, what can I do for you?"
     - name: search agent
       label: Search Agent
       description: Search agent
