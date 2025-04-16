@@ -5,6 +5,7 @@ namespace: databases
 resources:
   - helm-release.yaml
   - secret.sops.yaml
+  - prom-rules.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
