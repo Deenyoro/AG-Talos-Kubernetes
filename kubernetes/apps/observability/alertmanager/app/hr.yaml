@@ -84,7 +84,6 @@ spec:
         name: alertmanager-configmap
         globalMounts:
           - path: /etc/alertmanager
-            subPath: alertmanager.yml
 #      secrets:
 #        type: secret
 #        name: alertmanager-secret
