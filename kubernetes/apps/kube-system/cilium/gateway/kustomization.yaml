@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./internal.yaml
   - ./external.yaml
+  - ./plex-timeouts.yaml
