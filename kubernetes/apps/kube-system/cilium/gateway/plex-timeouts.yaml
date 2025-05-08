@@ -2,17 +2,16 @@ apiVersion: cilium.io/v2alpha1
 kind: CiliumEnvoyConfig
 metadata:
   name: plex-gateway-timeouts
-  namespace: kube-system            # lives with the Gateway
   labels:
-    gateway.cilium.io/gatewayName: external   # match the Gateway you terminate TLS on
+    gateway.cilium.io/gatewayName: external
 spec:
   resources:
-  - "@type": type.googleapis.com/envoy.config.listener.v3.Listener
-    name: listener_https2           # listener created for external/https2
-    filterChains:
-    - filters:
-      - name: envoy.filters.network.http_connection_manager
-        typed_config:
-          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-          stream_idle_timeout: 14400s   # 4 h; set to 0s for “unlimited”
-          idle_timeout:        14400s   # same
+    - "@type": type.googleapis.com/envoy.config.listener.v3.Listener
+      name: listener_https2
+      filterChains:
+        - filters:
+            - name: envoy.filters.network.http_connection_manager
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                stream_idle_timeout: 14400s   # 4 h  (0s = unlimited)
+                idle_timeout:        14400s
