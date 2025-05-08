@@ -136,8 +136,16 @@ spec:
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
     grafana:
-      enabled: false
+      enabled: true
       forceDeployDashboards: true
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts: [ "grafana.${SECRET_DOMAIN}" ]
+        pathType: Prefix
+        tls:
+          - hosts:
+              - grafana.${SECRET_DOMAIN}
     additionalPrometheusRulesMap:
       dockerhub-rules:
         groups:
