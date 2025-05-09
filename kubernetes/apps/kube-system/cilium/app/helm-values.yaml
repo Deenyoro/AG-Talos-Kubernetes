@@ -1,4 +1,6 @@
 ---
+extraArgs:
+  - --http-stream-idle-timeout=21600
 autoDirectNodeRoutes: true
 bpf:
   masquerade: true # Required for egressGateway
