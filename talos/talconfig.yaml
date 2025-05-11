@@ -268,7 +268,7 @@ nodes:
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.23.1
-            metric: 240
+            metric: 25
     nameservers:
       - 10.10.12.1
 
