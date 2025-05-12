@@ -14,7 +14,11 @@
       automergeType: "branch",
       ignoreTests: true,
       matchUpdateTypes: ["minor", "patch", "digest"],
-      matchPackageNames: ["ghcr.io/home-operations"]
+      matchPackageNames: [
+       "ghcr.io/home-operations/prowlarr",
+       "ghcr.io/home-operations/sonarr",
+       "ghcr.io/home-operations/radarr",
+      ]
     },
     {
       matchDatasources: ["docker"],
