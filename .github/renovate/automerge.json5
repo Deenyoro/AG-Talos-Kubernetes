@@ -39,6 +39,13 @@
       automerge: true,
       automergeType: "branch",
       ignoreTests: true,
+      matchUpdateTypes: ["patch"]
+    },
+    {
+      matchDatasources: ["helm"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
       matchUpdateTypes: ["minor"],
       matchPackageNames: [
         "kube-prometheus-stack",
