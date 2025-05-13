@@ -66,12 +66,12 @@ spec:
               tag: 1.41.6.9685
             env:
               TZ: America/New_York
-            command: ["/bin/sleep", "infinity"]
+            #command: ["/bin/sleep", "infinity"]
             envFrom:
               - secret: plex-secret
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
