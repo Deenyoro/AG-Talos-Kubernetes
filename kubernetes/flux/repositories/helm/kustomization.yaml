@@ -22,7 +22,6 @@ resources:
   - ./stakater.yaml
   - ./external-dns.yaml
   - ./ingress-nginx.yaml
-  - ./k8s-gateway.yaml
   - ./rook-release.yaml
   - ./invoiceninja-release.yaml
   - ./zammad.yaml
