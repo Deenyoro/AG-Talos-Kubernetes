@@ -114,25 +114,6 @@ spec:
           - name: external
             namespace: kube-system
             sectionName: https2
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-            filters:
-              - type: RequestHeaderModifier
-                requestHeaderModifier:
-                  remove: [ "Range" ]
-            matches:
-              - path:
-                  type: PathPrefix
-                  value: /library/streams
-          - backendRefs:
-              - name: *app
-                port: *port
-      int:
-        hostnames:
-          - "plex-int.${SECRET_DOMAIN_LEGACY}"
-        parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https2
