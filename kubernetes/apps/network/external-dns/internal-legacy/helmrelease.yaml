@@ -80,6 +80,7 @@ spec:
       - --ingress-class=internal
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
+      - --gateway-name=internal
 
     txtPrefix: "k8s."
     serviceMonitor:
