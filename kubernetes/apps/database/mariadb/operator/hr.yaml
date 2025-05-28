@@ -10,14 +10,14 @@ spec:
         kind: HelmRepository
         name: mariadb-operator
         namespace: flux-system
-      version: "0.36.0"
+      version: "0.38.1"
   interval: 1h0m0s
   values:
     logLevel: debug
     image:
       repository: ghcr.io/mariadb-operator/mariadb-operator
       pullPolicy: IfNotPresent
-      tag: 0.36.0
+      tag: 0.38.1
     metrics:
       enabled: true
       serviceMonitor:
