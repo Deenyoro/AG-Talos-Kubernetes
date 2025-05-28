@@ -40,6 +40,15 @@
       }
     },
     {
+      "description": "mariadb",
+      "groupName": "mariadb-operator",
+      "matchPackagePatterns": ["mariadb-operator-crds", "mariadb-operator"],
+      "matchDatasources": ["docker", "helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      }
+    },
+    {
       "description": "Wazuh images",
       "groupName": "Wazuh",
       "matchPackagePatterns": ["wazuh"],
