@@ -12,7 +12,7 @@
     'github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/pinnedVersions.json5',
     'github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/groups.json5',
     'github>Deenyoro/AG-Talos-Kubernetes//.github/renovate/automerge.json5',
-    'github>bjw-s/renovate-config//custom-managers.json5',
+    'github>bjw-s/renovate-config/custom-managers.json5',
   ],
   dependencyDashboard: true,
   dependencyDashboardTitle: 'Renovate Dashboard 🤖',
