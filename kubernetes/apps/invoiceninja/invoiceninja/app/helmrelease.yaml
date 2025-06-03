@@ -33,7 +33,7 @@ spec:
     image:
       registry: docker.io
       repository: invoiceninja/invoiceninja
-      tag: 5.11.81@sha256:3e922da910e13075d251926b59c1c872c670e8b76972dac0b606ea928e13f79e
+      tag: 5.11.82@sha256:119ff7e3e2f8dc5e07f44870492c64e33bed028643eea30a7309c485c3011709
     existingSecret: invoiceninja-secret
     updateStrategy:
      type: RollingUpdate
