@@ -127,7 +127,7 @@ spec:
           mongodb:
             image:
               repository: mongo
-              tag: "8.0.9"
+              tag: "8.0.10"
             command: ["mongod", "--noauth"]
             securityContext:
               allowPrivilegeEscalation: false
