@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: netbox
-      version: 6.0.25
+      version: 6.0.26
       sourceRef:
         kind: HelmRepository
         name: netbox
