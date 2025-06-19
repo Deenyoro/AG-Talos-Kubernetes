@@ -9,7 +9,7 @@ spec:
     spec:
       chart: cilium
       # ensure you are on ≥ 1.17.1; bump to 1.17.3 or newer if convenient
-      version: 1.17.4
+      version: 1.17.5
       sourceRef:
         kind: HelmRepository
         name: cilium
