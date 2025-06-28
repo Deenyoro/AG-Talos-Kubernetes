@@ -3,7 +3,7 @@
         "*.json5": "jsonc",
         "./kubernetes/**/*.sops.toml": "plaintext"
     },
-    "sops.defaults.ageKeyFile": "age.key",
+    "sops.defaults.ageKeyFile": "",
     "yaml.schemas": {
         "Kubernetes": "./kubernetes/*.yaml"
     },

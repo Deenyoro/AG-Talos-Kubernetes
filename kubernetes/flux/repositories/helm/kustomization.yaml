@@ -32,3 +32,4 @@ resources:
   - ./emberstack.yaml
   - ./goauthentik-charts.yaml
   - ./netbox.yaml
+  - ./external-secrets.yaml

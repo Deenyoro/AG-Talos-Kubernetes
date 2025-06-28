@@ -32,3 +32,4 @@ resources:
   - vpn
   - paperless/ks.yaml
   - docuseal/ks.yaml
+#  - external-secrets
