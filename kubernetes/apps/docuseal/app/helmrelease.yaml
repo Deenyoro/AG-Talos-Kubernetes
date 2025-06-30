@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: docuseal/docuseal
-              tag: 2.0.4
+              tag: 2.0.5
             env:
               DOCUSEAL_DB_URI: "postgres://docuseal:${DOCUSEAL_POSTGRES_PASS}@postgres16-rw.database.svc.cluster.local/docuseal"
               TZ: "${TIMEZONE}"
