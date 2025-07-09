@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/sabnzbd
-              tag: 4.5.1
+              tag: 4.5.2
             env:
               CROSS_SEED_HOST: cross-seed.media.svc.cluster.local
               CROSS_SEED_PORT: 2468
