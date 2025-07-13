@@ -43,8 +43,12 @@ spec:
               protocol: UDP
     - icmps:
         - fields:
+            # Echo Request
             - type: 8
               family: IPv4
+            # Echo reply
+            - type: 0
+              family: IPv6
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
 # This policy allows the vpn-gateway to communicate over the VXLAN port 4790
