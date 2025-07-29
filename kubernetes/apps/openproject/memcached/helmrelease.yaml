@@ -28,7 +28,7 @@ spec:
     image:
       registry: docker.io
       repository: bitnami/memcached
-      tag: 1.6.38-debian-12-r9
+      tag: 1.6.39-debian-12-r0
       pullPolicy: IfNotPresent
     architecture: standalone
     auth:
