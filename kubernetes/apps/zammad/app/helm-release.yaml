@@ -51,13 +51,15 @@ spec:
         - hosts:
             - *host
 
-    # Fix Elasticsearch resource allocation - move from zammadConfig to top level
+    # Fix Elasticsearch resource allocation - configure at top level for proper resource limits
     elasticsearch:
-      enabled: true
-      clusterName: zammad
+      # Workaround: switch to bitnami legacy image repository (https://github.com/bitnami/containers/issues/83267)
       image:
-        repository: docker.elastic.co/elasticsearch/elasticsearch
-        tag: "7.17.29"
+        repository: bitnamilegacy/elasticsearch
+      global:
+        security:
+          allowInsecureImages: true
+      clusterName: zammad
       coordinating:
         replicaCount: 0
       data:
@@ -65,9 +67,9 @@ spec:
       ingest:
         replicaCount: 0
       master:
-        heapSize: 512m
+        heapSize: 4g
         masterOnly: false
-        replicaCount: 2
+        replicaCount: 1
         resources:
           requests:
             cpu: 2
@@ -77,6 +79,15 @@ spec:
             memory: 8Gi
 
     zammadConfig:
+      elasticsearch:
+        enabled: true
+        host: zammad-elasticsearch-master
+        initialisation: true
+        pass: ""
+        port: 9200
+        reindex: false
+        schema: http
+        user: ""
       postgresql:
         enabled: false
         db: zammad
