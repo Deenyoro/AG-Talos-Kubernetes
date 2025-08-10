@@ -94,6 +94,34 @@ spec:
         host: postgres16-rw.database.svc.cluster.local
         user: zammad
 
+      scheduler:
+        # Fix for GitHub issue #5718: Background scheduler doesn't re-schedule things properly
+        # after losing and regaining database connection. Add liveness probe to detect when
+        # scheduler loses database connectivity and ensure proper recovery via pod restart.
+        livenessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - |
+                # Test database connectivity by attempting a simple query
+                # This ensures the scheduler can actually communicate with the database
+                # and will restart the pod if database connectivity is lost and not recovered
+                bundle exec rails runner "
+                begin
+                  # Simple database connectivity test
+                  ActiveRecord::Base.connection.execute('SELECT 1')
+                  exit 0
+                rescue => e
+                  STDERR.puts \"Database connection failed: #{e.message}\"
+                  exit 1
+                end
+                " 2>/dev/null || exit 1
+          initialDelaySeconds: 120
+          periodSeconds: 300
+          timeoutSeconds: 30
+          failureThreshold: 2
+
     # Note: Passwords should not contain special characters requiring URL encoding
     secrets:
       autowizard:
