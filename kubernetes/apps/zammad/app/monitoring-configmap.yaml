@@ -1,0 +1,188 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zammad-scheduler-metrics
+  namespace: default
+data:
+  metrics-exporter.rb: |
+    #!/usr/bin/env ruby
+    # Zammad Scheduler Metrics Exporter
+    # Exposes detailed metrics about scheduler job processing, database connectivity,
+    # and email processing for Prometheus monitoring
+    
+    require 'webrick'
+    require 'json'
+    require 'time'
+    
+    # Simple metrics server that exposes Zammad scheduler health metrics
+    class ZammadMetricsServer
+      def initialize(port = 9090)
+        @port = port
+        @server = WEBrick::HTTPServer.new(Port: port, Logger: WEBrick::Log.new("/dev/null"))
+        @server.mount_proc('/metrics') { |req, res| handle_metrics(req, res) }
+        @server.mount_proc('/health') { |req, res| handle_health(req, res) }
+        
+        # Graceful shutdown
+        trap('INT') { @server.shutdown }
+        trap('TERM') { @server.shutdown }
+      end
+      
+      def start
+        puts "Starting Zammad metrics server on port #{@port}"
+        @server.start
+      end
+      
+      private
+      
+      def handle_health(req, res)
+        res.status = 200
+        res['Content-Type'] = 'text/plain'
+        res.body = "OK\n"
+      end
+      
+      def handle_metrics(req, res)
+        res.status = 200
+        res['Content-Type'] = 'text/plain; version=0.0.4; charset=utf-8'
+        res.body = generate_metrics
+      end
+      
+      def generate_metrics
+        metrics = []
+        
+        # Basic scheduler health
+        metrics << "# HELP zammad_scheduler_up Whether the scheduler is running"
+        metrics << "# TYPE zammad_scheduler_up gauge"
+        metrics << "zammad_scheduler_up 1"
+        
+        # Database connectivity
+        db_status = check_database_connectivity
+        metrics << "# HELP zammad_scheduler_database_connected Whether database is accessible"
+        metrics << "# TYPE zammad_scheduler_database_connected gauge"
+        metrics << "zammad_scheduler_database_connected #{db_status ? 1 : 0}"
+        
+        # Job queue metrics
+        job_metrics = get_job_metrics
+        metrics << "# HELP zammad_scheduler_pending_jobs Number of pending jobs in queue"
+        metrics << "# TYPE zammad_scheduler_pending_jobs gauge"
+        metrics << "zammad_scheduler_pending_jobs #{job_metrics[:pending]}"
+        
+        metrics << "# HELP zammad_scheduler_failed_jobs Number of failed jobs"
+        metrics << "# TYPE zammad_scheduler_failed_jobs gauge"
+        metrics << "zammad_scheduler_failed_jobs #{job_metrics[:failed]}"
+        
+        # Email processing metrics
+        email_metrics = get_email_metrics
+        metrics << "# HELP zammad_scheduler_unprocessed_emails Number of unprocessed emails"
+        metrics << "# TYPE zammad_scheduler_unprocessed_emails gauge"
+        metrics << "zammad_scheduler_unprocessed_emails #{email_metrics[:unprocessed]}"
+        
+        metrics << "# HELP zammad_scheduler_last_email_processed_seconds Seconds since last email was processed"
+        metrics << "# TYPE zammad_scheduler_last_email_processed_seconds gauge"
+        metrics << "zammad_scheduler_last_email_processed_seconds #{email_metrics[:last_processed_seconds]}"
+        
+        # Ticket processing metrics
+        ticket_metrics = get_ticket_metrics
+        metrics << "# HELP zammad_scheduler_pending_tickets Number of pending tickets"
+        metrics << "# TYPE zammad_scheduler_pending_tickets gauge"
+        metrics << "zammad_scheduler_pending_tickets #{ticket_metrics[:pending]}"
+        
+        metrics << "# HELP zammad_scheduler_last_ticket_processed_seconds Seconds since last ticket was processed"
+        metrics << "# TYPE zammad_scheduler_last_ticket_processed_seconds gauge"
+        metrics << "zammad_scheduler_last_ticket_processed_seconds #{ticket_metrics[:last_processed_seconds]}"
+        
+        metrics.join("\n") + "\n"
+      end
+      
+      def check_database_connectivity
+        begin
+          # Test database connectivity
+          result = `bundle exec rails runner "ActiveRecord::Base.connection.execute('SELECT 1')" 2>/dev/null`
+          $?.success?
+        rescue
+          false
+        end
+      end
+      
+      def get_job_metrics
+        begin
+          result = `bundle exec rails runner "
+            require 'json'
+            pending = Delayed::Job.where(failed_at: nil, locked_at: nil).count
+            failed = Delayed::Job.where.not(failed_at: nil).count
+            puts JSON.generate({pending: pending, failed: failed})
+          " 2>/dev/null`
+          
+          if $?.success? && !result.strip.empty?
+            JSON.parse(result.strip, symbolize_names: true)
+          else
+            { pending: -1, failed: -1 }
+          end
+        rescue
+          { pending: -1, failed: -1 }
+        end
+      end
+      
+      def get_email_metrics
+        begin
+          result = `bundle exec rails runner "
+            require 'json'
+            # Count unprocessed emails (Channel::EmailParser jobs)
+            unprocessed = Delayed::Job.where(failed_at: nil)
+                                    .where('handler LIKE ?', '%Channel::EmailParser%')
+                                    .count
+            
+            # Find last processed email timestamp
+            last_email = Ticket.joins(:articles)
+                              .where(articles: { type_id: Ticket::Article::Type.find_by(name: 'email') })
+                              .maximum('articles.updated_at')
+            
+            last_processed_seconds = last_email ? (Time.now - last_email).to_i : -1
+            
+            puts JSON.generate({
+              unprocessed: unprocessed,
+              last_processed_seconds: last_processed_seconds
+            })
+          " 2>/dev/null`
+          
+          if $?.success? && !result.strip.empty?
+            JSON.parse(result.strip, symbolize_names: true)
+          else
+            { unprocessed: -1, last_processed_seconds: -1 }
+          end
+        rescue
+          { unprocessed: -1, last_processed_seconds: -1 }
+        end
+      end
+      
+      def get_ticket_metrics
+        begin
+          result = `bundle exec rails runner "
+            require 'json'
+            # Count pending tickets
+            pending = Ticket.where(state: Ticket::State.where(name: ['new', 'open'])).count
+            
+            # Find last processed ticket
+            last_ticket = Ticket.maximum(:updated_at)
+            last_processed_seconds = last_ticket ? (Time.now - last_ticket).to_i : -1
+            
+            puts JSON.generate({
+              pending: pending,
+              last_processed_seconds: last_processed_seconds
+            })
+          " 2>/dev/null`
+          
+          if $?.success? && !result.strip.empty?
+            JSON.parse(result.strip, symbolize_names: true)
+          else
+            { pending: -1, last_processed_seconds: -1 }
+          end
+        rescue
+          { pending: -1, last_processed_seconds: -1 }
+        end
+      end
+    end
+    
+    # Start the metrics server
+    server = ZammadMetricsServer.new(9090)
+    server.start

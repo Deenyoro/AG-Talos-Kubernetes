@@ -1,0 +1,132 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zammad-scheduler-dashboard
+  namespace: observability
+  labels:
+    grafana_dashboard: "1"
+    app.kubernetes.io/name: grafana
+data:
+  zammad-scheduler.json: |
+    {
+      "dashboard": {
+        "id": null,
+        "title": "Zammad Scheduler Monitoring",
+        "tags": ["zammad", "scheduler", "tickets"],
+        "style": "dark",
+        "timezone": "browser",
+        "refresh": "30s",
+        "time": {
+          "from": "now-1h",
+          "to": "now"
+        },
+        "panels": [
+          {
+            "id": 1,
+            "title": "Scheduler Status",
+            "type": "stat",
+            "targets": [
+              {
+                "expr": "zammad_scheduler_up",
+                "legendFormat": "Scheduler Up"
+              },
+              {
+                "expr": "zammad_scheduler_database_connected",
+                "legendFormat": "Database Connected"
+              }
+            ],
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "steps": [
+                    {"color": "red", "value": 0},
+                    {"color": "green", "value": 1}
+                  ]
+                }
+              }
+            },
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+          },
+          {
+            "id": 2,
+            "title": "Job Queue Status",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "zammad_scheduler_pending_jobs",
+                "legendFormat": "Pending Jobs"
+              },
+              {
+                "expr": "zammad_scheduler_failed_jobs",
+                "legendFormat": "Failed Jobs"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+          },
+          {
+            "id": 3,
+            "title": "Email Processing",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "zammad_scheduler_unprocessed_emails",
+                "legendFormat": "Unprocessed Emails"
+              },
+              {
+                "expr": "zammad_scheduler_last_email_processed_seconds / 60",
+                "legendFormat": "Minutes Since Last Email"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
+          },
+          {
+            "id": 4,
+            "title": "Ticket Processing",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "zammad_scheduler_pending_tickets",
+                "legendFormat": "Pending Tickets"
+              },
+              {
+                "expr": "zammad_scheduler_last_ticket_processed_seconds / 60",
+                "legendFormat": "Minutes Since Last Ticket"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
+          },
+          {
+            "id": 5,
+            "title": "Pod Restarts",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "increase(kube_pod_container_status_restarts_total{namespace=\"default\", pod=~\"zammad-scheduler-.*\"}[1h])",
+                "legendFormat": "Restarts per Hour - {{pod}}"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}
+          },
+          {
+            "id": 6,
+            "title": "Resource Usage",
+            "type": "timeseries",
+            "targets": [
+              {
+                "expr": "container_memory_working_set_bytes{namespace=\"default\", pod=~\"zammad-scheduler-.*\", container=\"zammad-scheduler\"} / 1024 / 1024",
+                "legendFormat": "Memory Usage (MB)"
+              },
+              {
+                "expr": "rate(container_cpu_usage_seconds_total{namespace=\"default\", pod=~\"zammad-scheduler-.*\", container=\"zammad-scheduler\"}[5m]) * 100",
+                "legendFormat": "CPU Usage (%)"
+              }
+            ],
+            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}
+          }
+        ]
+      }
+    }

@@ -1,0 +1,148 @@
+---
+# Backup Email Processor CronJob
+# Runs every 5 minutes to process critical email jobs if the main scheduler fails
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zammad-backup-email-processor
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: backup-processor
+spec:
+  schedule: "*/5 * * * *"  # Every 5 minutes
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: zammad
+            app.kubernetes.io/component: backup-processor
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: backup-processor
+              image: ghcr.io/zammad/zammad:6.5.0-101
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  cd /opt/zammad
+                  
+                  # Check if main scheduler is healthy
+                  SCHEDULER_HEALTHY=$(bundle exec rails runner "
+                    begin
+                      # Check if scheduler is processing jobs recently (within last 10 minutes)
+                      recent_jobs = Delayed::Job.where('updated_at > ?', 10.minutes.ago).count
+                      if recent_jobs > 0
+                        puts 'true'
+                      else
+                        puts 'false'
+                      end
+                    rescue => e
+                      puts 'false'
+                    end
+                  " 2>/dev/null || echo "false")
+                  
+                  echo "Scheduler health check: $SCHEDULER_HEALTHY"
+                  
+                  # Only process if main scheduler appears unhealthy
+                  if [ "$SCHEDULER_HEALTHY" = "false" ]; then
+                    echo "Main scheduler appears unhealthy, processing critical email jobs..."
+                    
+                    # Process only critical email-related jobs
+                    bundle exec rails runner "
+                      begin
+                        # Process email parsing jobs that are older than 5 minutes
+                        email_jobs = Delayed::Job.where(failed_at: nil, locked_at: nil)
+                                                .where('handler LIKE ?', '%Channel::EmailParser%')
+                                                .where('created_at < ?', 5.minutes.ago)
+                                                .limit(10)
+                        
+                        email_jobs.each do |job|
+                          begin
+                            puts \"Processing email job: #{job.id}\"
+                            job.invoke_job
+                            job.destroy
+                          rescue => e
+                            puts \"Failed to process job #{job.id}: #{e.message}\"
+                            job.update(failed_at: Time.current, last_error: e.message)
+                          end
+                        end
+                        
+                        puts \"Processed #{email_jobs.count} email jobs\"
+                      rescue => e
+                        puts \"Backup processor error: #{e.message}\"
+                        exit 1
+                      end
+                    "
+                  else
+                    echo "Main scheduler is healthy, backup processor not needed"
+                  fi
+              env:
+                - name: RAILS_ENV
+                  value: production
+                - name: RACK_ENV
+                  value: production
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: zammad-secret
+                      key: DATABASE_URL
+                - name: ELASTICSEARCH_ENABLED
+                  value: "true"
+                - name: ELASTICSEARCH_HOST
+                  value: zammad-elasticsearch-master
+                - name: ELASTICSEARCH_PORT
+                  value: "9200"
+                - name: REDIS_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: zammad-secret
+                      key: REDIS_URL
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                readOnlyRootFilesystem: true
+                privileged: false
+                runAsNonRoot: true
+                runAsUser: 1000
+              volumeMounts:
+                - name: tmp
+                  mountPath: /opt/zammad/tmp
+          volumes:
+            - name: tmp
+              emptyDir:
+                sizeLimit: 100Mi
+---
+# Service for backup processor metrics (if needed)
+apiVersion: v1
+kind: Service
+metadata:
+  name: zammad-backup-processor-metrics
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: backup-processor
+spec:
+  selector:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: backup-processor
+  ports:
+    - name: metrics
+      port: 9091
+      targetPort: 9091
+      protocol: TCP
+  type: ClusterIP

@@ -1,0 +1,38 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: zammad-scheduler
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: scheduler
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zammad
+      app.kubernetes.io/component: zammad-scheduler
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+      scrapeTimeout: 10s
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zammad-scheduler-metrics
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: zammad-scheduler
+spec:
+  selector:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: zammad-scheduler
+  ports:
+    - name: metrics
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+  type: ClusterIP
