@@ -126,60 +126,6 @@ spec:
           timeoutSeconds: 30
           failureThreshold: 2
 
-        # Add metrics sidecar for comprehensive monitoring
-        sidecars:
-          - name: metrics-exporter
-            image: ghcr.io/zammad/zammad:6.5.0-101
-            command:
-              - /bin/sh
-              - -c
-              - |
-                cd /opt/zammad
-                ruby /opt/zammad/metrics-exporter.rb
-            ports:
-              - name: metrics
-                containerPort: 9090
-                protocol: TCP
-            resources:
-              requests:
-                cpu: 10m
-                memory: 32Mi
-              limits:
-                cpu: 50m
-                memory: 64Mi
-            volumeMounts:
-              - name: zammad-metrics-config
-                mountPath: /opt/zammad/metrics-exporter.rb
-                subPath: metrics-exporter.rb
-                readOnly: true
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-              readOnlyRootFilesystem: true
-              privileged: false
-
-        # Add volume for metrics exporter script and monitoring annotations
-        podAnnotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/port: "9090"
-          prometheus.io/path: "/metrics"
-
-    # Add custom volumes for metrics exporter
-    customVolumes:
-      - name: zammad-metrics-config
-        configMap:
-          name: zammad-scheduler-metrics
-          defaultMode: 0755
-
-    # Add custom volume mounts for all Zammad pods
-    customVolumeMounts:
-      - name: zammad-metrics-config
-        mountPath: /opt/zammad/metrics-exporter.rb
-        subPath: metrics-exporter.rb
-        readOnly: true
-
     # Note: Passwords should not contain special characters requiring URL encoding
     secrets:
       autowizard:

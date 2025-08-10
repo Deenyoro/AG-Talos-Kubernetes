@@ -9,3 +9,4 @@ resources:
   - prometheusrules.yaml
   - grafana-dashboard.yaml
   - backup-processor.yaml
+  - metrics-exporter-deployment.yaml

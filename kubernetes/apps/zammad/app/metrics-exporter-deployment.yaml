@@ -1,0 +1,157 @@
+---
+# ServiceAccount for metrics exporter
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: zammad-metrics-exporter
+  namespace: default
+---
+# ClusterRole for metrics exporter
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: zammad-metrics-exporter
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/exec"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+---
+# ClusterRoleBinding for metrics exporter
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: zammad-metrics-exporter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: zammad-metrics-exporter
+subjects:
+  - kind: ServiceAccount
+    name: zammad-metrics-exporter
+    namespace: default
+---
+# Standalone metrics exporter deployment for Zammad scheduler monitoring
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zammad-scheduler-metrics-exporter
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: metrics-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zammad
+      app.kubernetes.io/component: metrics-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: zammad
+        app.kubernetes.io/component: metrics-exporter
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: zammad-metrics-exporter
+      containers:
+        - name: metrics-exporter
+          image: alpine:3.22.1
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Install required tools
+              apk add --no-cache netcat-openbsd curl
+              # Install kubectl
+              curl -LO "https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl"
+              chmod +x kubectl && mv kubectl /usr/local/bin/
+              # Run the metrics exporter
+              /bin/sh /scripts/metrics-exporter.sh
+          ports:
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+
+          resources:
+            requests:
+              cpu: 5m
+              memory: 16Mi
+            limits:
+              cpu: 20m
+              memory: 32Mi
+          volumeMounts:
+            - name: zammad-metrics-config
+              mountPath: /scripts/metrics-exporter.sh
+              subPath: metrics-exporter.sh
+              readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 9090
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: zammad-metrics-config
+          configMap:
+            name: zammad-scheduler-metrics
+            defaultMode: 0755
+      securityContext:
+        fsGroup: 1000
+---
+# Update the ServiceMonitor to target the metrics exporter deployment
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: zammad-scheduler-metrics-exporter
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: metrics-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zammad
+      app.kubernetes.io/component: metrics-exporter
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+      scrapeTimeout: 10s
+---
+# Service for the metrics exporter
+apiVersion: v1
+kind: Service
+metadata:
+  name: zammad-scheduler-metrics-exporter
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: metrics-exporter
+spec:
+  selector:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: metrics-exporter
+  ports:
+    - name: metrics
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+  type: ClusterIP

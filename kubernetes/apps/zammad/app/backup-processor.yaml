@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: zammad
     app.kubernetes.io/component: backup-processor
 spec:
-  schedule: "*/5 * * * *"  # Every 5 minutes
+  schedule: "*/5 * * * *" # Every 5 minutes
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -31,7 +31,7 @@ spec:
                 - -c
                 - |
                   cd /opt/zammad
-                  
+
                   # Check if main scheduler is healthy
                   SCHEDULER_HEALTHY=$(bundle exec rails runner "
                     begin
@@ -46,13 +46,13 @@ spec:
                       puts 'false'
                     end
                   " 2>/dev/null || echo "false")
-                  
+
                   echo "Scheduler health check: $SCHEDULER_HEALTHY"
-                  
+
                   # Only process if main scheduler appears unhealthy
                   if [ "$SCHEDULER_HEALTHY" = "false" ]; then
                     echo "Main scheduler appears unhealthy, processing critical email jobs..."
-                    
+
                     # Process only critical email-related jobs
                     bundle exec rails runner "
                       begin
@@ -61,7 +61,7 @@ spec:
                                                 .where('handler LIKE ?', '%Channel::EmailParser%')
                                                 .where('created_at < ?', 5.minutes.ago)
                                                 .limit(10)
-                        
+
                         email_jobs.each do |job|
                           begin
                             puts \"Processing email job: #{job.id}\"
@@ -72,7 +72,7 @@ spec:
                             job.update(failed_at: Time.current, last_error: e.message)
                           end
                         end
-                        
+
                         puts \"Processed #{email_jobs.count} email jobs\"
                       rescue => e
                         puts \"Backup processor error: #{e.message}\"
@@ -87,22 +87,32 @@ spec:
                   value: production
                 - name: RACK_ENV
                   value: production
-                - name: DATABASE_URL
+                - name: REDIS_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: zammad-secret
-                      key: DATABASE_URL
+                      key: redis-password
+                      name: zammad-redis-pass
+                - name: MEMCACHE_SERVERS
+                  value: zammad-memcached:11211
+                - name: RAILS_TRUSTED_PROXIES
+                  value: "['127.0.0.1', '::1']"
+                - name: REDIS_URL
+                  value: redis://:$(REDIS_PASSWORD)@zammad-redis-master:6379
+                - name: POSTGRESQL_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      key: postgresql-pass
+                      name: zammad-postgres-secrets
+                - name: DATABASE_URL
+                  value: postgres://zammad:$(POSTGRESQL_PASS)@postgres16-rw.database.svc.cluster.local:5432/zammad?pool=50
                 - name: ELASTICSEARCH_ENABLED
                   value: "true"
                 - name: ELASTICSEARCH_HOST
                   value: zammad-elasticsearch-master
                 - name: ELASTICSEARCH_PORT
                   value: "9200"
-                - name: REDIS_URL
-                  valueFrom:
-                    secretKeyRef:
-                      name: zammad-secret
-                      key: REDIS_URL
+                - name: TMP
+                  value: /opt/zammad/tmp
               resources:
                 requests:
                   cpu: 50m
