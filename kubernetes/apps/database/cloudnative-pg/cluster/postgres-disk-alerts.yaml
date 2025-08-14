@@ -1,0 +1,129 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: postgres16-disk-alerts
+  namespace: database
+  labels:
+    app.kubernetes.io/name: postgres16
+    app.kubernetes.io/component: monitoring
+spec:
+  groups:
+    - name: postgres16.disk.rules
+      interval: 30s
+      rules:
+        # PostgreSQL Data Directory Disk Usage
+        - alert: PostgreSQLDataDiskSpaceHigh
+          expr: |
+            (
+              cnpg_pg_stat_database_size_bytes{cluster="postgres16"} / 
+              (cnpg_pg_settings_max_wal_size_bytes{cluster="postgres16"} + cnpg_pg_stat_database_size_bytes{cluster="postgres16"} + 10737418240)
+            ) * 100 > 70
+          for: 5m
+          labels:
+            severity: warning
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL data directory disk usage is high"
+            description: |
+              PostgreSQL cluster {{ $labels.cluster }} instance {{ $labels.pod }} 
+              data directory disk usage is {{ $value | humanizePercentage }}.
+              Current database size: {{ with query "cnpg_pg_stat_database_size_bytes{cluster='postgres16',pod='" }}{{ . | first | value | humanizeBytes }}{{ end }}
+
+        - alert: PostgreSQLDataDiskSpaceCritical
+          expr: |
+            (
+              cnpg_pg_stat_database_size_bytes{cluster="postgres16"} / 
+              (cnpg_pg_settings_max_wal_size_bytes{cluster="postgres16"} + cnpg_pg_stat_database_size_bytes{cluster="postgres16"} + 10737418240)
+            ) * 100 > 85
+          for: 2m
+          labels:
+            severity: critical
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL data directory disk usage is critically high"
+            description: |
+              PostgreSQL cluster {{ $labels.cluster }} instance {{ $labels.pod }} 
+              data directory disk usage is {{ $value | humanizePercentage }}.
+              Immediate action required to prevent service outage.
+              Current database size: {{ with query "cnpg_pg_stat_database_size_bytes{cluster='postgres16',pod='" }}{{ . | first | value | humanizeBytes }}{{ end }}
+
+        # WAL Directory Specific Alerts
+        - alert: PostgreSQLWALDiskSpaceHigh
+          expr: |
+            cnpg_pg_wal_size_bytes{cluster="postgres16"} / cnpg_pg_settings_max_wal_size_bytes{cluster="postgres16"} * 100 > 80
+          for: 3m
+          labels:
+            severity: warning
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL WAL directory disk usage is high"
+            description: |
+              PostgreSQL cluster {{ $labels.cluster }} instance {{ $labels.pod }} 
+              WAL directory usage is {{ $value | humanizePercentage }} of max_wal_size.
+              Current WAL size: {{ with query "cnpg_pg_wal_size_bytes{cluster='postgres16',pod='" }}{{ . | first | value | humanizeBytes }}{{ end }}
+              Max WAL size: {{ with query "cnpg_pg_settings_max_wal_size_bytes{cluster='postgres16',pod='" }}{{ . | first | value | humanizeBytes }}{{ end }}
+
+        - alert: PostgreSQLWALDiskSpaceCritical
+          expr: |
+            cnpg_pg_wal_size_bytes{cluster="postgres16"} / cnpg_pg_settings_max_wal_size_bytes{cluster="postgres16"} * 100 > 95
+          for: 1m
+          labels:
+            severity: critical
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL WAL directory disk usage is critically high"
+            description: |
+              PostgreSQL cluster {{ $labels.cluster }} instance {{ $labels.pod }} 
+              WAL directory usage is {{ $value | humanizePercentage }} of max_wal_size.
+              Database may become unavailable soon. Immediate action required.
+
+        # Archive Failure Detection
+        - alert: PostgreSQLArchiveFailure
+          expr: |
+            increase(cnpg_pg_stat_archiver_failed_count{cluster="postgres16"}[5m]) > 0
+          for: 2m
+          labels:
+            severity: warning
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL WAL archiving is failing"
+            description: |
+              PostgreSQL cluster {{ $labels.cluster }} instance {{ $labels.pod }} 
+              has {{ $value }} failed archive attempts in the last 5 minutes.
+              This can lead to WAL disk space issues.
+
+        # Cluster Health
+        - alert: PostgreSQLClusterNotHealthy
+          expr: |
+            cnpg_cluster_status{cluster="postgres16"} != 1
+          for: 5m
+          labels:
+            severity: critical
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL cluster is not healthy"
+            description: |
+              PostgreSQL cluster {{ $labels.cluster }} is not in a healthy state.
+              Current status: {{ $value }}. Check cluster conditions and logs.
+
+        # Instance Availability
+        - alert: PostgreSQLInstanceDown
+          expr: |
+            up{job="postgres16"} == 0
+          for: 1m
+          labels:
+            severity: critical
+            service: postgresql
+            cluster: postgres16
+          annotations:
+            summary: "PostgreSQL instance is down"
+            description: |
+              PostgreSQL instance {{ $labels.pod }} in cluster {{ $labels.cluster }} is down.
+              This may affect database availability and replication.

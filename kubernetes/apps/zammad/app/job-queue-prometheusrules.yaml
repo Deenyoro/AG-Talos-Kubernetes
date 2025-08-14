@@ -1,0 +1,188 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: zammad-job-queue-alerts
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: monitoring
+spec:
+  groups:
+    - name: zammad.job-queue
+      interval: 30s
+      rules:
+        # CRITICAL: Job queue backlog building up
+        - alert: ZammadJobQueueBacklog
+          expr: zammad_job_queue_pending_jobs > 50
+          for: 2m
+          labels:
+            severity: critical
+            component: zammad-scheduler
+            recovery_action: restart_scheduler
+          annotations:
+            summary: "Zammad job queue has excessive backlog"
+            description: "The Zammad job queue has {{ $value }} pending jobs, indicating the scheduler is not processing jobs effectively. This will cause delayed email notifications and Discord alerts."
+            runbook_url: "https://github.com/Deenyoro/AG-Talos-Kubernetes/blob/main/docs/runbooks/zammad-scheduler.md"
+
+        # CRITICAL: Jobs stuck for too long
+        - alert: ZammadJobsStuckTooLong
+          expr: zammad_job_queue_old_pending_jobs > 5
+          for: 1m
+          labels:
+            severity: critical
+            component: zammad-scheduler
+            recovery_action: restart_scheduler
+          annotations:
+            summary: "Zammad jobs stuck in queue for over 10 minutes"
+            description: "{{ $value }} jobs have been pending for more than 10 minutes, indicating the scheduler has stopped processing jobs effectively."
+
+        # CRITICAL: Scheduler not responsive
+        - alert: ZammadSchedulerUnresponsive
+          expr: zammad_scheduler_responsive == 0
+          for: 1m
+          labels:
+            severity: critical
+            component: zammad-scheduler
+            recovery_action: restart_scheduler
+          annotations:
+            summary: "Zammad scheduler is not responding to health checks"
+            description: "The scheduler monitoring system cannot query the job queue, indicating a serious problem with the scheduler or database connectivity."
+
+        # CRITICAL: Job processing rate too low
+        - alert: ZammadJobProcessingStalled
+          expr: zammad_job_processing_rate < 0.1 and zammad_job_queue_pending_jobs > 10
+          for: 5m
+          labels:
+            severity: critical
+            component: zammad-scheduler
+            recovery_action: restart_scheduler
+          annotations:
+            summary: "Zammad job processing has stalled"
+            description: "Job processing rate is {{ $value }} jobs/minute with {{ $labels.pending_jobs }} pending jobs. The scheduler appears to be stuck."
+
+        # WARNING: High number of failed jobs
+        - alert: ZammadJobFailuresHigh
+          expr: zammad_job_queue_failed_jobs > 20
+          for: 5m
+          labels:
+            severity: warning
+            component: zammad-scheduler
+          annotations:
+            summary: "High number of failed Zammad jobs"
+            description: "There are {{ $value }} failed jobs in the queue. This may indicate configuration issues or external service problems."
+
+        # WARNING: Notification jobs pending
+        - alert: ZammadNotificationJobsPending
+          expr: zammad_notification_jobs_pending > 10
+          for: 3m
+          labels:
+            severity: warning
+            component: zammad-scheduler
+          annotations:
+            summary: "Zammad notification jobs are backing up"
+            description: "{{ $value }} notification jobs are pending, which may delay email alerts and Discord notifications."
+
+        # WARNING: Email jobs pending
+        - alert: ZammadEmailJobsPending
+          expr: zammad_email_jobs_pending > 5
+          for: 3m
+          labels:
+            severity: warning
+            component: zammad-scheduler
+          annotations:
+            summary: "Zammad email jobs are backing up"
+            description: "{{ $value }} email jobs are pending, which may delay email notifications to customers and staff."
+
+        # INFO: Scheduler restarted (for tracking)
+        - alert: ZammadSchedulerRestarted
+          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"}[5m]) > 0
+          for: 0m
+          labels:
+            severity: info
+            component: zammad-scheduler
+          annotations:
+            summary: "Zammad scheduler pod restarted"
+            description: "The Zammad scheduler pod {{ $labels.pod }} has restarted {{ $value }} times in the last 5 minutes."
+
+    - name: zammad.scheduler-health
+      interval: 30s
+      rules:
+        # CRITICAL: Scheduler pod not ready
+        - alert: ZammadSchedulerPodNotReady
+          expr: kube_pod_status_ready{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"} == 0
+          for: 2m
+          labels:
+            severity: critical
+            component: zammad-scheduler
+            recovery_action: check_pod_logs
+          annotations:
+            summary: "Zammad scheduler pod is not ready"
+            description: "The Zammad scheduler pod {{ $labels.pod }} has been not ready for more than 2 minutes."
+
+        # WARNING: High memory usage
+        - alert: ZammadSchedulerHighMemoryUsage
+          expr: |
+            (
+              container_memory_working_set_bytes{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"} /
+              container_spec_memory_limit_bytes{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}
+            ) > 0.9
+          for: 5m
+          labels:
+            severity: warning
+            component: zammad-scheduler
+          annotations:
+            summary: "Zammad scheduler high memory usage"
+            description: "Zammad scheduler pod {{ $labels.pod }} is using {{ $value | humanizePercentage }} of its memory limit."
+
+        # WARNING: High CPU usage
+        - alert: ZammadSchedulerHighCPUUsage
+          expr: |
+            (
+              rate(container_cpu_usage_seconds_total{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}[5m]) /
+              container_spec_cpu_quota{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"} * 
+              container_spec_cpu_period{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}
+            ) > 0.9
+          for: 5m
+          labels:
+            severity: warning
+            component: zammad-scheduler
+          annotations:
+            summary: "Zammad scheduler high CPU usage"
+            description: "Zammad scheduler pod {{ $labels.pod }} is using {{ $value | humanizePercentage }} of its CPU limit."
+
+    - name: zammad.dependencies
+      interval: 60s
+      rules:
+        # CRITICAL: PostgreSQL down
+        - alert: ZammadPostgreSQLDown
+          expr: up{job="postgres16-rw"} == 0
+          for: 1m
+          labels:
+            severity: critical
+            component: zammad-dependencies
+          annotations:
+            summary: "Zammad PostgreSQL database is down"
+            description: "The PostgreSQL database for Zammad is down, which will cause all Zammad functionality to fail."
+
+        # CRITICAL: Redis down
+        - alert: ZammadRedisDown
+          expr: up{job="zammad-redis-master"} == 0
+          for: 1m
+          labels:
+            severity: critical
+            component: zammad-dependencies
+          annotations:
+            summary: "Zammad Redis is down"
+            description: "The Redis instance for Zammad is down, which will cause session and caching issues."
+
+        # WARNING: Elasticsearch down
+        - alert: ZammadElasticsearchDown
+          expr: up{job="zammad-elasticsearch-master"} == 0
+          for: 2m
+          labels:
+            severity: warning
+            component: zammad-dependencies
+          annotations:
+            summary: "Zammad Elasticsearch is down"
+            description: "The Elasticsearch instance for Zammad is down, which will affect search functionality."

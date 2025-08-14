@@ -1,0 +1,270 @@
+---
+# Automatic Recovery System for Zammad Scheduler
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: zammad-recovery-system
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: zammad-recovery-system
+  namespace: default
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "patch"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: zammad-recovery-system
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: zammad-recovery-system
+    namespace: default
+roleRef:
+  kind: Role
+  name: zammad-recovery-system
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zammad-scheduler-recovery
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: scheduler-recovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zammad
+      app.kubernetes.io/component: scheduler-recovery
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: zammad
+        app.kubernetes.io/component: scheduler-recovery
+    spec:
+      serviceAccountName: zammad-recovery-system
+      containers:
+        - name: recovery-system
+          image: python:3.12-alpine
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # Install kubectl and curl
+              apk add --no-cache curl
+              curl -LO "https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl"
+              chmod +x kubectl && mv kubectl /usr/local/bin/
+
+              # Start the recovery system
+              python3 -c "
+              import subprocess
+              import time
+              import json
+              import logging
+              from datetime import datetime, timedelta
+
+              logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+              logger = logging.getLogger(__name__)
+
+              class ZammadRecoverySystem:
+                  def __init__(self):
+                      self.last_restart = None
+                      self.restart_cooldown = 300  # 5 minutes between restarts
+                      self.max_restarts_per_hour = 3
+                      self.restart_history = []
+
+                  def get_job_queue_metrics(self):
+                      '''Get current job queue metrics from the monitor'''
+                      try:
+                          result = subprocess.run([
+                              'kubectl', 'get', 'service', 'zammad-job-queue-monitor',
+                              '-n', 'default', '-o', 'json'
+                          ], capture_output=True, text=True, timeout=10)
+
+                          if result.returncode != 0:
+                              logger.warning('Job queue monitor service not found')
+                              return None
+
+                          # Query the metrics endpoint
+                          result = subprocess.run([
+                              'kubectl', 'exec', '-n', 'default',
+                              'deployment/zammad-job-queue-monitor', '--',
+                              'wget', '-qO-', 'http://localhost:9090/health'
+                          ], capture_output=True, text=True, timeout=30)
+
+                          if result.returncode == 0:
+                              return json.loads(result.stdout)
+                          else:
+                              logger.error(f'Failed to get metrics: {result.stderr}')
+                              return None
+
+                      except Exception as e:
+                          logger.error(f'Error getting job queue metrics: {e}')
+                          return None
+
+                  def check_scheduler_health(self):
+                      '''Check if scheduler needs recovery'''
+                      metrics = self.get_job_queue_metrics()
+                      if not metrics:
+                          logger.warning('Could not get job queue metrics')
+                          return False
+
+                      data = metrics.get('metrics', {})
+
+                      # Check for critical conditions requiring restart
+                      pending_jobs = data.get('pending_jobs', 0)
+                      old_pending = data.get('old_pending_jobs', 0)
+                      processing_rate = data.get('job_processing_rate', 0)
+                      responsive = data.get('scheduler_responsive', 1)
+
+                      logger.info(f'Health check: pending={pending_jobs}, old_pending={old_pending}, rate={processing_rate:.2f}/min, responsive={responsive}')
+
+                      # Critical conditions that require restart
+                      if responsive == 0:
+                          logger.error('Scheduler is not responsive')
+                          return True
+
+                      if pending_jobs > 100:
+                          logger.error(f'Excessive job backlog: {pending_jobs} jobs')
+                          return True
+
+                      if old_pending > 10:
+                          logger.error(f'Jobs stuck too long: {old_pending} jobs pending >10min')
+                          return True
+
+                      if pending_jobs > 20 and processing_rate < 0.1:
+                          logger.error(f'Job processing stalled: {pending_jobs} pending, rate={processing_rate:.2f}/min')
+                          return True
+
+                      return False
+
+                  def can_restart(self):
+                      '''Check if we can restart (cooldown and rate limiting)'''
+                      now = datetime.now()
+
+                      # Check cooldown period
+                      if self.last_restart and (now - self.last_restart).seconds < self.restart_cooldown:
+                          logger.info(f'Restart cooldown active, {self.restart_cooldown - (now - self.last_restart).seconds}s remaining')
+                          return False
+
+                      # Check restart rate limiting (max 3 per hour)
+                      hour_ago = now - timedelta(hours=1)
+                      recent_restarts = [r for r in self.restart_history if r > hour_ago]
+
+                      if len(recent_restarts) >= self.max_restarts_per_hour:
+                          logger.warning(f'Rate limit reached: {len(recent_restarts)} restarts in last hour')
+                          return False
+
+                      return True
+
+                  def restart_scheduler(self):
+                      '''Restart the Zammad scheduler pod'''
+                      try:
+                          logger.info('Attempting to restart Zammad scheduler...')
+
+                          # Get current scheduler pod
+                          result = subprocess.run([
+                              'kubectl', 'get', 'pods', '-n', 'default',
+                              '-l', 'app.kubernetes.io/component=zammad-scheduler',
+                              '-o', 'json'
+                          ], capture_output=True, text=True, timeout=30)
+
+                          if result.returncode != 0:
+                              logger.error(f'Failed to get scheduler pods: {result.stderr}')
+                              return False
+
+                          pods_data = json.loads(result.stdout)
+                          pods = pods_data.get('items', [])
+
+                          if not pods:
+                              logger.error('No scheduler pods found')
+                              return False
+
+                          # Delete the scheduler pod to trigger restart
+                          pod_name = pods[0]['metadata']['name']
+                          logger.info(f'Deleting scheduler pod: {pod_name}')
+
+                          result = subprocess.run([
+                              'kubectl', 'delete', 'pod', pod_name, '-n', 'default'
+                          ], capture_output=True, text=True, timeout=60)
+
+                          if result.returncode == 0:
+                              logger.info(f'Successfully deleted scheduler pod {pod_name}')
+                              self.last_restart = datetime.now()
+                              self.restart_history.append(self.last_restart)
+
+                              # Create event for tracking
+                              subprocess.run([
+                                  'kubectl', 'create', 'event', 'scheduler-auto-restart',
+                                  '--type=Warning', '--reason=AutoRestart',
+                                  '--message=Zammad scheduler automatically restarted due to job processing issues',
+                                  '-n', 'default'
+                              ], capture_output=True)
+
+                              return True
+                          else:
+                              logger.error(f'Failed to delete scheduler pod: {result.stderr}')
+                              return False
+
+                      except Exception as e:
+                          logger.error(f'Error restarting scheduler: {e}')
+                          return False
+
+                  def run(self):
+                      '''Main recovery loop'''
+                      logger.info('Starting Zammad scheduler recovery system')
+
+                      while True:
+                          try:
+                              if self.check_scheduler_health():
+                                  if self.can_restart():
+                                      logger.warning('Scheduler health check failed, attempting restart')
+                                      if self.restart_scheduler():
+                                          logger.info('Scheduler restart initiated, waiting for recovery...')
+                                          time.sleep(120)  # Wait 2 minutes after restart
+                                      else:
+                                          logger.error('Failed to restart scheduler')
+                                  else:
+                                      logger.warning('Scheduler needs restart but rate limited')
+
+                              # Check every 60 seconds
+                              time.sleep(60)
+
+                          except KeyboardInterrupt:
+                              logger.info('Recovery system shutting down')
+                              break
+                          except Exception as e:
+                              logger.error(f'Unexpected error in recovery loop: {e}')
+                              time.sleep(60)
+
+              # Start the recovery system
+              recovery = ZammadRecoverySystem()
+              recovery.run()
+              "
+          resources:
+            requests:
+              cpu: 5m
+              memory: 32Mi
+            limits:
+              cpu: 20m
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false

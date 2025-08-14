@@ -1,0 +1,130 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-maintenance-script
+  namespace: database
+data:
+  maintenance.sh: |
+    #!/bin/bash
+    set -euo pipefail
+    
+    NAMESPACE="database"
+    CLUSTER_NAME="postgres16"
+    
+    log() {
+        echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
+    }
+    
+    # Find primary pod
+    PRIMARY_POD=$(kubectl get pods -n $NAMESPACE -l cnpg.io/cluster=$CLUSTER_NAME -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}' | awk '{print $1}')
+    
+    if [[ -z "$PRIMARY_POD" ]]; then
+        log "ERROR: No running PostgreSQL pods found"
+        exit 1
+    fi
+    
+    log "Using PostgreSQL pod: $PRIMARY_POD"
+    
+    # Check disk space
+    log "=== Disk Space Check ==="
+    kubectl exec -n $NAMESPACE $PRIMARY_POD -- df -h /var/lib/postgresql/data
+    
+    # Check WAL usage
+    log "=== WAL Directory Usage ==="
+    kubectl exec -n $NAMESPACE $PRIMARY_POD -- du -sh /var/lib/postgresql/data/pgdata/pg_wal
+    
+    # Check archive status
+    log "=== Archive Status ==="
+    kubectl exec -n $NAMESPACE $PRIMARY_POD -- psql -U postgres -c "SELECT archived_count, failed_count FROM pg_stat_archiver;"
+    
+    # Trigger checkpoint if needed
+    WAL_SIZE=$(kubectl exec -n $NAMESPACE $PRIMARY_POD -- du -s /var/lib/postgresql/data/pgdata/pg_wal | awk '{print $1}')
+    if [[ $WAL_SIZE -gt 1048576 ]]; then  # > 1GB
+        log "WAL size is large (${WAL_SIZE}KB), triggering checkpoint"
+        kubectl exec -n $NAMESPACE $PRIMARY_POD -- psql -U postgres -c "CHECKPOINT;"
+    fi
+    
+    log "Maintenance check completed"
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-maintenance
+  namespace: database
+  labels:
+    app.kubernetes.io/name: postgres-maintenance
+    app.kubernetes.io/component: maintenance
+spec:
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  timeZone: "America/New_York"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: postgres-maintenance
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: postgres-maintenance
+          containers:
+          - name: maintenance
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/bash
+            - /scripts/maintenance.sh
+            volumeMounts:
+            - name: maintenance-script
+              mountPath: /scripts
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+          volumes:
+          - name: maintenance-script
+            configMap:
+              name: postgres-maintenance-script
+              defaultMode: 0755
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres-maintenance
+  namespace: database
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: postgres-maintenance
+  namespace: database
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/exec"]
+  verbs: ["get", "list", "create"]
+- apiGroups: ["postgresql.cnpg.io"]
+  resources: ["clusters"]
+  verbs: ["get", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: postgres-maintenance
+  namespace: database
+subjects:
+- kind: ServiceAccount
+  name: postgres-maintenance
+  namespace: database
+roleRef:
+  kind: Role
+  name: postgres-maintenance
+  apiGroup: rbac.authorization.k8s.io

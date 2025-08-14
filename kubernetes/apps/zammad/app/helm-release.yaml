@@ -99,31 +99,50 @@ spec:
         # Only one will be active (Zammad handles this internally), but provides failover
         replicas: 2
 
-        # Fix for GitHub issue #5718: Background scheduler doesn't re-schedule things properly
-        # after losing and regaining database connection. Add liveness probe to detect when
-        # scheduler loses database connectivity and ensure proper recovery via pod restart.
+        # Enhanced liveness probe: Detects database connectivity issues AND job processing problems
+        # This prevents silent failures where the scheduler appears healthy but isn't processing jobs
         livenessProbe:
           exec:
             command:
               - /bin/sh
               - -c
               - |
-                # Test database connectivity by attempting a simple query
-                # This ensures the scheduler can actually communicate with the database
-                # and will restart the pod if database connectivity is lost and not recovered
+                cd /opt/zammad
                 bundle exec rails runner "
                 begin
-                  # Simple database connectivity test
+                  # Test database connectivity
                   ActiveRecord::Base.connection.execute('SELECT 1')
+
+                  # Check for jobs stuck for too long (indicates scheduler not processing)
+                  old_jobs = Delayed::Job.where(failed_at: nil, locked_at: nil)
+                                        .where('run_at <= ?', Time.now - 900)  # 15 minutes
+                                        .count
+
+                  if old_jobs > 20
+                    STDERR.puts \"LIVENESS FAIL: #{old_jobs} jobs stuck for >15 minutes\"
+                    exit 1
+                  end
+
+                  # Check for excessive job backlog (indicates scheduler overwhelmed or stuck)
+                  pending_jobs = Delayed::Job.where(failed_at: nil, locked_at: nil)
+                                            .where('run_at <= ?', Time.now)
+                                            .count
+
+                  if pending_jobs > 200
+                    STDERR.puts \"LIVENESS FAIL: Excessive job backlog (#{pending_jobs} jobs)\"
+                    exit 1
+                  end
+
+                  puts 'Scheduler health: OK'
                   exit 0
                 rescue => e
-                  STDERR.puts \"Database connection failed: #{e.message}\"
+                  STDERR.puts \"Scheduler health check failed: #{e.message}\"
                   exit 1
                 end
                 " 2>/dev/null || exit 1
-          initialDelaySeconds: 120
+          initialDelaySeconds: 180
           periodSeconds: 300
-          timeoutSeconds: 30
+          timeoutSeconds: 60
           failureThreshold: 2
 
     # Note: Passwords should not contain special characters requiring URL encoding

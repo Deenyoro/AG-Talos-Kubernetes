@@ -7,6 +7,9 @@ resources:
   - monitoring-configmap.yaml
   - servicemonitor.yaml
   - prometheusrules.yaml
+  - job-queue-prometheusrules.yaml
   - grafana-dashboard.yaml
   - backup-processor.yaml
   - metrics-exporter-deployment.yaml
+  - job-queue-monitor.yaml
+  - scheduler-recovery-system.yaml
