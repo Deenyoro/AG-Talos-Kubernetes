@@ -6,7 +6,7 @@ resources:
   - ./prometheus-operator-crds/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./alertmanager/ks.yaml
-#  - ./alertmanager-discord/ks.yaml  # TODO: Uncomment when ready
+  - ./alertmanager-discord/ks.yaml
   - ./uptimekuma/ks.yaml
 #  - ./zabbix/ks-secrets.yaml
 #  - ./zabbix/ks-pvc.yaml

@@ -12,89 +12,51 @@ spec:
     - name: zammad.scheduler
       interval: 30s
       rules:
-        # Scheduler pod availability
+        # Scheduler pod availability - using existing Kubernetes metrics
         - alert: ZammadSchedulerDown
-          expr: up{job="zammad-scheduler"} == 0
+          expr: kube_pod_status_ready{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"} == 0
           for: 2m
           labels:
             severity: critical
             component: zammad-scheduler
           annotations:
             summary: "Zammad scheduler is down"
-            description: "The Zammad scheduler pod has been down for more than 2 minutes. Ticket processing and email alerts may be affected."
+            description: "The Zammad scheduler pod {{ $labels.pod }} has been not ready for more than 2 minutes. Ticket processing and email alerts may be affected."
             runbook_url: "https://github.com/Deenyoro/AG-Talos-Kubernetes/blob/main/docs/runbooks/zammad-scheduler.md"
 
-        # Database connectivity issues
+        # Database connectivity issues - using PostgreSQL metrics
         - alert: ZammadSchedulerDatabaseDisconnected
-          expr: zammad_scheduler_database_connected == 0
+          expr: up{job="postgres16-rw"} == 0
           for: 1m
           labels:
             severity: critical
             component: zammad-scheduler
           annotations:
-            summary: "Zammad scheduler lost database connection"
-            description: "The Zammad scheduler cannot connect to the database. This will cause ticket processing failures and missed email alerts."
+            summary: "Zammad database is down"
+            description: "The PostgreSQL database for Zammad is down. This will cause ticket processing failures and missed email alerts."
             runbook_url: "https://github.com/Deenyoro/AG-Talos-Kubernetes/blob/main/docs/runbooks/zammad-scheduler.md"
 
-        # Job queue issues
-        - alert: ZammadSchedulerJobQueueBacklog
-          expr: zammad_scheduler_pending_jobs > 100
+        # High memory usage alert - using existing Kubernetes metrics
+        - alert: ZammadSchedulerHighMemoryUsage
+          expr: |
+            (
+              container_memory_working_set_bytes{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"} /
+              container_spec_memory_limit_bytes{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}
+            ) > 0.9
           for: 5m
           labels:
             severity: warning
             component: zammad-scheduler
           annotations:
-            summary: "Zammad scheduler has large job queue backlog"
-            description: "The Zammad scheduler has {{ $value }} pending jobs, indicating processing delays. Current backlog: {{ $value }} jobs."
+            summary: "Zammad scheduler high memory usage"
+            description: "Zammad scheduler pod {{ $labels.pod }} is using {{ $value | humanizePercentage }} of its memory limit."
 
-        - alert: ZammadSchedulerJobFailures
-          expr: increase(zammad_scheduler_failed_jobs[5m]) > 5
-          for: 2m
-          labels:
-            severity: warning
-            component: zammad-scheduler
-          annotations:
-            summary: "Zammad scheduler job failures increasing"
-            description: "The Zammad scheduler has {{ $value }} failed jobs in the last 5 minutes, indicating processing issues."
-
-        # Email processing issues
-        - alert: ZammadSchedulerEmailProcessingStalled
-          expr: zammad_scheduler_last_email_processed_seconds > 1800
-          for: 5m
-          labels:
-            severity: critical
-            component: zammad-scheduler
-          annotations:
-            summary: "Zammad email processing has stalled"
-            description: "No emails have been processed by Zammad for {{ $value | humanizeDuration }}. Email alerts and autoreplies are not working."
-
-        - alert: ZammadSchedulerUnprocessedEmails
-          expr: zammad_scheduler_unprocessed_emails > 10
-          for: 10m
-          labels:
-            severity: warning
-            component: zammad-scheduler
-          annotations:
-            summary: "Zammad has unprocessed emails"
-            description: "There are {{ $value }} unprocessed emails in the Zammad queue. Email processing may be delayed."
-
-        # Ticket processing issues
-        - alert: ZammadSchedulerTicketProcessingStalled
-          expr: zammad_scheduler_last_ticket_processed_seconds > 3600
-          for: 10m
-          labels:
-            severity: warning
-            component: zammad-scheduler
-          annotations:
-            summary: "Zammad ticket processing has stalled"
-            description: "No tickets have been processed by Zammad for {{ $value | humanizeDuration }}. Ticket escalation and automation may not be working."
-
-        # Pod restart detection
+        # Pod restart detection - CRITICAL ALERT FOR TESTING
         - alert: ZammadSchedulerRestarted
-          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-.*"}[5m]) > 0
+          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"}[5m]) > 0
           for: 0m
           labels:
-            severity: warning
+            severity: critical
             component: zammad-scheduler
           annotations:
             summary: "Zammad scheduler pod restarted"
