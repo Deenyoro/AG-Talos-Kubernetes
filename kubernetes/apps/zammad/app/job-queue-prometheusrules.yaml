@@ -96,7 +96,7 @@ spec:
 
         # INFO: Scheduler restarted (for tracking)
         - alert: ZammadSchedulerRestarted
-          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"}[5m]) > 0
+          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+"}[5m]) > 0
           for: 0m
           labels:
             severity: info
@@ -110,7 +110,7 @@ spec:
       rules:
         # CRITICAL: Scheduler pod not ready
         - alert: ZammadSchedulerPodNotReady
-          expr: kube_pod_status_ready{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"} == 0
+          expr: kube_pod_status_ready{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", condition="true"} == 0
           for: 2m
           labels:
             severity: critical
@@ -124,8 +124,8 @@ spec:
         - alert: ZammadSchedulerHighMemoryUsage
           expr: |
             (
-              container_memory_working_set_bytes{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"} /
-              container_spec_memory_limit_bytes{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}
+              container_memory_working_set_bytes{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", container="zammad-scheduler"} /
+              container_spec_memory_limit_bytes{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", container="zammad-scheduler"}
             ) > 0.9
           for: 5m
           labels:
@@ -139,9 +139,9 @@ spec:
         - alert: ZammadSchedulerHighCPUUsage
           expr: |
             (
-              rate(container_cpu_usage_seconds_total{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}[5m]) /
-              container_spec_cpu_quota{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"} * 
-              container_spec_cpu_period{namespace="default", pod=~"zammad-scheduler-[^-]+-.*", container="zammad-scheduler"}
+              rate(container_cpu_usage_seconds_total{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", container="zammad-scheduler"}[5m]) /
+              container_spec_cpu_quota{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", container="zammad-scheduler"} *
+              container_spec_cpu_period{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", container="zammad-scheduler"}
             ) > 0.9
           for: 5m
           labels:

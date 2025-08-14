@@ -14,7 +14,7 @@ spec:
       rules:
         # Scheduler pod availability - using existing Kubernetes metrics
         - alert: ZammadSchedulerDown
-          expr: kube_pod_status_ready{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"} == 0
+          expr: kube_pod_status_ready{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+", condition="true"} == 0
           for: 2m
           labels:
             severity: critical
@@ -53,7 +53,7 @@ spec:
 
         # Pod restart detection - CRITICAL ALERT FOR TESTING
         - alert: ZammadSchedulerRestarted
-          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-[^-]+-.*"}[5m]) > 0
+          expr: increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"zammad-scheduler-[a-f0-9]+-[a-z0-9]+"}[5m]) > 0
           for: 0m
           labels:
             severity: critical
