@@ -59,7 +59,7 @@ spec:
       serviceAccountName: zammad-recovery-system
       containers:
         - name: recovery-system
-          image: python:3.12-alpine
+          image: python:3.13-alpine
           command:
             - /bin/sh
             - -c

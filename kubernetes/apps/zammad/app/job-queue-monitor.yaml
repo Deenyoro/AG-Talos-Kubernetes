@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: job-queue-monitor
-          image: python:3.12-alpine
+          image: python:3.13-alpine
           command:
             - python3
             - -c
