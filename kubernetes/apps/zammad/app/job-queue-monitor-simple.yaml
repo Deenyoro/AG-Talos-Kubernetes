@@ -1,0 +1,96 @@
+---
+# Simplified Job Queue Health Monitor using CronJob
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zammad-job-queue-health-check
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zammad
+    app.kubernetes.io/component: job-queue-monitor
+spec:
+  schedule: "*/2 * * * *" # Every 2 minutes
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: zammad
+            app.kubernetes.io/component: job-queue-monitor
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: job-queue-health-check
+              image: ghcr.io/zammad/zammad:6.4.0-1
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  cd /opt/zammad
+                  bundle exec rails runner "
+                  # Check job queue health and create alerts if needed
+                  pending_jobs = Delayed::Job.where(failed_at: nil, locked_at: nil).where('run_at <= ?', Time.now).count
+                  old_jobs = Delayed::Job.where(failed_at: nil, locked_at: nil).where('run_at <= ?', Time.now - 600).count
+                  failed_jobs = Delayed::Job.where.not(failed_at: nil).count
+                  locked_jobs = Delayed::Job.where.not(locked_at: nil).count
+
+                  puts \"=== Job Queue Health Check - #{Time.now} ===\"
+                  puts \"Pending jobs: #{pending_jobs}\"
+                  puts \"Locked jobs: #{locked_jobs}\"
+                  puts \"Old jobs (>10min): #{old_jobs}\"
+                  puts \"Failed jobs: #{failed_jobs}\"
+
+                  # Critical thresholds that would trigger scheduler restart
+                  if old_jobs > 10
+                    puts \"CRITICAL: #{old_jobs} jobs stuck for >10 minutes - scheduler may need restart\"
+                    exit 1
+                  end
+
+                  if pending_jobs > 100
+                    puts \"CRITICAL: #{pending_jobs} jobs pending - scheduler may be overwhelmed\"
+                    exit 1
+                  end
+
+                  if failed_jobs > 50
+                    puts \"WARNING: #{failed_jobs} failed jobs - check for configuration issues\"
+                  end
+
+                  puts 'Job queue health: OK'
+                  puts '============================================='
+                  "
+              env:
+                - name: DATABASE_URL
+                  value: "postgresql://zammad:$(POSTGRESQL_PASS)@postgres16-rw:5432/zammad"
+                - name: POSTGRESQL_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: zammad-postgres-secrets
+                      key: postgresql-pass
+                - name: REDIS_URL
+                  value: "redis://:$(REDIS_PASSWORD)@zammad-redis-master:6379"
+                - name: REDIS_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: zammad-redis-pass
+                      key: redis-password
+                - name: ELASTICSEARCH_URL
+                  value: "http://zammad-elasticsearch-master:9200"
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 64Mi
+                limits:
+                  cpu: 100m
+                  memory: 128Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                privileged: false
+                runAsNonRoot: true
+                runAsUser: 1000
+          securityContext:
+            fsGroup: 1000
