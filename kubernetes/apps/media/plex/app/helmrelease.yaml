@@ -102,36 +102,37 @@ spec:
         controller: plex
         type: LoadBalancer
         annotations:
+          external-dns.alpha.kubernetes.io/hostname: "plex.${SECRET_DOMAIN_LEGACY}"
           lbipam.cilium.io/ips: 10.10.12.241
         ports:
           http:
             port: *port
-#    route:
-#      app:
-#        hostnames:
-#        - "plex.${SECRET_DOMAIN_LEGACY}"
-#        parentRefs:
-#          - name: external
-#            namespace: kube-system
-#            sectionName: https2
-#          - name: internal
-#            namespace: kube-system
-#            sectionName: https2
-#        rules:
-#          - backendRefs:
-#              - name: *app
-#                port: *port
-#            filters:
-#              - type: RequestHeaderModifier
-#                requestHeaderModifier:
-#                  remove: [ "Range" ]
-#            matches:
-#              - path:
-#                  type: PathPrefix
-#                  value: /library/streams
-#          - backendRefs:
-#              - name: *app
-#                port: *port
+    route:
+      app:
+        hostnames:
+        - "plex.${SECRET_DOMAIN_LEGACY}"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https2
+          - name: internal
+            namespace: kube-system
+            sectionName: https2
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  remove: [ "Range" ]
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /library/streams
+          - backendRefs:
+              - name: *app
+                port: *port
 
 #    ingress:
 #      external:
