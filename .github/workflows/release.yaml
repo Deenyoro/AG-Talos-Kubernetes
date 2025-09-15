@@ -7,11 +7,16 @@ on:
   schedule:
     - cron: "0 0 1 * *"
 
+
 jobs:
   release:
     if: ${{ github.repository == 'Deenyoro/AG-Talos-Kubernetes' }}
     name: Release
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v5
