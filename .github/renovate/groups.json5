@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
+    // NOTE: Renovate processes rules from top to bottom, so the rules below take precedence over rules above it
     {
       "description": "Flux Group",
       "groupName": "Flux",

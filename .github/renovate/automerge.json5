@@ -1,6 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
+    // NOTE: Renovate processes rules from top to bottom, so the rules below take precedence over rules above it
+    {
+      "description": "Auto merge all Renovate versions",
+      "matchPackageNames": ["**renovate**"],
+      "matchUpdateTypes": ["major", "minor", "patch", "digest"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": true,
+      "addLabels": ["renovate-itself"]
+    },
+    {
+      "description": "Auto merge all Mise versions",
+      "matchFileNames": [".mise.toml", "mise.toml"],
+      "matchPackageNames": ["*"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "automerge": true,
+      "automergeType": "pr",
+      "rebaseWhen": "behind-base-branch"
+    },
     {
       matchDatasources: ["docker"],
       automerge: true,
