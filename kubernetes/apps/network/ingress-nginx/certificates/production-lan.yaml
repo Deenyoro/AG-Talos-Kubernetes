@@ -1,0 +1,19 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "lan-${SECRET_DOMAIN/./-}-production"
+spec:
+  secretName: "lan-${SECRET_DOMAIN/./-}-production-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "lan.${SECRET_DOMAIN}"
+  dnsNames:
+    - "lan.${SECRET_DOMAIN}"
+    - "*.lan.${SECRET_DOMAIN}"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "kube-system,cilium-secrets"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
