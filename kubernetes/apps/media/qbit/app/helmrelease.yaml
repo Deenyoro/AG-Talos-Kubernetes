@@ -27,7 +27,7 @@ spec:
     cleanupOnFail: true
     remediation:
       strategy: uninstall
-      retries: 3
+      retries: 1
   values:
     defaultPodOptions:
       nodeSelector:
