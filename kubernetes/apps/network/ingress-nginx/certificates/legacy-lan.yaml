@@ -2,9 +2,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN_LEGACY/./-}-production"
+  name: "lan-${SECRET_DOMAIN_LEGACY/./-}-production"
 spec:
-  secretName: "${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+  secretName: "lan-${SECRET_DOMAIN_LEGACY/./-}-production-tls"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
@@ -15,10 +15,10 @@ spec:
       passwordSecretRef:
         key: p12-password
         name: legacy-cert-p12
-  commonName: "${SECRET_DOMAIN_LEGACY}"
+  commonName: "lan.${SECRET_DOMAIN_LEGACY}"
   dnsNames:
-    - "${SECRET_DOMAIN_LEGACY}"
-    - "*.${SECRET_DOMAIN_LEGACY}"
+    - "lan.${SECRET_DOMAIN_LEGACY}"
+    - "*.lan.${SECRET_DOMAIN_LEGACY}"
   secretTemplate:
     annotations:
       reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
