@@ -41,7 +41,7 @@ spec:
       passwordSecretRef:
         key: p12-password
         name: legacy-cert-p12
-  commonName: "${SECRET_DOMAIN_LEGACY}"
+  commonName: "lan.${SECRET_DOMAIN_LEGACY}"
   dnsNames:
     - "lan.${SECRET_DOMAIN_LEGACY}"
     - "*.lan.${SECRET_DOMAIN_LEGACY}"
