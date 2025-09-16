@@ -27,7 +27,7 @@ spec:
 
     fullnameOverride: k8s-gateway
     apex: "k8s-gateway"
-    domain: "${SECRET_DOMAIN} ${SECRET_DOMAIN_LEGACY}"
+    domain: "lan.${SECRET_DOMAIN} lan.${SECRET_DOMAIN_LEGACY}"
     ttl: 1
     service:
       type: LoadBalancer
