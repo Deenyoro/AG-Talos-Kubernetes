@@ -175,9 +175,6 @@ spec:
         hostnames:
           - "aichat.${SECRET_DOMAIN}"
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https1
           - name: external
             namespace: kube-system
             sectionName: https1
@@ -187,7 +184,7 @@ spec:
                 port: *port
       mongolibre:
         hostnames:
-          - "mongolibre.${SECRET_DOMAIN}"
+          - "mongolibre.lan.${SECRET_DOMAIN}"
         parentRefs:
           - name: internal
             namespace: kube-system

@@ -82,10 +82,18 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.${SECRET_DOMAIN}"
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
-          - name: external
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+      app-int:
+        hostnames:
+          - "{{ .Release.Name }}.lan.${SECRET_DOMAIN}"
+        parentRefs:
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:

@@ -79,9 +79,6 @@ spec:
           - name: external
             namespace: kube-system
             sectionName: https1
-          - name: internal
-            namespace: kube-system
-            sectionName: https1
         rules:
           - backendRefs:
               - name: *app

@@ -86,7 +86,7 @@ spec:
     route:
       app:
         hostnames:
-          - "qbit.${SECRET_DOMAIN_LEGACY}"
+          - "qbit.lan.${SECRET_DOMAIN_LEGACY}"
         parentRefs:
           - name: internal
             namespace: kube-system

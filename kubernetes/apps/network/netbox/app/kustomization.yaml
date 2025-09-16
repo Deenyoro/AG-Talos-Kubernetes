@@ -8,4 +8,3 @@ resources:
   - ./helm-release.yaml
   - ./sso-custom-pipeline-configmap.yaml
   - ./HTTPRoute.yaml
-#  - ./ext-ingress.yaml

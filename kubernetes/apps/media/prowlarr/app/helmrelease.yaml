@@ -86,7 +86,7 @@ spec:
             app in (
               prowlarr
             )
-        hostnames: [ "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}" ]
+        hostnames: [ "{{ .Release.Name }}.lan.${SECRET_DOMAIN_LEGACY}" ]
         parentRefs:
           - name: internal
             namespace: kube-system

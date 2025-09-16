@@ -56,7 +56,7 @@ spec:
 
     route:
       app:
-        hostnames: [ "ytdl.${SECRET_DOMAIN}" ]
+        hostnames: [ "ytdl.lan.${SECRET_DOMAIN}" ]
         parentRefs:
           - name: internal
             namespace: kube-system

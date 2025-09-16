@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - secret.sops.yaml
-  - ingress-int.yaml
   - monitoring-configmap.yaml
   - servicemonitor.yaml
   - prometheusrules.yaml

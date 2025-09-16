@@ -175,9 +175,6 @@ spec:
         hostnames:
           - "aichat2.${SECRET_DOMAIN}"
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https1
           - name: external
             namespace: kube-system
             sectionName: https1
@@ -186,10 +183,8 @@ spec:
               - name: *app
                 port: *port
       mongo-express:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hostnames:
-          - "mongolibre2.${SECRET_DOMAIN}"
+          - "mongolibre2.lan.${SECRET_DOMAIN}"
         parentRefs:
           - name: internal
             namespace: kube-system

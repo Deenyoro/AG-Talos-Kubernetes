@@ -100,7 +100,7 @@ spec:
     route:
       app:
         hostnames:
-          - "porla.${SECRET_DOMAIN_LEGACY}"
+          - "porla.lan.${SECRET_DOMAIN_LEGACY}"
         parentRefs:
           - name: internal
             namespace: kube-system

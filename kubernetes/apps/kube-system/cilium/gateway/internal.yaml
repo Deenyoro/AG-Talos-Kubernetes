@@ -13,14 +13,14 @@ spec:
     - name: http1
       protocol: HTTP
       port: 80
-      hostname: "*.${SECRET_DOMAIN}"
+      hostname: "*.lan.${SECRET_DOMAIN}"
       allowedRoutes:
         namespaces:
           from: All
     - name: https1
       protocol: HTTPS
       port: 443
-      hostname: "*.${SECRET_DOMAIN}"
+      hostname: "*.lan.${SECRET_DOMAIN}"
       allowedRoutes:
         namespaces:
           from: All
@@ -31,14 +31,14 @@ spec:
     - name: http2
       protocol: HTTP
       port: 80
-      hostname: "*.${SECRET_DOMAIN_LEGACY}"
+      hostname: "*.lan.${SECRET_DOMAIN_LEGACY}"
       allowedRoutes:
         namespaces:
           from: All
     - name: https2
       protocol: HTTPS
       port: 443
-      hostname: "*.${SECRET_DOMAIN_LEGACY}"
+      hostname: "*.lan.${SECRET_DOMAIN_LEGACY}"
       allowedRoutes:
         namespaces:
           from: All

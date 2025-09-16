@@ -102,7 +102,7 @@ spec:
         controller: plex
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "plex.${SECRET_DOMAIN_LEGACY}"
+          external-dns.alpha.kubernetes.io/hostname: "plex.lan.${SECRET_DOMAIN_LEGACY}"
           lbipam.cilium.io/ips: 10.10.12.241
         ports:
           http:

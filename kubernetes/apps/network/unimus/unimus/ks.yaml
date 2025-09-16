@@ -21,7 +21,7 @@ spec:
   wait: false
   postBuild:
     substitute:
-      HOSTNAME: "unimus.${SECRET_DOMAIN}"
+      HOSTNAME: "unimus.lan.${SECRET_DOMAIN}"
       APP: unimus
       VOLSYNC_CLAIM: unimus-storage
 

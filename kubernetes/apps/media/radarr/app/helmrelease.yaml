@@ -104,7 +104,7 @@ spec:
           gethomepage.dev/icon: radarr.png
           gethomepage.dev/description: Movie Downloads
         hostnames:
-          - "{{ .Release.Name }}.${SECRET_DOMAIN_LEGACY}"
+          - "{{ .Release.Name }}.lan.${SECRET_DOMAIN_LEGACY}"
         parentRefs:
           - name: internal
             namespace: kube-system
