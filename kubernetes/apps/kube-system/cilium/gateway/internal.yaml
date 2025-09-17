@@ -27,7 +27,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: "lan.${SECRET_DOMAIN/./-}-production-tls"
+            name: "lan-${SECRET_DOMAIN/./-}-production-tls"
     - name: http2
       protocol: HTTP
       port: 80
@@ -45,4 +45,4 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: "lan.${SECRET_DOMAIN_LEGACY/./-}-production-tls"
+            name: "lan-${SECRET_DOMAIN_LEGACY/./-}-production-tls"
