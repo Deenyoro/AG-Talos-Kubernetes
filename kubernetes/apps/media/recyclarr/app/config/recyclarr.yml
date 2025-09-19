@@ -128,6 +128,24 @@ sonarr:
           - name: Web 1080p
             score: 1850
 
+      # === HDR/Dolby Vision policy ===
+      # Block DV without HDR10 fallback (Profile 5 WEB-DL etc.)
+      - trash_ids:
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (w/o HDR fallback) — Sonarr
+        assign_scores_to:
+          - name: Web 1080p
+            score: -10000
+          - name: Web 720p
+            score: -10000
+      # Neutralize any DV-Boost so HDR10 is never deprioritized
+      - trash_ids:
+          - 7c3a61a9c6cb04f52f1544be6d44a026 # DV Boost — Sonarr
+        assign_scores_to:
+          - name: Web 1080p
+            score: 0
+          - name: Web 720p
+            score: 0
+
 radarr:
   radarr:
     base_url: http://radarr.media.svc.cluster.local
@@ -146,6 +164,7 @@ radarr:
 
     quality_profiles:
       - name: SQP-1 (2160p)
+        # Keep >=10 so HDR-related CFs are required for 4K in the SQP template
         min_format_score: 10
       - name: Remux/Web 1080p
         reset_unmatched_scores:
@@ -259,3 +278,21 @@ radarr:
         assign_scores_to:
           - name: SQP-1 (2160p)
           - name: Remux/Web 1080p
+
+      # === HDR/Dolby Vision policy ===
+      # Block DV without HDR10 fallback (Profile 5 WEB-DL etc.)
+      - trash_ids:
+          - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback) — Radarr
+        assign_scores_to:
+          - name: SQP-1 (2160p)
+            score: -10000
+          - name: Remux/Web 1080p
+            score: -10000
+      # Neutralize any DV-Boost so HDR10 is never deprioritized
+      - trash_ids:
+          - b337d6812e06c200ec9a2d3cfa9d20a7 # DV Boost — Radarr
+        assign_scores_to:
+          - name: SQP-1 (2160p)
+            score: 0
+          - name: Remux/Web 1080p
+            score: 0
