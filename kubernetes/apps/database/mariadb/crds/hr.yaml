@@ -10,5 +10,5 @@ spec:
         kind: HelmRepository
         name: mariadb-operator
         namespace: flux-system
-      version: "0.38.1"
+      version: "25.8.4"
   interval: 1h0m0s
