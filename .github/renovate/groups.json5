@@ -3,6 +3,12 @@
   "packageRules": [
     // NOTE: Renovate processes rules from top to bottom, so the rules below take precedence over rules above it
     {
+      "description": ["Split app-template 4.0.x into separate PRs per-app"],
+      "matchDataSources": ["helm"],
+      "matchPackagePatterns": ["app-template"],
+      "additionalBranchPrefix": "{{baseDir}}-"
+    },
+    {
       "description": "Flux Group",
       "groupName": "Flux",
       "matchPackagePatterns": ["flux"],
