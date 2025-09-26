@@ -4,8 +4,8 @@
     // NOTE: Renovate processes rules from top to bottom, so the rules below take precedence over rules above it
     {
       "description": ["Split app-template into separate PRs per app and include app name in title"],
-      "matchDatasources": ["helm"],
-      "matchPackagePatterns": ["^app-template$"],
+      "matchDatasources": ["helm", "docker"],
+      "matchPackagePatterns": ["app-template"],
       "additionalBranchPrefix": "{{parentDir}}-",
       "prTitle": "[{{parentDir}}] Update Helm chart {{depName}} to {{newValue}}",
       "commitMessageTopic": "{{depName}} ({{parentDir}})"
