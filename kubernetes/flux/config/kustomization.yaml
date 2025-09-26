@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - ./flux.yaml
   - ./cluster.yaml
-  - ./ssh-credentials.sops.yaml
+# Apply manually
+#  - ./ssh-credentials.sops.yaml
