@@ -23,7 +23,7 @@
     'prEditedNotification',
     'prIgnoreNotification',
   ],
-  rebaseWhen: 'behind-base-branch',
+  rebaseWhen: 'conflicted',
   ignorePaths: [
     '**/*.sops.*',
   ],
