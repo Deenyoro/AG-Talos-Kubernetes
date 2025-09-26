@@ -6,7 +6,9 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: "https://github.com/Deenyoro/AG-Talos-Kubernetes"
+  url: "ssh://git@github.com/Deenyoro/AG-Talos-Kubernetes.git"
+  secretRef:
+    name: thepatriots-ssh-credentials
   ref:
     branch: "main"
   ignore: |
