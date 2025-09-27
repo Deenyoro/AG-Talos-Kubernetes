@@ -42,7 +42,7 @@ spec:
             dependsOn: init-db
             image:
               repository: ghcr.io/skyssolutions/openproject
-              tag: 16.2.2@sha256:976883eab3d696d6caaea98d6c2dbadabfafb8604af8526e6f1a3765a0295f31
+              tag: 16.4.1@sha256:d571fdd2032ec59f3c9d9eb2c07978968292ed9fa9a6d79535cf5c8e675d2ddc
             envFrom:
               - secretRef:
                   name: openproject-secret
@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: ghcr.io/skyssolutions/openproject
-              tag: 16.2.2@sha256:976883eab3d696d6caaea98d6c2dbadabfafb8604af8526e6f1a3765a0295f31
+              tag: 16.4.1@sha256:d571fdd2032ec59f3c9d9eb2c07978968292ed9fa9a6d79535cf5c8e675d2ddc
             envFrom:
               - secretRef:
                   name: openproject-secret
@@ -83,7 +83,7 @@ spec:
           worker:
             image:
               repository: ghcr.io/skyssolutions/openproject
-              tag: 16.2.2@sha256:976883eab3d696d6caaea98d6c2dbadabfafb8604af8526e6f1a3765a0295f31
+              tag: 16.4.1@sha256:d571fdd2032ec59f3c9d9eb2c07978968292ed9fa9a6d79535cf5c8e675d2ddc
             envFrom:
               - secretRef:
                   name: openproject-secret
